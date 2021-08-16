@@ -23,6 +23,8 @@ public class Account extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
+    private String signInId;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 

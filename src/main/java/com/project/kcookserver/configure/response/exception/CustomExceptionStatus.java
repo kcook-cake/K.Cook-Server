@@ -38,6 +38,9 @@ public enum CustomExceptionStatus {
     POST_USERS_EXISTS_NICKNAME(false,2025,"중복된 닉네임입니다."),
     POST_USERS_INVALID_PASSWORD(false, 2026, "비밀번호 형식을 확인해주세요."),
     POST_USERS_EMPTY_PASSWORD(false, 2027, "비밀번호를 입력해주세요"),
+    POST_USERS_EMPTY_ID(false, 2028, "아이디를 입력해주세요."),
+    POST_USERS_INVALID_ID(false, 2029, "아이디 형식을 확인해주세요."),
+    POST_USERS_EXISTS_ID(false,2030,"중복된 아이디입니다."),
 
 
 

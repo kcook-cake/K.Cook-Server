@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Optional<Account> findByEmailAndStatus(String email, Status status);
+    Optional<Account> findBySignInIdAndStatus(String signInId, Status status);
 }
