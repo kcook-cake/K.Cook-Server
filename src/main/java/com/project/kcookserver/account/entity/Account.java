@@ -1,5 +1,7 @@
 package com.project.kcookserver.account.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.kcookserver.account.dto.AccountAuthDto;
 import com.project.kcookserver.account.entity.enumtypes.OAuthType;
 import com.project.kcookserver.account.entity.enumtypes.RoleType;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
@@ -8,9 +10,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+
+import static com.project.kcookserver.configure.entity.Status.*;
 
 @Builder
 @NoArgsConstructor
@@ -54,6 +62,21 @@ public class Account extends BaseTimeEntity {
 
     private boolean isSmsCertified;
 
-    private Integer Saving;
+    private Integer savings;
 
+    public static Account createAccount(AccountAuthDto dto) {
+
+        return Account.builder()
+                .signInId(dto.getSignInId())
+                .email(dto.getEmail())
+                .nickname(dto.getNickname())
+                .password(dto.getPassword())
+                .phoneNumber(dto.getPhoneNumber())
+                .address(dto.getAddress())
+                .dateOfBirth(dto.getDateOfBirth())
+                .status(VALID)
+                .role(RoleType.ROLE_USER)
+                .savings(0)
+                .build();
+    }
 }
