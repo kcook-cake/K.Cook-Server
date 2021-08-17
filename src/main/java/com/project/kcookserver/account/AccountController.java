@@ -6,6 +6,7 @@ import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
 import com.project.kcookserver.util.ValidationExceptionProvider;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-@Tag(name = "Account", description = "계정 관련 API")
+@Api(tags = {"Account API"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/app")
