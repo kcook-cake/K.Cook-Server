@@ -41,6 +41,10 @@ public enum CustomExceptionStatus {
     POST_USERS_EMPTY_ID(false, 2028, "아이디를 입력해주세요."),
     POST_USERS_INVALID_ID(false, 2029, "아이디 형식을 확인해주세요."),
     POST_USERS_EXISTS_ID(false,2030,"중복된 아이디입니다."),
+    POST_USERS_EMPTY_ADDRESS(false, 2031, "주소를 입력해주세요."),
+    POST_USERS_INVALID_ADDRESS(false, 2032, "주소 형식을 확인해주세요."),
+    POST_USERS_EMPTY_BIRTH_OF_DATE(false, 2033, "생년월일을 입력해주세요."),
+    POST_USERS_INVALID_DATE(false, 2034, "연도-월-일 형식을 확인해주세요."),
 
 
 
@@ -58,6 +62,7 @@ public enum CustomExceptionStatus {
     ALREADY_CERTIFICATION_ACCOUNT(false,3014,"이미 인증된 유저입니다."),
     FAILED_TO_CERTIFICATION(false,3015,"유효한 토큰 값이 아닙니다."),
     FAILED_TO_RECEPTION(false,3016,"유효한 수신 번호가 아닙니다."),
+    DUPLICATED_ID(false, 3017, "중복된 아이디입니다."),
 
 
 
