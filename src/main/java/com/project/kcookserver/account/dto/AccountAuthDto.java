@@ -1,6 +1,8 @@
 package com.project.kcookserver.account.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.kcookserver.account.entity.Account;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -51,7 +53,19 @@ public class AccountAuthDto {
 
     private LocalDate dateOfBirth;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty(access = Access.READ_ONLY)
     private String jwt;
+
+    public AccountAuthDto(Account account) {
+
+        this.accountId = account.getAccountId();
+        this.signInId = account.getSignInId();
+        this.email = account.getEmail();
+        this.nickname = account.getNickname();
+        this.phoneNumber = account.getPhoneNumber();
+        this.address = account.getAddress();
+        this.dateOfBirth = account.getDateOfBirth();
+    }
 
 }

@@ -7,15 +7,16 @@ import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
+import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.util.ValidationExceptionProvider;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -42,6 +43,15 @@ public class AccountController {
     public DataResponse<SignInRes> signIn(@RequestBody @Valid SignInReq req, Errors errors) {
         if (errors.hasErrors()) ValidationExceptionProvider.throwValidError(errors);
         return responseService.getDataResponse(accountService.signIn(req));
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+    })
+    @Operation(summary = "로그인한 회원 정보 조회", description = "JWT 토큰으로 인증 된 회원 정보 리턴")
+    @GetMapping(value = "/accounts/auth")
+    public DataResponse<AccountAuthDto> getAuthAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        return responseService.getDataResponse(accountService.getAuthAccount(customUserDetails));
     }
 
 

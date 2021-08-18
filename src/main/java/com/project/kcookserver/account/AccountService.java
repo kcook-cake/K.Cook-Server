@@ -6,6 +6,7 @@ import com.project.kcookserver.account.dto.SignInRes;
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
+import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.configure.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,6 +52,11 @@ public class AccountService {
                 .build();
 
         return res;
+    }
+
+    public AccountAuthDto getAuthAccount(CustomUserDetails customUserDetails) {
+        Account account = customUserDetails.getAccount();
+        return new AccountAuthDto(account);
     }
 
 }
