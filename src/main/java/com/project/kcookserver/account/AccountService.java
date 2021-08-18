@@ -1,6 +1,8 @@
 package com.project.kcookserver.account;
 
 import com.project.kcookserver.account.dto.AccountAuthDto;
+import com.project.kcookserver.account.dto.SignInReq;
+import com.project.kcookserver.account.dto.SignInRes;
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
@@ -31,8 +33,24 @@ public class AccountService {
         Account account = Account.createAccount(dto);
         Account save = accountRepository.save(account);
         dto.setAccountId(save.getAccountId());
-        dto.setJwt(jwtTokenProvider.createToken(account.getEmail(),account.getRole()));
+        dto.setJwt(jwtTokenProvider.createToken(account.getSignInId(),account.getRole()));
         return dto;
+    }
+
+    @Transactional
+    public SignInRes signIn(SignInReq req) {
+        Account account = accountRepository.findBySignInIdAndStatus(req.getSignInId(), VALID)
+                .orElseThrow(()-> new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN));
+        if(!passwordEncoder.matches(req.getPassword(),account.getPassword())){
+            throw new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN);
+        }
+
+        SignInRes res = SignInRes.builder()
+                .accountId(account.getAccountId())
+                .jwt(jwtTokenProvider.createToken(account.getSignInId(), account.getRole()))
+                .build();
+
+        return res;
     }
 
 }

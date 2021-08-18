@@ -1,6 +1,8 @@
 package com.project.kcookserver.account;
 
 import com.project.kcookserver.account.dto.AccountAuthDto;
+import com.project.kcookserver.account.dto.SignInReq;
+import com.project.kcookserver.account.dto.SignInRes;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.response.exception.CustomException;
@@ -8,7 +10,6 @@ import com.project.kcookserver.configure.response.exception.CustomExceptionStatu
 import com.project.kcookserver.util.ValidationExceptionProvider;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,13 @@ public class AccountController {
         if (dto.getDateOfBirth() == null)
             throw new CustomException(CustomExceptionStatus.POST_USERS_EMPTY_BIRTH_OF_DATE);
         return responseService.getDataResponse(accountService.signUp(dto));
+    }
+
+    @Operation(summary = "로그인", description = "로그인 DTO로 JWT 토큰과 Account Id 리턴")
+    @PostMapping(value = "/sign-in")
+    public DataResponse<SignInRes> signIn(@RequestBody @Valid SignInReq req, Errors errors) {
+        if (errors.hasErrors()) ValidationExceptionProvider.throwValidError(errors);
+        return responseService.getDataResponse(accountService.signIn(req));
     }
 
 
