@@ -1,6 +1,5 @@
 package com.project.kcookserver.account.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.kcookserver.account.dto.AccountAuthDto;
 import com.project.kcookserver.account.entity.enumtypes.OAuthType;
 import com.project.kcookserver.account.entity.enumtypes.RoleType;
@@ -10,12 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 import static com.project.kcookserver.configure.entity.Status.*;

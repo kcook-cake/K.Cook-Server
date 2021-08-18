@@ -11,7 +11,7 @@
 
 > K.Cook Back-End Server Project
 
-### ✨ [Swaager API Docs](https://prod.kcook.site/swagger-ui/index.html)
+### ✨ [Swagger API Docs](https://prod.kcook.site/swagger-ui/index.html)
 
 ## 기술스택
 

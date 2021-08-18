@@ -30,8 +30,6 @@ public class ValidationExceptionProvider {
         else if (code.equals("Email")) {
             return CustomExceptionStatus.POST_USERS_INVALID_EMAIL;
         }
-        System.out.println("code = " + code);
-        System.out.println("target = " + target);
         return CustomExceptionStatus.RESPONSE_ERROR;
     }
 
