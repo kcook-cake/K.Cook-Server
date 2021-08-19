@@ -39,6 +39,9 @@
 $ ./gradlew clean build
 ```
 
+## ERD (v1)
+![erd](https://user-images.githubusercontent.com/54254402/130004175-fa3ef885-dc3b-42e6-835c-07de0acdc1e1.png)<br>
+
 ## Author
 
 👤 **vividswan**
