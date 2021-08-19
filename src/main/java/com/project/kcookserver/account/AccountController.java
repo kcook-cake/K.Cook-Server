@@ -3,6 +3,10 @@ package com.project.kcookserver.account;
 import com.project.kcookserver.account.dto.AccountAuthDto;
 import com.project.kcookserver.account.dto.SignInReq;
 import com.project.kcookserver.account.dto.SignInRes;
+import com.project.kcookserver.account.sms.PhoneNumberDto;
+import com.project.kcookserver.account.sms.SmsAuthService;
+import com.project.kcookserver.account.sms.TokenDto;
+import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.response.exception.CustomException;
@@ -28,6 +32,7 @@ public class AccountController {
 
     private final ResponseService responseService;
     private final AccountService accountService;
+    private final SmsAuthService smsAuthService;
 
     @Operation(summary = "회원 가입", description = "회원 가입 DTO로 회원 가입 신청")
     @PostMapping(value = "/sign-up")
@@ -54,5 +59,26 @@ public class AccountController {
         return responseService.getDataResponse(accountService.getAuthAccount(customUserDetails));
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+    })
+    @Operation(summary = "사용자 SMS 인증 토큰 생성", description = "인자로 보내는 전화번호로 SMS Token 전송")
+    @PatchMapping(value = "/accounts/sms-token")
+    public DataResponse<Integer> updateAccountSmsToken(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                                       @RequestBody PhoneNumberDto phoneNumberDto) {
+        Integer token = smsAuthService.updateAccountSmsToken(customUserDetails, phoneNumberDto.getPhoneNumber());
+        return responseService.getDataResponse(token);
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+    })
+    @Operation(summary = "로그인한 회원 SMS 인증", description = "유저 정보에 저장된 토큰 값과 일치 여부 확인")
+    @PatchMapping(value = "/accounts/sms-certification")
+    public CommonResponse updateAccountSmsCertification(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                                        @RequestBody TokenDto tokenDto) {
+        smsAuthService.updateAccountSmsCertification(customUserDetails, tokenDto.getSmsToken());
+        return responseService.getSuccessResponse();
+    }
 
 }

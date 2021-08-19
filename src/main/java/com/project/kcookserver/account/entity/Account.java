@@ -74,4 +74,13 @@ public class Account extends BaseTimeEntity {
                 .savings(0)
                 .build();
     }
+
+    public void createTokenToPhoneNumber(Integer smsAuthToken, String phoneNumber) {
+        this.smsAuthToken = smsAuthToken;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void certifySmsAuth() {
+        this.isSmsCertified = true;
+    }
 }
