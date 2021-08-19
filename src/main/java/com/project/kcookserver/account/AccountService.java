@@ -8,6 +8,7 @@ import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.configure.security.jwt.JwtTokenProvider;
+import com.project.kcookserver.util.location.NaverGeocode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,14 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final NaverGeocode naverGeocode;
 
     @Transactional
     public AccountAuthDto signUp(AccountAuthDto dto) {
         if (accountRepository.findByEmailAndStatus(dto.getEmail(), VALID).isPresent()) throw new CustomException(CustomExceptionStatus.DUPLICATED_EMAIL);
         if (accountRepository.findByNicknameAndStatus(dto.getNickname(), VALID).isPresent()) throw new CustomException(CustomExceptionStatus.DUPLICATED_NICKNAME);
         if (accountRepository.findBySignInIdAndStatus(dto.getSignInId(), VALID).isPresent()) throw new CustomException(CustomExceptionStatus.DUPLICATED_ID);
+        naverGeocode.getCoordinate(dto.getAddress());
 
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         Account account = Account.createAccount(dto);
