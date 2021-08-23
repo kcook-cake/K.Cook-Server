@@ -3,11 +3,17 @@ package com.project.kcookserver.store;
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 @Entity
 public class Store extends BaseTimeEntity {
 
@@ -15,6 +21,7 @@ public class Store extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long storeId;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @OneToOne(fetch = LAZY)
