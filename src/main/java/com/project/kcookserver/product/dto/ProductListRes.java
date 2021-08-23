@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.text.DecimalFormat;
+
 
 @Getter
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class ProductListRes {
 
     private String thumbnail;
 
-    private Float raiting;
+    private String raiting;
 
     private String storeName;
 
@@ -39,7 +41,7 @@ public class ProductListRes {
         this.status = product.getStatus();
         this.isCake = product.getIsCake();
         this.thumbnail = product.getThumbnail();
-        this.raiting = product.getRaiting();
+        this.raiting = new DecimalFormat("#.00").format(product.getRaiting());
         this.storeName = product.getStore().getName();
         this.name = product.getName();
         this.price = product.getPrice();
