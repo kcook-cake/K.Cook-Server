@@ -1,4 +1,4 @@
-package com.project.kcookserver.product;
+package com.project.kcookserver.product.entity;
 
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;

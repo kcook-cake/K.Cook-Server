@@ -1,6 +1,7 @@
-package com.project.kcookserver.product;
+package com.project.kcookserver.product.service;
 
 import com.project.kcookserver.product.dto.ProductListRes;
+import com.project.kcookserver.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -1,7 +1,8 @@
-package com.project.kcookserver.product;
+package com.project.kcookserver.product.controller;
 
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
+import com.project.kcookserver.product.service.ProductService;
 import com.project.kcookserver.product.dto.ProductListRes;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;

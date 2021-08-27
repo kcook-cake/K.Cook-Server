@@ -1,7 +1,7 @@
 package com.project.kcookserver.product.dto;
 
 import com.project.kcookserver.configure.entity.Status;
-import com.project.kcookserver.product.Product;
+import com.project.kcookserver.product.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
