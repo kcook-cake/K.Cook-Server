@@ -46,6 +46,8 @@ public enum CustomExceptionStatus {
     POST_USERS_EMPTY_BIRTH_OF_DATE(false, 2033, "생년월일을 입력해주세요."),
     POST_USERS_INVALID_DATE(false, 2034, "연도-월-일 형식을 확인해주세요."),
 
+    // Product
+    PRODUCT_NOT_FOUND(false, 2040, "상품을 찾을 수 없습니다."),
 
 
     /**
