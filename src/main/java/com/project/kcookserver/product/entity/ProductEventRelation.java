@@ -1,6 +1,5 @@
-package com.project.kcookserver.store;
+package com.project.kcookserver.product.entity;
 
-import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
 import lombok.AllArgsConstructor;
@@ -11,29 +10,25 @@ import javax.persistence.*;
 
 import static javax.persistence.FetchType.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Store extends BaseTimeEntity {
+public class ProductEventRelation extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long storeId;
+    private Long relationId;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "accountId")
-    private Account account;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "productId")
+    private Product product;
 
-    private String name;
-
-    private String contact;
-
-    private String address;
-
-    private String area;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "eventId")
+    private Event event;
 
 }
