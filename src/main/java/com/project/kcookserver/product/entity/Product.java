@@ -44,6 +44,8 @@ public class Product extends BaseTimeEntity {
 
     private Boolean isCake;
 
+    private Integer salesRate;
+
     @OneToMany(mappedBy = "product")
     private List<Review> reviews = new ArrayList<>();
 
