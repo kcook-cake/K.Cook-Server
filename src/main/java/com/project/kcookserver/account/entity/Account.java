@@ -1,5 +1,6 @@
 package com.project.kcookserver.account.entity;
 
+import com.project.kcookserver.account.coupon.Coupon;
 import com.project.kcookserver.account.dto.AccountAuthDto;
 import com.project.kcookserver.account.entity.enumtypes.OAuthType;
 import com.project.kcookserver.account.entity.enumtypes.RoleType;
@@ -9,11 +10,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.project.kcookserver.configure.entity.Status.*;
+import static javax.persistence.CascadeType.*;
 
 @Builder
 @NoArgsConstructor
@@ -58,6 +63,11 @@ public class Account extends BaseTimeEntity {
     private boolean isSmsCertified;
 
     private Integer savings;
+
+
+    @BatchSize(size = 100)
+    @OneToMany(mappedBy = "account", cascade = ALL)
+    private List<Coupon> coupons = new ArrayList<>();
 
     public static Account createAccount(AccountAuthDto dto) {
 
