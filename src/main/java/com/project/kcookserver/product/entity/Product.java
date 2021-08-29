@@ -46,6 +46,8 @@ public class Product extends BaseTimeEntity {
 
     private Integer salesRate;
 
+    private Long reviewCount;
+
     @OneToMany(mappedBy = "product")
     private List<Review> reviews = new ArrayList<>();
 

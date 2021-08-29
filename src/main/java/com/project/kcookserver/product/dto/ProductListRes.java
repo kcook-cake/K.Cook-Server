@@ -2,16 +2,11 @@ package com.project.kcookserver.product.dto;
 
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.product.entity.Product;
-import com.project.kcookserver.review.Review;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.project.kcookserver.configure.entity.Status.*;
 
 
 @Getter
@@ -39,7 +34,7 @@ public class ProductListRes {
 
     private Integer resultPrice;
 
-    private Integer reviewCount;
+    private Long reviewCount;
 
     public ProductListRes(Product product) {
         this.productId = product.getProductId();
@@ -52,8 +47,7 @@ public class ProductListRes {
         this.price = product.getPrice();
         this.salePrice = product.getSalePrice();
         this.resultPrice = price - salePrice;
-        List<Review> reviewList = product.getReviews().stream().filter(r -> r.getStatus().equals(VALID)).collect(Collectors.toList());
-        this.reviewCount = reviewList.size();
+        this.reviewCount = product.getReviewCount();
     }
 
 }
