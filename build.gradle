@@ -1,6 +1,8 @@
 plugins {
 	id 'org.springframework.boot' version '2.5.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	//querydsl 추가
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'java'
 }
 
@@ -42,7 +44,31 @@ dependencies {
 
 	// SMS Service
 	implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2'
+
+	// querydsl
+	implementation 'com.querydsl:querydsl-jpa'
 }
+
+//querydsl
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+	main.java.srcDir querydslDir
+}
+
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+//querydsl
 
 test {
 	useJUnitPlatform()
