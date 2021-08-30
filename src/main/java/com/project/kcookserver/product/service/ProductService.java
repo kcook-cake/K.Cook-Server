@@ -7,7 +7,9 @@ import com.project.kcookserver.product.dto.ProductDetailRes;
 import com.project.kcookserver.product.dto.ProductListRes;
 import com.project.kcookserver.product.entity.Product;
 import com.project.kcookserver.product.repository.OptionsRepository;
+import com.project.kcookserver.product.repository.ProductQueryRepository;
 import com.project.kcookserver.product.repository.ProductRepository;
+import com.project.kcookserver.product.repository.ProductRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,12 +30,14 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final OptionsRepository optionsRepository;
+    private final ProductRepositoryCustom productRepositoryCustom;
 
-    public Page<ProductListRes> getProductList(int page, int size, String sortBy, boolean isAsc, boolean isCake) {
+    public Page<ProductListRes> getCakeList(int page, int size, String sortBy, boolean isAsc, String event, String options, Integer lowPrice, Integer highPrice, String area) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
-        return productRepository.findAllListResByStatusAndIsCake(VALID, isCake, pageable);
+        Page<Product> cakeList = productRepositoryCustom.findAllCakeProduct(pageable, event, options, lowPrice, highPrice,area);
+        return cakeList.map(ProductListRes::new);
     }
 
     public ProductDetailRes getDetailProduct(Long productId) {
