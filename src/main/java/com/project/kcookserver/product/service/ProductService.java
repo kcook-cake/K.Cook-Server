@@ -32,12 +32,22 @@ public class ProductService {
     private final OptionsRepository optionsRepository;
     private final ProductRepositoryCustom productRepositoryCustom;
 
-    public Page<ProductListRes> getCakeList(int page, int size, String sortBy, boolean isAsc, String event, String options, Integer lowPrice, Integer highPrice, String area) {
+    public Page<ProductListRes> getCakeList
+            (int page, int size, String sortBy, boolean isAsc, String event, String options, Integer lowPrice, Integer highPrice, String area) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Product> cakeList = productRepositoryCustom.findAllCakeProduct(pageable, event, options, lowPrice, highPrice,area);
         return cakeList.map(ProductListRes::new);
+    }
+
+    public Page<ProductListRes> getAdditionalProductsList
+            (Integer page, Integer size, String sortBy, Boolean isAsc, String options, Integer lowPrice, Integer highPrice, String area) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Product> additionalProductList = productRepositoryCustom.findAllAdditionalProduct(pageable, options, lowPrice, highPrice,area);
+        return additionalProductList.map(ProductListRes::new);
     }
 
     public ProductDetailRes getDetailProduct(Long productId) {
@@ -48,4 +58,5 @@ public class ProductService {
         ProductDetailRes productDetailRes = new ProductDetailRes(product, optionsList);
         return productDetailRes;
     }
+
 }

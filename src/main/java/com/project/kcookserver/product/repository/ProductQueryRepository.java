@@ -60,6 +60,32 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
 
+    @Override
+    public Page<Product> findAllAdditionalProduct(Pageable pageable, String options, Integer lowPrice, Integer highPrice, String area) {
+        QProduct product = QProduct.product;
+        QStore store = QStore.store;
+        QProductEventRelation productEventRelation = QProductEventRelation.productEventRelation;
+        QProductOptionsRelation productOptionsRelation = QProductOptionsRelation.productOptionsRelation;
+        QOptions qOptions = QOptions.options;
+
+
+        QueryResults<Product> result = queryFactory
+                .select(product)
+                .from(product)
+                .leftJoin(product.store, store).fetchJoin()
+                .leftJoin(productEventRelation).on(productEventRelation.product.eq(product).and(productEventRelation.status.eq(VALID)))
+                .leftJoin(productOptionsRelation).on(productOptionsRelation.status.eq(VALID).and(productOptionsRelation.product.eq(product)))
+                .leftJoin(qOptions).on(qOptions.status.eq(VALID).and(productOptionsRelation.options.eq(qOptions)))
+                .where(product.status.eq(VALID), product.isCake.eq(false), optionsEq(qOptions, options), storeEq(store, area), lowPriceGoe(product,lowPrice),highPriceLoe(product,highPrice))
+                .distinct()
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(getSortedColumn(pageable.getSort()))
+                .fetchResults();
+
+        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+    }
+
     private BooleanExpression eventEq(QEvent qEvent, String event) {
         if (event == null) return null;
         return qEvent.name.eq(event);

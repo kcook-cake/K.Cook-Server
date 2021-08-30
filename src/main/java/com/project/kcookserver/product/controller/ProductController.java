@@ -3,7 +3,6 @@ package com.project.kcookserver.product.controller;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.product.dto.ProductDetailRes;
-import com.project.kcookserver.product.repository.ProductQueryRepository;
 import com.project.kcookserver.product.service.ProductService;
 import com.project.kcookserver.product.dto.ProductListRes;
 import io.swagger.annotations.Api;
@@ -49,14 +48,19 @@ public class ProductController {
             @RequestParam(name = "page", required = false) Integer page,
             @RequestParam(name = "size", required = false) Integer size,
             @RequestParam(name = "sortBy", required = false) String sortBy,
-            @RequestParam(name = "isAsc", required = false) Boolean isAsc
+            @RequestParam(name = "isAsc", required = false) Boolean isAsc,
+            @RequestParam(name = "options", required = false) String options,
+            @RequestParam(name = "lowPrice", required = false) Integer lowPrice,
+            @RequestParam(name = "highPrice", required = false) Integer highPrice,
+            @RequestParam(name = "area", required = false) String area
     ){
         if (page == null) page = 1;
         page = page - 1;
         if (size == null) size = 10;
         if (isAsc == null) isAsc = true;
         if (sortBy == null) sortBy = "updatedAt";
-        return null;
+        Page<ProductListRes> result =  productService.getAdditionalProductsList(page, size, sortBy, isAsc, options, lowPrice, highPrice, area);
+        return responseService.getDataResponse(result);
     }
 
     @Operation(summary = "하나의 상품 내용 조회 API", description = "상품 번호가 PathVariable로 들어감")
