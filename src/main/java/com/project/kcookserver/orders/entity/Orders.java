@@ -65,9 +65,10 @@ public class Orders extends BaseTimeEntity {
         this.price = product.getPrice() - product.getSalePrice();
         this.paymentType = paymentType;
         this.pickUpAt = pickUpAt;
+        int index = 1;
         for (Options options : optionsList) {
             price += options.getAdditionalCost();
-            this.ordersOptionsRelationList.add(new OrdersOptionsRelation(this, options));
+            this.ordersOptionsRelationList.add(new OrdersOptionsRelation(this, options, index++));
         }
     }
 

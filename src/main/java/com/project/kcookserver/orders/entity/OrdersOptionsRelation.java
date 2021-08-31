@@ -34,10 +34,13 @@ public class OrdersOptionsRelation extends BaseTimeEntity {
     @JoinColumn(name = "optionsId")
     private Options options;
 
-    public OrdersOptionsRelation(Orders orders, Options options) {
+    private Integer optionsNumber;
+
+    public OrdersOptionsRelation(Orders orders, Options options, Integer optionsNumber) {
         this.status = VALID;
         this.orders = orders;
         this.options = options;
+        this.optionsNumber = optionsNumber;
     }
 
 }
