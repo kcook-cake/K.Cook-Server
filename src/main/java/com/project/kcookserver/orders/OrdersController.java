@@ -4,14 +4,14 @@ import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.orders.dto.CreateOrdersReq;
+import com.project.kcookserver.orders.dto.OrdersListRes;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api(tags = {"Orders API"})
 @RequiredArgsConstructor
@@ -27,6 +27,13 @@ public class OrdersController {
     public DataResponse<Long> createOrders(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CreateOrdersReq createOrdersReq) {
         Long ordersId = ordersService.createOrders(customUserDetails, createOrdersReq);
         return responseService.getDataResponse(ordersId);
+    }
+
+    @Operation(summary = "고객 주문 조회 API", description = "인증된 Account를 기준으로 주문 조회")
+    @GetMapping("/orders/accounts/auth")
+    public DataResponse<List<OrdersListRes>> getOrdersListByAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        List<OrdersListRes> ordersListResList = ordersService.getOrdersListByAccount(customUserDetails);
+        return responseService.getDataResponse(ordersListResList);
     }
 
 }

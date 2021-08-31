@@ -1,10 +1,12 @@
 package com.project.kcookserver.orders;
 
 import com.project.kcookserver.account.entity.Account;
+import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.orders.dto.CreateOrdersReq;
+import com.project.kcookserver.orders.dto.OrdersListRes;
 import com.project.kcookserver.orders.entity.Orders;
 import com.project.kcookserver.product.entity.Options;
 import com.project.kcookserver.product.entity.Product;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -41,5 +44,10 @@ public class OrdersService {
         Orders save = ordersRepository.save(orders);
 
         return save.getOrdersId();
+    }
+
+    public List<OrdersListRes> getOrdersListByAccount(CustomUserDetails customUserDetails) {
+        Account account = customUserDetails.getAccount();
+        return ordersRepository.findAllByAccountAndStatus(account);
     }
 }
