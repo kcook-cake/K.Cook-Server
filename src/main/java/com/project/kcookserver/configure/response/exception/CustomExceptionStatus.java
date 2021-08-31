@@ -49,6 +49,8 @@ public enum CustomExceptionStatus {
     // Product
     PRODUCT_NOT_FOUND(false, 2040, "상품을 찾을 수 없습니다."),
 
+    // Options
+    OPTIONS_NOT_FOUND(false, 2041, "옵션을 찾을 수 없습니다."),
 
     /**
      * 3000 : Response 오류
