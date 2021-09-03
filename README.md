@@ -24,6 +24,7 @@
   <img src="https://img.shields.io/badge/-Nginx-red"/>&nbsp
   <img src="https://img.shields.io/badge/-Swagger-black"/>&nbsp
   <img src="https://img.shields.io/badge/-SpringSecurity-green"/>&nbsp
+  <img src="https://img.shields.io/badge/-Querydsl-violet"/>&nbsp
 </p>
 
 ## 개발환경
@@ -39,8 +40,8 @@
 $ ./gradlew clean build
 ```
 
-## ERD (v1)
-![erd](https://user-images.githubusercontent.com/54254402/130004175-fa3ef885-dc3b-42e6-835c-07de0acdc1e1.png)<br>
+## ERD
+![erd](https://user-images.githubusercontent.com/54254402/132042780-5322f9d3-6046-4f4c-aa27-99be5c068b89.png)<br>
 
 ### Access server side using following URL
 
