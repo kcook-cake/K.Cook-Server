@@ -25,5 +25,8 @@ public class ExceptionController {
         throw new CustomException(CustomExceptionStatus.EMPTY_JWT);
     }
 
+    @GetMapping(value = "/errors/access-Denied")
+    public void getAccessDeniedException() { throw new CustomException(CustomExceptionStatus.ACCOUNT_ACCESS_DENIED);}
+
 
 }

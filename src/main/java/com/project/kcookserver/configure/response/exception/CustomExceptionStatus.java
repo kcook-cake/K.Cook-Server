@@ -55,6 +55,9 @@ public enum CustomExceptionStatus {
     // Store
     STORE_NOT_FOUND(false, 2042, "스토어를 찾을 수 없습니다."),
 
+    // Role
+    ACCOUNT_ACCESS_DENIED(false, 2050, "권한이 없습니다."),
+
     /**
      * 3000 : Response 오류
      */

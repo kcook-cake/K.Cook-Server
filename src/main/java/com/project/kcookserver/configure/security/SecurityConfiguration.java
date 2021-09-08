@@ -1,5 +1,6 @@
 package com.project.kcookserver.configure.security;
 
+import com.project.kcookserver.configure.response.exception.CustomAccessDeniedHandler;
 import com.project.kcookserver.configure.response.exception.CustomAuthenticationEntryPoint;
 import com.project.kcookserver.configure.security.jwt.JwtAuthenticationFilter;
 import com.project.kcookserver.configure.security.jwt.JwtTokenProvider;
@@ -72,6 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .exceptionHandling()
                     .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                    .accessDeniedHandler(new CustomAccessDeniedHandler())
                 .and()
                     .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
