@@ -52,6 +52,9 @@ public enum CustomExceptionStatus {
     // Options
     OPTIONS_NOT_FOUND(false, 2041, "옵션을 찾을 수 없습니다."),
 
+    // Store
+    STORE_NOT_FOUND(false, 2042, "스토어를 찾을 수 없습니다."),
+
     /**
      * 3000 : Response 오류
      */
