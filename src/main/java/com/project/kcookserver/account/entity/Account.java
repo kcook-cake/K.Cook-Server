@@ -93,4 +93,8 @@ public class Account extends BaseTimeEntity {
     public void certifySmsAuth() {
         this.isSmsCertified = true;
     }
+
+    public void changeRole(RoleType roleType) {
+        this.role = roleType;
+    }
 }

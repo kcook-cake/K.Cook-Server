@@ -64,18 +64,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                    .authorizeRequests()
-                    .antMatchers(HttpMethod.POST,"/app/sign-in", "/app/sign-up").permitAll()
-                    .antMatchers(HttpMethod.GET, "/errors/**","/app/cakes/**","/app/additional-products/**","/app/products/**").permitAll()
-                    .antMatchers(HttpMethod.GET, "/app/stores/account/auth").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                    .anyRequest().hasRole("USER")
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/app/sign-in", "/app/sign-up").permitAll()
+                .antMatchers(HttpMethod.GET, "/errors/**", "/app/cakes/**", "/app/additional-products/**", "/app/products/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/app/stores/account/auth").hasAnyRole("MANAGER", "ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/app/accounts/role").hasRole("ADMIN")
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .anyRequest().authenticated()
                 .and()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                    .accessDeniedHandler(new CustomAccessDeniedHandler())
+                .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                .accessDeniedHandler(new CustomAccessDeniedHandler())
                 .and()
-                    .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
     }
 

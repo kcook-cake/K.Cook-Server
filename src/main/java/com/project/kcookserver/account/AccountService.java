@@ -4,6 +4,7 @@ import com.project.kcookserver.account.dto.AccountAuthDto;
 import com.project.kcookserver.account.dto.SignInReq;
 import com.project.kcookserver.account.dto.SignInRes;
 import com.project.kcookserver.account.entity.Account;
+import com.project.kcookserver.account.entity.enumtypes.RoleType;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
@@ -62,5 +63,11 @@ public class AccountService {
         return new AccountAuthDto(account);
     }
 
+    @Transactional
+    public void updateAccountRoleByAccountsSignInId(String signInId, RoleType roleType) {
+        Account account = accountRepository.findBySignInIdAndStatus(signInId, VALID)
+                .orElseThrow(() -> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID));
+        account.changeRole(roleType);
+    }
 }
 

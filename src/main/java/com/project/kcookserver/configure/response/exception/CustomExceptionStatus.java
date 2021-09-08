@@ -28,6 +28,7 @@ public enum CustomExceptionStatus {
     USERS_EMPTY_USER_ID(false, 2010, "유저 아이디 값을 확인해주세요."),
     ACCOUNT_NOT_FOUND(false, 2011, "사용자를 찾을 수 없습니다."),
     ACCOUNT_NOT_VALID(false, 2012, "유효한 사용자가 아닙니다."),
+    ACCOUNT_NOT_VALID_ROLE(false, 2013, "유효한 Role 형식이 아닙니다."),
 
     // [POST] /users
     POST_USERS_EMPTY_EMAIL(false, 2020, "이메일을 입력해주세요."),

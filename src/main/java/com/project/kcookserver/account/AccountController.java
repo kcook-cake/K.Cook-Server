@@ -3,6 +3,7 @@ package com.project.kcookserver.account;
 import com.project.kcookserver.account.dto.AccountAuthDto;
 import com.project.kcookserver.account.dto.SignInReq;
 import com.project.kcookserver.account.dto.SignInRes;
+import com.project.kcookserver.account.entity.enumtypes.RoleType;
 import com.project.kcookserver.account.sms.PhoneNumberDto;
 import com.project.kcookserver.account.sms.SmsAuthService;
 import com.project.kcookserver.account.sms.TokenDto;
@@ -78,6 +79,26 @@ public class AccountController {
     public CommonResponse updateAccountSmsCertification(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                                         @RequestBody TokenDto tokenDto) {
         smsAuthService.updateAccountSmsCertification(customUserDetails, tokenDto.getSmsToken());
+        return responseService.getSuccessResponse();
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+    })
+    @Operation(summary = "회원 권한 변경", description = "관리자 권한으로 회원의 Role 변경 API")
+    @PatchMapping(value = "/accounts/role")
+    public CommonResponse updateAccountRoleByAccountsSignInId(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                                              @RequestParam(value = "signInId") String signInId,
+                                                              @RequestParam(value = "role") String role){
+        RoleType roleType;
+        try {
+            roleType = RoleType.valueOf("ROLE_" + role);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("e.getMessage() = " + e.getMessage());
+            throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID_ROLE);
+        }
+        accountService.updateAccountRoleByAccountsSignInId(signInId, roleType);
         return responseService.getSuccessResponse();
     }
 
