@@ -6,6 +6,8 @@ import com.project.kcookserver.configure.security.authentication.CustomUserDetai
 import com.project.kcookserver.orders.dto.CreateOrdersReq;
 import com.project.kcookserver.orders.dto.OrdersListRes;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +24,9 @@ public class OrdersController {
     private final OrdersService ordersService;
     private final ResponseService responseService;
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+    })
     @Operation(summary = "주문 생성 API", description = "Account가 인증된 상태에서 CreateOrdersReq 객체의 인자로 주문 생성")
     @PostMapping("/orders")
     public DataResponse<Long> createOrders(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CreateOrdersReq createOrdersReq) {
@@ -29,6 +34,9 @@ public class OrdersController {
         return responseService.getDataResponse(ordersId);
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+    })
     @Operation(summary = "고객 주문 조회 API", description = "인증된 Account를 기준으로 주문 조회")
     @GetMapping("/orders/accounts/auth")
     public DataResponse<List<OrdersListRes>> getOrdersListByAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
