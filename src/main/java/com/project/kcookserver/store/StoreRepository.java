@@ -15,4 +15,6 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
             "WHERE a = :account AND s.status = :status")
     Optional<StoreDetailRes> getStoreByAccountAndStatus(@Param(value = "account") Account account, @Param(value = "status") Status status);
 
+    Optional<Store> findByAccountAndStatus(Account account, Status status);
+
 }

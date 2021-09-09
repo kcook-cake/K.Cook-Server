@@ -38,4 +38,13 @@ public class StoreService {
         Store save = storeRepository.save(store);
         return save.getStoreId();
     }
+
+    @Transactional
+    public void updateStoreByAccount(CustomUserDetails customUserDetails, CreateStoreReq dto) {
+        Account account = customUserDetails.getAccount();
+        Store store = storeRepository.findByAccountAndStatus(account, VALID)
+                .orElseThrow(() -> new CustomException(CustomExceptionStatus.STORE_NOT_FOUND));
+        naverGeocode.getCoordinate(dto.getAddress());
+        store.updateStore(dto);
+    }
 }

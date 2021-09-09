@@ -47,4 +47,11 @@ public class Store extends BaseTimeEntity {
         this.area = dto.getArea();
     }
 
+    public void updateStore(CreateStoreReq dto) {
+        this.name = dto.getName();
+        this.contact = dto.getContact();
+        this.address = dto.getAddress();
+        this.area = dto.getArea();
+    }
+
 }

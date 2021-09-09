@@ -1,5 +1,6 @@
 package com.project.kcookserver.store;
 
+import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
@@ -41,6 +42,17 @@ public class StoreController {
                                                    @RequestBody CreateStoreReq dto) {
         Long storeId = storeService.createStoreByAccount(customUserDetails,dto);
         return responseService.getDataResponse(storeId);
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
+    })
+    @Operation(summary = "스토어 수정 API", description = "인증된 Account를 기준으로 스토어 수정")
+    @PutMapping("/stores/accounts/auth")
+    public CommonResponse updateStoreByAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                               @RequestBody CreateStoreReq dto) {
+        storeService.updateStoreByAccount(customUserDetails,dto);
+        return responseService.getSuccessResponse();
     }
 
 }

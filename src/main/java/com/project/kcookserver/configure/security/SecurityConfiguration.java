@@ -69,6 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/errors/**", "/app/cakes/**", "/app/additional-products/**", "/app/products/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/app/stores/account/auth").hasAnyRole("MANAGER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/app/stores").hasAnyRole("MANAGER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/app/stores").hasAnyRole("MANAGER", "ADMIN")
                 .antMatchers(HttpMethod.PATCH, "/app/accounts/role").hasRole("ADMIN")
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated()
