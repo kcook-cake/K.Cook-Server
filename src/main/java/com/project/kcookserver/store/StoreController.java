@@ -16,6 +16,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Api(tags = {"Store API"})
 @RequiredArgsConstructor
 @RestController
@@ -41,7 +43,7 @@ public class StoreController {
     @Operation(summary = "스토어 생성 API", description = "인증된 Account를 기준으로 스토어 생성")
     @PostMapping("/stores/accounts/auth")
     public DataResponse<Long> createStoreByAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                                   @RequestBody CreateStoreReq dto, Errors errors) {
+                                                   @RequestBody @Valid CreateStoreReq dto, Errors errors) {
         if (errors.hasErrors()) ValidationExceptionProvider.throwValidError(errors);
         Long storeId = storeService.createStoreByAccount(customUserDetails,dto);
         return responseService.getDataResponse(storeId);
@@ -53,7 +55,7 @@ public class StoreController {
     @Operation(summary = "스토어 수정 API", description = "인증된 Account를 기준으로 스토어 수정")
     @PutMapping("/stores/accounts/auth")
     public CommonResponse updateStoreByAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                               @RequestBody CreateStoreReq dto, Errors errors) {
+                                               @RequestBody @Valid CreateStoreReq dto, Errors errors) {
         if (errors.hasErrors()) ValidationExceptionProvider.throwValidError(errors);
         storeService.updateStoreByAccount(customUserDetails,dto);
         return responseService.getSuccessResponse();
