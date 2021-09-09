@@ -6,12 +6,14 @@ import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.store.dto.CreateStoreReq;
 import com.project.kcookserver.store.dto.StoreDetailRes;
+import com.project.kcookserver.util.ValidationExceptionProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"Store API"})
@@ -39,7 +41,8 @@ public class StoreController {
     @Operation(summary = "스토어 생성 API", description = "인증된 Account를 기준으로 스토어 생성")
     @PostMapping("/stores/accounts/auth")
     public DataResponse<Long> createStoreByAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                                   @RequestBody CreateStoreReq dto) {
+                                                   @RequestBody CreateStoreReq dto, Errors errors) {
+        if (errors.hasErrors()) ValidationExceptionProvider.throwValidError(errors);
         Long storeId = storeService.createStoreByAccount(customUserDetails,dto);
         return responseService.getDataResponse(storeId);
     }
@@ -50,7 +53,8 @@ public class StoreController {
     @Operation(summary = "스토어 수정 API", description = "인증된 Account를 기준으로 스토어 수정")
     @PutMapping("/stores/accounts/auth")
     public CommonResponse updateStoreByAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                               @RequestBody CreateStoreReq dto) {
+                                               @RequestBody CreateStoreReq dto, Errors errors) {
+        if (errors.hasErrors()) ValidationExceptionProvider.throwValidError(errors);
         storeService.updateStoreByAccount(customUserDetails,dto);
         return responseService.getSuccessResponse();
     }
