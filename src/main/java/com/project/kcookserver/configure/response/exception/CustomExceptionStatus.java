@@ -78,6 +78,9 @@ public enum CustomExceptionStatus {
     // Location
     LOCATION_NOT_VALID(false,3030,"유효한 주소가 아닙니다."),
 
+    // Store
+    ALREADY_CREATED_STORE(false,3040,"이미 스토어가 존재합니다."),
+
 
 
     /**

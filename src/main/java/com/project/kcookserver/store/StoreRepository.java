@@ -13,6 +13,6 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     @Query("SELECT s FROM Store s JOIN FETCH s.account a " +
             "WHERE a = :account AND s.status = :status")
-    Optional<StoreDetailRes> getStoreBy(@Param(value = "account") Account account, @Param(value = "status") Status status);
+    Optional<StoreDetailRes> getStoreByAccountAndStatus(@Param(value = "account") Account account, @Param(value = "status") Status status);
 
 }
