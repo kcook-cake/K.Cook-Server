@@ -11,6 +11,13 @@
 
 > K.Cook Back-End Server Project
 
+## K.COOK
+<div align=center>
+  <img alt="케이쿡 로고 정사각" src="https://user-images.githubusercontent.com/54254402/132728193-dc82be44-cb42-4a52-aa77-a8e68ac2f4d6.jpeg" />
+</div>
+<h2 align=center>케이쿡은 커스텀케이크 주문 플랫폼을 개발하고 있는 초기스타트업입니다.</h2>
+
+
 ### ✨ [Swagger API Docs](https://prod.kcook.site/swagger-ui/index.html)
 
 ## 기술스택
