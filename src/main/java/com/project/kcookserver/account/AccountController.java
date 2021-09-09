@@ -52,7 +52,7 @@ public class AccountController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
     @Operation(summary = "로그인한 회원 정보 조회", description = "JWT 토큰으로 인증 된 회원 정보 리턴")
     @GetMapping(value = "/accounts/auth")
@@ -61,7 +61,7 @@ public class AccountController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
     @Operation(summary = "사용자 SMS 인증 토큰 생성", description = "인자로 보내는 전화번호로 SMS Token 전송")
     @PatchMapping(value = "/accounts/sms-token")
@@ -72,7 +72,7 @@ public class AccountController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
     @Operation(summary = "로그인한 회원 SMS 인증", description = "유저 정보에 저장된 토큰 값과 일치 여부 확인")
     @PatchMapping(value = "/accounts/sms-certification")
@@ -83,7 +83,7 @@ public class AccountController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
     @Operation(summary = "회원 권한 변경", description = "관리자 권한으로 회원의 Role 변경 API")
     @PatchMapping(value = "/accounts/role")

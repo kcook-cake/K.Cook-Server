@@ -25,7 +25,7 @@ public class OrdersController {
     private final ResponseService responseService;
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
     @Operation(summary = "주문 생성 API", description = "Account가 인증된 상태에서 CreateOrdersReq 객체의 인자로 주문 생성")
     @PostMapping("/orders")
@@ -35,7 +35,7 @@ public class OrdersController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
     @Operation(summary = "고객 주문 조회 API", description = "인증된 Account를 기준으로 주문 조회")
     @GetMapping("/orders/accounts/auth")
