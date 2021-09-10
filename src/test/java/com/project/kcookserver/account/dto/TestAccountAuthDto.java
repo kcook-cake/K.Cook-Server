@@ -67,4 +67,14 @@ public class TestAccountAuthDto {
         this.dateOfBirth = account.getDateOfBirth();
     }
 
+    public TestAccountAuthDto(AccountAuthDto dto) {
+        this.accountId = dto.getAccountId();
+        this.signInId = dto.getSignInId();
+        this.email = dto.getEmail();
+        this.nickname = dto.getNickname();
+        this.phoneNumber = dto.getPhoneNumber();
+        this.address = dto.getAddress();
+        this.dateOfBirth = dto.getDateOfBirth();
+    }
+
 }
