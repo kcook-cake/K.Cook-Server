@@ -5,6 +5,7 @@ import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.review.Review;
 import com.project.kcookserver.store.Store;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ import static javax.persistence.FetchType.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 public class Product extends BaseTimeEntity {
 

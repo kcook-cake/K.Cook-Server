@@ -1,6 +1,7 @@
 package com.project.kcookserver.store.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.Pattern;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 public class CreateStoreReq {
 
