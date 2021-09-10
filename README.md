@@ -68,10 +68,11 @@ https://kcook.site/app
 - 케이크, 추가 상품 검색 조건 고도화 [`Querydsl`을 활용한 정렬과 여러 인자들의 동적 쿼리 생성] (21/08/30) - `commit` : [dc3cf97](https://github.com/vividswan/K.Cook-Server/commit/dc3cf9736c4dd99759562ea4c6aba59efada77b1), [556bd7a](https://github.com/vividswan/K.Cook-Server/commit/556bd7ac289b97a897fd93b9929cfbf07bcaa60a)
 - 주문 생성 API 완성 (21/08/31) - `commit` : [1ef32a8](https://github.com/vividswan/K.Cook-Server/commit/1ef32a839021935b83e87d7d62132c6b78355402)
 - 고객 주문 조회 API 완성 (21/09/01) - `commit` : [ff91b18](https://github.com/vividswan/K.Cook-Server/commit/ff91b1891dcadb84616f31711deb83668f6e0614)
-- 회원가입, 로그인 통합 테스트 코드 (21/09/07) - `commit` : [b9a0815](https://github.com/vividswan/K.Cook-Server/commit/b9a0815d17ad3133c8387d669c2dc70dc3ea5314), [6279b75](https://github.com/vividswan/K.Cook-Server/commit/6279b75740b2b60629f2e290fdaaef62b68b04c9)
+- 회원가입, 로그인 통합 테스트 코드 (21/09/07) - `commit` : [b9a0815](https://github.com/vividswan/K.Cook-Server/commit/b9a0815d17ad3133c8387d669c2dc70dc3ea5314), [6279b75](https://github.com/vividswan/K.Cook-Server/commit/6279b75740b2b60629f2e290fdaaef62b68b04c9), `수정 commit` : [7c4bf18](https://github.com/vividswan/K.Cook-Server/commit/7c4bf1873b1e7ac6d40bc62a8bb43db269f74a1f)
 - 인증 된 계정의 스토어 조회 API 완성 (21/09/08) - `commit` : [d30b71d](https://github.com/vividswan/K.Cook-Server/commit/d30b71d68fc6b72fb4266fba9ab6b4266c9b995b)
 - 관리자 권한으로 회원 Role 변경 API 완성 (21/09/08) - `commit` : [fb8f56f](https://github.com/vividswan/K.Cook-Server/commit/fb8f56f572d0dd034c856218097525deef910f04)
 - Store 생성, 수정 API 완성 (21/09/09) - `commit` : [8da80bc](https://github.com/vividswan/K.Cook-Server/commit/8da80bce7c556c4101fb398d67f172605c0f8abf), [a24bc2b](https://github.com/vividswan/K.Cook-Server/commit/a24bc2b2b82d50f0be0ec6e1803b983b6bc452f8)
+- Product Detail 조회 API 통합테스트 코드 작성 (21/09/10) - `commit` : [4400cc6](https://github.com/vividswan/K.Cook-Server/commit/4400cc651818cd04363efad146a52a8a591b4fca)
 
 
 
