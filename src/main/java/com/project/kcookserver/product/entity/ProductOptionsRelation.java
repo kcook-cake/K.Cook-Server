@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static com.project.kcookserver.configure.entity.Status.*;
 import static javax.persistence.FetchType.*;
 
 @Getter
@@ -30,5 +31,11 @@ public class ProductOptionsRelation extends BaseTimeEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "optionsId")
     private Options options;
+
+    public ProductOptionsRelation(Product product, Options options) {
+        this.status = VALID;
+        this.product = product;
+        this.options = options;
+    }
 
 }

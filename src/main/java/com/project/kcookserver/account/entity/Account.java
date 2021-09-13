@@ -6,6 +6,7 @@ import com.project.kcookserver.account.entity.enumtypes.OAuthType;
 import com.project.kcookserver.account.entity.enumtypes.RoleType;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
+import com.project.kcookserver.store.Store;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import static com.project.kcookserver.configure.entity.Status.*;
 import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
 
 @Builder
 @NoArgsConstructor
@@ -63,6 +65,9 @@ public class Account extends BaseTimeEntity {
     private boolean isSmsCertified;
 
     private Integer savings;
+
+    @OneToOne(fetch = LAZY, mappedBy = "account", cascade = ALL)
+    private Store store;
 
 
     @BatchSize(size = 100)
