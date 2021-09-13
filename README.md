@@ -19,8 +19,9 @@
 ![웹 1920 – 케이크](https://user-images.githubusercontent.com/54254402/133126499-abab1a68-12dd-429c-b204-5be48b3b11a4.png)
 
 
+## API Docs
 
-### ✨ [Swagger API Docs](https://prod.kcook.site/swagger-ui/index.html)
+### ✨ [K.Cook Server Swagger](https://prod.kcook.site/swagger-ui/index.html)
 
 ## 기술스택
 
