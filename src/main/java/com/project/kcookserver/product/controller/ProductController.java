@@ -2,6 +2,9 @@ package com.project.kcookserver.product.controller;
 
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
+import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
+import com.project.kcookserver.product.dto.CreateOptionReq;
+import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.product.dto.ProductDetailRes;
 import com.project.kcookserver.product.service.ProductService;
 import com.project.kcookserver.product.dto.ProductListRes;
@@ -9,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"Product API"})
@@ -68,6 +72,14 @@ public class ProductController {
     public DataResponse<ProductDetailRes> getDetailProduct(@PathVariable(value = "productId") Long productId) {
         ProductDetailRes productDetailRes = productService.getDetailProduct(productId);
         return responseService.getDataResponse(productDetailRes);
+    }
+
+    @Operation(summary = "상품 생성 API", description = "운영자 , 사업자 계정만 사용 가능")
+    @PostMapping(value = "/products")
+    public DataResponse<Long> createProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                            @RequestBody CreateProductReq createProductReq) {
+        Long productId = productService.createProduct(customUserDetails ,createProductReq);
+        return responseService.getDataResponse(productId);
     }
 
 }
