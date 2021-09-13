@@ -11,7 +11,6 @@
 
 > K.Cook Back-End Server Project
 
-## K.COOK
 <div align=center>
   <img width="249" alt="케이쿡마크" src="https://user-images.githubusercontent.com/54254402/133126938-f76c8dfb-255e-4daf-afef-499736d987f6.png">
 </div>
