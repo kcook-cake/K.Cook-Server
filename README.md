@@ -73,6 +73,7 @@ https://kcook.site/app
 - 관리자 권한으로 회원 Role 변경 API 완성 (21/09/08) - `commit` : [fb8f56f](https://github.com/vividswan/K.Cook-Server/commit/fb8f56f572d0dd034c856218097525deef910f04)
 - Store 생성, 수정 API 완성 (21/09/09) - `commit` : [8da80bc](https://github.com/vividswan/K.Cook-Server/commit/8da80bce7c556c4101fb398d67f172605c0f8abf), [a24bc2b](https://github.com/vividswan/K.Cook-Server/commit/a24bc2b2b82d50f0be0ec6e1803b983b6bc452f8)
 - Product Detail 조회 API 통합테스트 코드 작성 (21/09/10) - `commit` : [4400cc6](https://github.com/vividswan/K.Cook-Server/commit/4400cc651818cd04363efad146a52a8a591b4fca)
+- Product 생성 API 완성 (21/09/13) - `commit` : [4477731](https://github.com/vividswan/K.Cook-Server/commit/4477731f2345bef774df05783932552c1d577ef5), [d518792](https://github.com/vividswan/K.Cook-Server/commit/d518792f5dd720a3b51253c78e66d9ba5d102ccb), [3c2243e](https://github.com/vividswan/K.Cook-Server/commit/3c2243eaa1d8ab2cb5c9030442350f125bca51d1)
 
 
 
