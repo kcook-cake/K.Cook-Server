@@ -44,6 +44,10 @@
   - gradle
   - spring-boot 2.5.3
 
+## 시스템 구성도
+
+![setting](https://user-images.githubusercontent.com/54254402/134059531-0e56113d-41a2-4338-9593-2886a18a45c6.png)
+
 ## Usage
 
 ```sh
