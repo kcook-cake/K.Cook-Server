@@ -39,6 +39,7 @@
 
 ## 개발환경
 
+
 - backend
   - java11
   - gradle
@@ -46,7 +47,7 @@
 
 ## 시스템 구성도
 
-![setting](https://user-images.githubusercontent.com/54254402/134059531-0e56113d-41a2-4338-9593-2886a18a45c6.png)
+![setting drawio](https://user-images.githubusercontent.com/54254402/134060049-f0129ac9-e7a4-4b51-b68a-896010aa76da.png)
 
 ## Usage
 
