@@ -47,7 +47,8 @@
 
 ## 시스템 구성도
 
-![setting drawio](https://user-images.githubusercontent.com/54254402/134060049-f0129ac9-e7a4-4b51-b68a-896010aa76da.png)
+![drawio](https://user-images.githubusercontent.com/54254402/134108670-568b2458-b80b-4706-a27b-c027e7aa7d1e.png)
+
 
 ## Usage
 
