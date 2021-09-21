@@ -21,7 +21,7 @@
 
 ## API Docs
 
-### ✨ [K.Cook Server Swagger](https://prod.kcook.site/swagger-ui/index.html)
+### ✨ [K.Cook Server Swagger](https://prod.kcook-cake.com/swagger-ui/index.html)
 
 ## 기술스택
 
@@ -62,7 +62,7 @@ $ ./gradlew clean build
 ### Access server side using following URL
 
 ```
-https://kcook.site/app
+https://kcook-cake.com/app
 ```
 
 ## 개발일지
