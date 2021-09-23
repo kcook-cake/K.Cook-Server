@@ -62,7 +62,7 @@ $ ./gradlew clean build
 ### Access server side using following URL
 
 ```
-https://kcook-cake.com/app
+https://prod.kcook-cake.com/app
 ```
 
 ## 개발일지
@@ -83,7 +83,7 @@ https://kcook-cake.com/app
 - Store 생성, 수정 API 완성 (21/09/09) - `commit` : [8da80bc](https://github.com/vividswan/K.Cook-Server/commit/8da80bce7c556c4101fb398d67f172605c0f8abf), [a24bc2b](https://github.com/vividswan/K.Cook-Server/commit/a24bc2b2b82d50f0be0ec6e1803b983b6bc452f8)
 - Product Detail 조회 API 통합테스트 코드 작성 (21/09/10) - `commit` : [4400cc6](https://github.com/vividswan/K.Cook-Server/commit/4400cc651818cd04363efad146a52a8a591b4fca)
 - Product 생성 API 완성 (21/09/13) - `commit` : [4477731](https://github.com/vividswan/K.Cook-Server/commit/4477731f2345bef774df05783932552c1d577ef5), [d518792](https://github.com/vividswan/K.Cook-Server/commit/d518792f5dd720a3b51253c78e66d9ba5d102ccb), [3c2243e](https://github.com/vividswan/K.Cook-Server/commit/3c2243eaa1d8ab2cb5c9030442350f125bca51d1)
-
+- 백엔드 빌드 및 배포 자동화(잰킨스, 도커) (21/09/21) : [시스템 구상도](https://user-images.githubusercontent.com/54254402/134108670-568b2458-b80b-4706-a27b-c027e7aa7d1e.png)
 
 
 
