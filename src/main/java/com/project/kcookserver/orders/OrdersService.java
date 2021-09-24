@@ -48,6 +48,6 @@ public class OrdersService {
 
     public List<OrdersListRes> getOrdersListByAccount(CustomUserDetails customUserDetails) {
         Account account = customUserDetails.getAccount();
-        return ordersRepository.findAllByAccountAndStatus(account);
+        return ordersRepository.findAllByAccount(account);
     }
 }
