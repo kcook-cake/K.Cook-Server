@@ -1,4 +1,4 @@
-package com.project.kcookserver.account.coupon;
+package com.project.kcookserver.coupon;
 
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
@@ -28,7 +28,7 @@ public class Coupon extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     @JoinColumn(name = "accountId")
     private Account account;
 

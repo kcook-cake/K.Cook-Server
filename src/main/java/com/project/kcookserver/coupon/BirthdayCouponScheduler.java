@@ -1,4 +1,4 @@
-package com.project.kcookserver.account.coupon;
+package com.project.kcookserver.coupon;
 
 import com.project.kcookserver.account.AccountRepository;
 import com.project.kcookserver.account.entity.Account;

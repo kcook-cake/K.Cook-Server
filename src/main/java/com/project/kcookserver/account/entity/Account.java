@@ -1,6 +1,6 @@
 package com.project.kcookserver.account.entity;
 
-import com.project.kcookserver.account.coupon.Coupon;
+import com.project.kcookserver.coupon.Coupon;
 import com.project.kcookserver.account.dto.AccountAuthDto;
 import com.project.kcookserver.account.entity.enumtypes.OAuthType;
 import com.project.kcookserver.account.entity.enumtypes.RoleType;
