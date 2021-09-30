@@ -24,9 +24,6 @@ public class CouponController {
     private final CouponService couponService;
     private final ResponseService responseService;
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
-    })
     @Operation(summary = "계정이 소유한 쿠폰 조회", description = "accountId가 필요")
     @GetMapping(value = "/accounts/{accountId}/coupons")
     DataResponse<List<GetCouponReq>> getCouponsByAccountId(
