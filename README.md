@@ -57,7 +57,7 @@ $ ./gradlew clean build
 ```
 
 ## ERD
-![erd](https://user-images.githubusercontent.com/54254402/132042780-5322f9d3-6046-4f4c-aa27-99be5c068b89.png)<br>
+<img width="980" alt="스크린샷 2021-10-06 오후 10 51 57" src="https://user-images.githubusercontent.com/54254402/136216341-7d4bb3fa-adcf-4dd0-9f68-5a27cda0cbeb.png">
 
 ### Access server side using following URL
 
@@ -85,7 +85,7 @@ https://prod.kcook-cake.com/app
 - Product 생성 API 완성 (21/09/13) - `commit` : [4477731](https://github.com/vividswan/K.Cook-Server/commit/4477731f2345bef774df05783932552c1d577ef5), [d518792](https://github.com/vividswan/K.Cook-Server/commit/d518792f5dd720a3b51253c78e66d9ba5d102ccb), [3c2243e](https://github.com/vividswan/K.Cook-Server/commit/3c2243eaa1d8ab2cb5c9030442350f125bca51d1)
 - 백엔드 빌드 및 배포 자동화(잰킨스, 도커) (21/09/21) : [시스템 구상도](https://user-images.githubusercontent.com/54254402/134108670-568b2458-b80b-4706-a27b-c027e7aa7d1e.png)
 - 계정의 쿠폰 조회 API 완성 (21/09/30) - `commit` : [1492cb9](https://github.com/vividswan/K.Cook-Server/commit/1492cb91a933c76e5c7448623b6b6ddceb1fa5dc)
-
+- 로그인 한 회원의 사용 API 로그 저장 기능 추가(`Spring AOP`) (21/10/06) - `commit` : [2b387bc](https://github.com/vividswan/K.Cook-Server/commit/2b387bc42bcea2982078ff9a3ae2b54a7913537b)
 
 
 
