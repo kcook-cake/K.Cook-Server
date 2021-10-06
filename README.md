@@ -47,7 +47,7 @@
 
 ## 시스템 구성도
 
-![drawio](https://user-images.githubusercontent.com/54254402/134108670-568b2458-b80b-4706-a27b-c027e7aa7d1e.png)
+![drawio](https://user-images.githubusercontent.com/54254402/136225436-8693e719-f8cc-4670-bbbd-33e6e68096cc.png)
 
 
 ## Usage
@@ -57,7 +57,9 @@ $ ./gradlew clean build
 ```
 
 ## ERD
-<img width="980" alt="스크린샷 2021-10-06 오후 10 51 57" src="https://user-images.githubusercontent.com/54254402/136216341-7d4bb3fa-adcf-4dd0-9f68-5a27cda0cbeb.png">
+
+<img width="759" alt="스크린샷 2021-10-06 오후 11 36 17" src="https://user-images.githubusercontent.com/54254402/136225484-8fc163fa-2129-4975-b813-f2c25af7a854.png">
+
 
 ### Access server side using following URL
 
