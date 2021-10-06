@@ -1,5 +1,6 @@
 package com.project.kcookserver.orders;
 
+import com.project.kcookserver.configure.aop.annotation.AccountLog;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
@@ -24,6 +25,7 @@ public class OrdersController {
     private final OrdersService ordersService;
     private final ResponseService responseService;
 
+    @AccountLog
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
@@ -34,6 +36,7 @@ public class OrdersController {
         return responseService.getDataResponse(ordersId);
     }
 
+    @AccountLog
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })

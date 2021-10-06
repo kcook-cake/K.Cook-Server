@@ -1,5 +1,6 @@
 package com.project.kcookserver.store;
 
+import com.project.kcookserver.configure.aop.annotation.AccountLog;
 import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
@@ -27,6 +28,7 @@ public class StoreController {
     private final StoreService storeService;
     private final ResponseService responseService;
 
+    @AccountLog
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
@@ -37,6 +39,7 @@ public class StoreController {
         return responseService.getDataResponse(storeDetailRes);
     }
 
+    @AccountLog
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
@@ -49,6 +52,7 @@ public class StoreController {
         return responseService.getDataResponse(storeId);
     }
 
+    @AccountLog
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })

@@ -7,6 +7,7 @@ import com.project.kcookserver.account.entity.enumtypes.RoleType;
 import com.project.kcookserver.account.sms.PhoneNumberDto;
 import com.project.kcookserver.account.sms.SmsAuthService;
 import com.project.kcookserver.account.sms.TokenDto;
+import com.project.kcookserver.configure.aop.annotation.AccountLog;
 import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
@@ -51,6 +52,7 @@ public class AccountController {
         return responseService.getDataResponse(accountService.signIn(req));
     }
 
+    @AccountLog
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
@@ -60,6 +62,7 @@ public class AccountController {
         return responseService.getDataResponse(accountService.getAuthAccount(customUserDetails));
     }
 
+    @AccountLog
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
@@ -71,6 +74,7 @@ public class AccountController {
         return responseService.getDataResponse(token);
     }
 
+    @AccountLog
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
@@ -82,6 +86,7 @@ public class AccountController {
         return responseService.getSuccessResponse();
     }
 
+    @AccountLog
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
