@@ -42,8 +42,14 @@ public class ProductService {
             (int page, int size, String sortBy, boolean isAsc, String event, String options, Integer lowPrice, Integer highPrice, String area) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
+
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Product> cakeList = productRepositoryCustom.findAllCakeProduct(pageable, event, options, lowPrice, highPrice,area);
+        Page<Product> cakeList;
+        try {
+            cakeList = productRepositoryCustom.findAllCakeProduct(pageable, event, options, lowPrice, highPrice,area);
+        } catch (Exception exception) {
+            throw new CustomException(CustomExceptionStatus.REQUEST_ERROR);
+        }
         return cakeList.map(ProductListRes::new);
     }
 
