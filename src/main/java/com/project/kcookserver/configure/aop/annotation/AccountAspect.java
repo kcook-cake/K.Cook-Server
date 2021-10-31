@@ -1,7 +1,7 @@
 package com.project.kcookserver.configure.aop.annotation;
 
 import com.project.kcookserver.account.entity.Account;
-import com.project.kcookserver.configure.Repository.AccountLogRepository;
+import com.project.kcookserver.configure.repository.AccountLogRepository;
 import com.project.kcookserver.configure.entity.AccountLog;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
