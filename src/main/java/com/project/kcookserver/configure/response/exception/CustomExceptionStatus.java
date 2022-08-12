@@ -86,7 +86,7 @@ public enum CustomExceptionStatus {
     CITY_NOT_FOUND(false, 3050, "시를 찾을 수 없습니다."),
 
     // APPLICANT
-    APPLICANT_ALREADY_EXIST(false, 3060, "이미 존재하는 지원자입니다."),
+    APPLICANT_ALREADY_EXIST(false, 3060, "이미 존재하는 신청자입니다."),
 
 
     /**

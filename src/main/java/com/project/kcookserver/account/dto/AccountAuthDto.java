@@ -48,7 +48,6 @@ public class AccountAuthDto {
     private String phoneNumber;
 
     @NotBlank
-    @Pattern(regexp = "^[가-힣a-zA-Z0-9\\s_-]*$")
     private String address;
 
     private LocalDate dateOfBirth;
