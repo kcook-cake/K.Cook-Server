@@ -9,6 +9,8 @@ import com.project.kcookserver.product.dto.ProductDetailRes;
 import com.project.kcookserver.product.service.ProductService;
 import com.project.kcookserver.product.dto.ProductListRes;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -75,6 +77,9 @@ public class ProductController {
     }
 
     @Operation(summary = "상품 생성 API", description = "운영자 , 사업자 계정만 사용 가능")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
+    })
     @PostMapping(value = "/products")
     public DataResponse<Long> createProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                             @RequestBody CreateProductReq createProductReq) {

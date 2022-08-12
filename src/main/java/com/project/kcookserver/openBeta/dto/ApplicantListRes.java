@@ -21,6 +21,8 @@ public class ApplicantListRes {
         this.applicantId = applicant.getApplicantId();
         this.phoneNumber = applicant.getPhoneNumber();
         this.cityName = applicant.getCity().getName();
-        this.locationName = applicant.getLocation().getName();
+        if (applicant.getLocation() != null) {
+            this.locationName = applicant.getLocation().getName();
+        }
     }
 }

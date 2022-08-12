@@ -40,6 +40,9 @@ public class OpenBetaService {
             location = locationRepository.findByLocationIdAndStatus(dto.getLocationIndex(), VALID)
                     .orElseThrow(() -> new CustomException(CustomExceptionStatus.LOCATION_NOT_FOUND));
         }
+        else {
+            throw new CustomException(CustomExceptionStatus.LOCATION_NOT_FOUND);
+        }
 
         Applicant applicant = new Applicant(dto.getPhoneNumber(), city, location);
         applicantRepository.save(applicant);

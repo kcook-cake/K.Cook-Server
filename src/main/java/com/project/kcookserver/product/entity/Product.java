@@ -44,7 +44,7 @@ public class Product extends BaseTimeEntity {
 
     private Integer salePrice;
 
-    private Float raiting;
+    private Float raiting = 0F;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "storeId")
