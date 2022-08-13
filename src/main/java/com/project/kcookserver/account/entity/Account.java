@@ -62,8 +62,6 @@ public class Account extends BaseTimeEntity {
 
     private Integer smsAuthToken;
 
-    private boolean isSmsCertified;
-
     private Integer savings;
 
     @OneToOne(fetch = LAZY, mappedBy = "account", cascade = ALL)
@@ -88,15 +86,6 @@ public class Account extends BaseTimeEntity {
                 .role(RoleType.ROLE_USER)
                 .savings(0)
                 .build();
-    }
-
-    public void createTokenToPhoneNumber(Integer smsAuthToken, String phoneNumber) {
-        this.smsAuthToken = smsAuthToken;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void certifySmsAuth() {
-        this.isSmsCertified = true;
     }
 
     public void changeRole(RoleType roleType) {

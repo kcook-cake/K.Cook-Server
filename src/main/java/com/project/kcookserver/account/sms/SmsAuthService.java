@@ -1,10 +1,8 @@
 package com.project.kcookserver.account.sms;
 
 import com.project.kcookserver.account.AccountRepository;
-import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
-import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.api.Message;
@@ -53,11 +51,7 @@ public class SmsAuthService {
     }
 
 
-    public Integer updateAccountSmsToken(CustomUserDetails customUserDetails, String phoneNumber) {
-        Account account = accountRepository.findById(customUserDetails.getAccount().getAccountId())
-                .orElseThrow(()-> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID));
-
-        if (account.isSmsCertified()) throw new CustomException(CustomExceptionStatus.ALREADY_CERTIFICATION_ACCOUNT);
+    public Integer updateAccountSmsToken(String phoneNumber) {
 
         Integer randNum = createRandNum();
 
@@ -80,15 +74,6 @@ public class SmsAuthService {
             throw new CustomException(CustomExceptionStatus.FAILED_TO_RECEPTION);
         }
 
-        account.createTokenToPhoneNumber(randNum, phoneNumber);
-
         return randNum;
-    }
-
-    public void updateAccountSmsCertification(CustomUserDetails customUserDetails, Integer smsToken) {
-        Account account = accountRepository.findById(customUserDetails.getAccount().getAccountId())
-                .orElseThrow(()-> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID));
-        if (account.getSmsAuthToken().equals(smsToken)) account.certifySmsAuth();
-        else throw new CustomException(CustomExceptionStatus.FAILED_TO_CERTIFICATION);
     }
 }
