@@ -6,6 +6,7 @@ import com.project.kcookserver.account.entity.Account;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -23,11 +24,6 @@ public class AccountAuthDto {
 
     @JsonProperty(access = Access.READ_ONLY)
     private Long accountId;
-
-    @NotBlank
-    @Length(min=3, max = 30)
-    @Pattern(regexp = "^[a-zA-Z0-9_-]{3,20}$")
-    private String signInId;
 
     @Email
     @NotBlank
@@ -47,9 +43,10 @@ public class AccountAuthDto {
     @Pattern(regexp = "^[0-9-]{3,20}$")
     private String phoneNumber;
 
-    @NotBlank
+    @Nullable
     private String address;
 
+    @Nullable
     private LocalDate dateOfBirth;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -59,7 +56,6 @@ public class AccountAuthDto {
     public AccountAuthDto(Account account) {
 
         this.accountId = account.getAccountId();
-        this.signInId = account.getSignInId();
         this.email = account.getEmail();
         this.nickname = account.getNickname();
         this.phoneNumber = account.getPhoneNumber();

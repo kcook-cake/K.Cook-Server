@@ -1,12 +1,13 @@
 package com.project.kcookserver.account;
 
 import com.project.kcookserver.account.dto.AccountAuthDto;
+import com.project.kcookserver.account.dto.PasswordDto;
 import com.project.kcookserver.account.dto.SignInReq;
 import com.project.kcookserver.account.dto.SignInRes;
 import com.project.kcookserver.account.entity.enumtypes.RoleType;
+import com.project.kcookserver.account.sms.EmailDto;
 import com.project.kcookserver.account.sms.PhoneNumberDto;
 import com.project.kcookserver.account.sms.SmsAuthService;
-import com.project.kcookserver.account.sms.TokenDto;
 import com.project.kcookserver.configure.aop.annotation.AccountLog;
 import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
@@ -40,8 +41,6 @@ public class AccountController {
     @PostMapping(value = "/sign-up")
     public DataResponse<AccountAuthDto> signUp(@RequestBody @Valid AccountAuthDto dto, Errors errors){
         if (errors.hasErrors()) ValidationExceptionProvider.throwValidError(errors);
-        if (dto.getDateOfBirth() == null)
-            throw new CustomException(CustomExceptionStatus.POST_USERS_EMPTY_BIRTH_OF_DATE);
         return responseService.getDataResponse(accountService.signUp(dto));
     }
 
@@ -63,27 +62,12 @@ public class AccountController {
     }
 
     @AccountLog
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
-    })
     @Operation(summary = "사용자 SMS 인증 토큰 생성", description = "인자로 보내는 전화번호로 SMS Token 전송")
     @PatchMapping(value = "/accounts/sms-token")
-    public DataResponse<Integer> updateAccountSmsToken(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                                       @RequestBody PhoneNumberDto phoneNumberDto) {
-        Integer token = smsAuthService.updateAccountSmsToken(customUserDetails, phoneNumberDto.getPhoneNumber());
+    public DataResponse<Integer> updateAccountSmsToken(@RequestBody PhoneNumberDto phoneNumberDto) {
+        phoneNumberDto.setPhoneNumber(phoneNumberDto.getPhoneNumber().replaceAll("-",""));
+        Integer token = smsAuthService.updateAccountSmsToken(phoneNumberDto.getPhoneNumber());
         return responseService.getDataResponse(token);
-    }
-
-    @AccountLog
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
-    })
-    @Operation(summary = "로그인한 회원 SMS 인증", description = "유저 정보에 저장된 토큰 값과 일치 여부 확인")
-    @PatchMapping(value = "/accounts/sms-certification")
-    public CommonResponse updateAccountSmsCertification(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                                        @RequestBody TokenDto tokenDto) {
-        smsAuthService.updateAccountSmsCertification(customUserDetails, tokenDto.getSmsToken());
-        return responseService.getSuccessResponse();
     }
 
     @AccountLog
@@ -92,8 +76,8 @@ public class AccountController {
     })
     @Operation(summary = "회원 권한 변경", description = "관리자 권한으로 회원의 Role 변경 API")
     @PatchMapping(value = "/accounts/role")
-    public CommonResponse updateAccountRoleByAccountsSignInId(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                                              @RequestParam(value = "signInId") String signInId,
+    public CommonResponse updateAccountRoleByAccountsEmail(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                                              @RequestParam(value = "email") String email,
                                                               @RequestParam(value = "role") String role){
         RoleType roleType;
         try {
@@ -103,8 +87,22 @@ public class AccountController {
             System.out.println("e.getMessage() = " + e.getMessage());
             throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID_ROLE);
         }
-        accountService.updateAccountRoleByAccountsSignInId(signInId, roleType);
+        accountService.updateAccountRoleByAccountsEmail(email, roleType);
         return responseService.getSuccessResponse();
     }
 
+    @AccountLog
+    @Operation(summary = "회원 이메일로 SMS 인증", description = "회원의 이메일을 받아서 SMS 인증 번호 Return")
+    @GetMapping(value = "/accounts/email/sms-token")
+    public DataResponse<Integer> getAccountSmsTokenByEmail(@RequestBody EmailDto emailDto) {
+        return responseService.getDataResponse(smsAuthService.getAccountSmsTokenByEmail(emailDto.getEmail()));
+    }
+
+    @AccountLog
+    @Operation(summary = "회원 이메일로 비밀번호 변경", description = "회원의 이메일을 받아서 비밀번호 변경")
+    @PatchMapping(value = "/accounts/email/password")
+    public CommonResponse updateAccountPasswordByEmail(@RequestBody PasswordDto passwordDto) {
+        accountService.updateAccountPasswordByEmail(passwordDto);
+        return responseService.getSuccessResponse();
+    }
 }

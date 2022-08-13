@@ -33,8 +33,6 @@ public class Account extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
-    private String signInId;
-
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -62,8 +60,6 @@ public class Account extends BaseTimeEntity {
 
     private Integer smsAuthToken;
 
-    private boolean isSmsCertified;
-
     private Integer savings;
 
     @OneToOne(fetch = LAZY, mappedBy = "account", cascade = ALL)
@@ -77,7 +73,6 @@ public class Account extends BaseTimeEntity {
     public static Account createAccount(AccountAuthDto dto) {
 
         return Account.builder()
-                .signInId(dto.getSignInId())
                 .email(dto.getEmail())
                 .nickname(dto.getNickname())
                 .password(dto.getPassword())
@@ -90,16 +85,11 @@ public class Account extends BaseTimeEntity {
                 .build();
     }
 
-    public void createTokenToPhoneNumber(Integer smsAuthToken, String phoneNumber) {
-        this.smsAuthToken = smsAuthToken;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void certifySmsAuth() {
-        this.isSmsCertified = true;
-    }
-
     public void changeRole(RoleType roleType) {
         this.role = roleType;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

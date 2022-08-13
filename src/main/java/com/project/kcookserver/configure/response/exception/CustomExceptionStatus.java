@@ -74,6 +74,7 @@ public enum CustomExceptionStatus {
     FAILED_TO_CERTIFICATION(false,3015,"유효한 토큰 값이 아닙니다."),
     FAILED_TO_RECEPTION(false,3016,"유효한 수신 번호가 아닙니다."),
     DUPLICATED_ID(false, 3017, "중복된 아이디입니다."),
+    FAILED_TO_COOLSMS(false,3018,"SMS 라이브러리에 문제가 있습니다."),
 
     // Location
     LOCATION_NOT_VALID(false,3030,"유효한 주소가 아닙니다."),

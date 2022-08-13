@@ -1,10 +1,11 @@
 package com.project.kcookserver.account.sms;
 
+import static com.project.kcookserver.configure.entity.Status.*;
+
 import com.project.kcookserver.account.AccountRepository;
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
-import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.api.Message;
@@ -53,11 +54,7 @@ public class SmsAuthService {
     }
 
 
-    public Integer updateAccountSmsToken(CustomUserDetails customUserDetails, String phoneNumber) {
-        Account account = accountRepository.findById(customUserDetails.getAccount().getAccountId())
-                .orElseThrow(()-> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID));
-
-        if (account.isSmsCertified()) throw new CustomException(CustomExceptionStatus.ALREADY_CERTIFICATION_ACCOUNT);
+    public Integer updateAccountSmsToken(String phoneNumber) {
 
         Integer randNum = createRandNum();
 
@@ -73,22 +70,21 @@ public class SmsAuthService {
 
         try {
             JSONObject send = coolsms.send(params);
-            if(Integer.parseInt(send.get("error_count").toString()) > 0) throw new CustomException(CustomExceptionStatus.FAILED_TO_RECEPTION);
+            if(Integer.parseInt(send.get("error_count").toString()) > 0) throw new CustomException(CustomExceptionStatus.FAILED_TO_COOLSMS);
             log.info(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))+" : send SMS Authentication Token to "+phoneNumber);
         } catch (CoolsmsException e) {
             log.warn(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))+" : "+e.getMessage());
-            throw new CustomException(CustomExceptionStatus.FAILED_TO_RECEPTION);
+            throw new CustomException(CustomExceptionStatus.FAILED_TO_COOLSMS);
         }
-
-        account.createTokenToPhoneNumber(randNum, phoneNumber);
 
         return randNum;
     }
 
-    public void updateAccountSmsCertification(CustomUserDetails customUserDetails, Integer smsToken) {
-        Account account = accountRepository.findById(customUserDetails.getAccount().getAccountId())
-                .orElseThrow(()-> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID));
-        if (account.getSmsAuthToken().equals(smsToken)) account.certifySmsAuth();
-        else throw new CustomException(CustomExceptionStatus.FAILED_TO_CERTIFICATION);
+    @Transactional
+    public Integer getAccountSmsTokenByEmail(String email) {
+        Account account = accountRepository.findByEmailAndStatus(email, VALID)
+            .orElseThrow(() -> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID));
+        String phoneNumber = account.getPhoneNumber().replaceAll("-","");
+        return updateAccountSmsToken(phoneNumber);
     }
 }
