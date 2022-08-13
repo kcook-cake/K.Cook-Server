@@ -88,4 +88,8 @@ public class Account extends BaseTimeEntity {
     public void changeRole(RoleType roleType) {
         this.role = roleType;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

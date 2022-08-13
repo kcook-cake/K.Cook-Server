@@ -1,6 +1,7 @@
 package com.project.kcookserver.account;
 
 import com.project.kcookserver.account.dto.AccountAuthDto;
+import com.project.kcookserver.account.dto.PasswordDto;
 import com.project.kcookserver.account.dto.SignInReq;
 import com.project.kcookserver.account.dto.SignInRes;
 import com.project.kcookserver.account.entity.Account;
@@ -67,6 +68,13 @@ public class AccountService {
         Account account = accountRepository.findByEmailAndStatus(email, VALID)
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID));
         account.changeRole(roleType);
+    }
+
+    @Transactional
+    public void updateAccountPasswordByEmail(PasswordDto dto) {
+        Account account = accountRepository.findByEmailAndStatus(dto.getEmail(), VALID)
+            .orElseThrow(() -> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID));
+        account.setPassword(passwordEncoder.encode(dto.getPassword()));
     }
 }
 

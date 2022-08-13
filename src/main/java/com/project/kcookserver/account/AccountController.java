@@ -1,9 +1,11 @@
 package com.project.kcookserver.account;
 
 import com.project.kcookserver.account.dto.AccountAuthDto;
+import com.project.kcookserver.account.dto.PasswordDto;
 import com.project.kcookserver.account.dto.SignInReq;
 import com.project.kcookserver.account.dto.SignInRes;
 import com.project.kcookserver.account.entity.enumtypes.RoleType;
+import com.project.kcookserver.account.sms.EmailDto;
 import com.project.kcookserver.account.sms.PhoneNumberDto;
 import com.project.kcookserver.account.sms.SmsAuthService;
 import com.project.kcookserver.configure.aop.annotation.AccountLog;
@@ -63,6 +65,7 @@ public class AccountController {
     @Operation(summary = "사용자 SMS 인증 토큰 생성", description = "인자로 보내는 전화번호로 SMS Token 전송")
     @PatchMapping(value = "/accounts/sms-token")
     public DataResponse<Integer> updateAccountSmsToken(@RequestBody PhoneNumberDto phoneNumberDto) {
+        phoneNumberDto.setPhoneNumber(phoneNumberDto.getPhoneNumber().replaceAll("-",""));
         Integer token = smsAuthService.updateAccountSmsToken(phoneNumberDto.getPhoneNumber());
         return responseService.getDataResponse(token);
     }
@@ -88,4 +91,18 @@ public class AccountController {
         return responseService.getSuccessResponse();
     }
 
+    @AccountLog
+    @Operation(summary = "회원 이메일로 SMS 인증", description = "회원의 이메일을 받아서 SMS 인증 번호 Return")
+    @GetMapping(value = "/accounts/email/sms-token")
+    public DataResponse<Integer> getAccountSmsTokenByEmail(@RequestBody EmailDto emailDto) {
+        return responseService.getDataResponse(smsAuthService.getAccountSmsTokenByEmail(emailDto.getEmail()));
+    }
+
+    @AccountLog
+    @Operation(summary = "회원 이메일로 비밀번호 변경", description = "회원의 이메일을 받아서 비밀번호 변경")
+    @PatchMapping(value = "/accounts/email/password")
+    public CommonResponse updateAccountPasswordByEmail(@RequestBody PasswordDto passwordDto) {
+        accountService.updateAccountPasswordByEmail(passwordDto);
+        return responseService.getSuccessResponse();
+    }
 }
