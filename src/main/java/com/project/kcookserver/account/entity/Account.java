@@ -33,8 +33,6 @@ public class Account extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
-    private String signInId;
-
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -75,7 +73,6 @@ public class Account extends BaseTimeEntity {
     public static Account createAccount(AccountAuthDto dto) {
 
         return Account.builder()
-                .signInId(dto.getSignInId())
                 .email(dto.getEmail())
                 .nickname(dto.getNickname())
                 .password(dto.getPassword())

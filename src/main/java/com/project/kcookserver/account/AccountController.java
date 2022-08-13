@@ -6,7 +6,6 @@ import com.project.kcookserver.account.dto.SignInRes;
 import com.project.kcookserver.account.entity.enumtypes.RoleType;
 import com.project.kcookserver.account.sms.PhoneNumberDto;
 import com.project.kcookserver.account.sms.SmsAuthService;
-import com.project.kcookserver.account.sms.TokenDto;
 import com.project.kcookserver.configure.aop.annotation.AccountLog;
 import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
@@ -74,8 +73,8 @@ public class AccountController {
     })
     @Operation(summary = "회원 권한 변경", description = "관리자 권한으로 회원의 Role 변경 API")
     @PatchMapping(value = "/accounts/role")
-    public CommonResponse updateAccountRoleByAccountsSignInId(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                                              @RequestParam(value = "signInId") String signInId,
+    public CommonResponse updateAccountRoleByAccountsEmail(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                                              @RequestParam(value = "email") String email,
                                                               @RequestParam(value = "role") String role){
         RoleType roleType;
         try {
@@ -85,7 +84,7 @@ public class AccountController {
             System.out.println("e.getMessage() = " + e.getMessage());
             throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID_ROLE);
         }
-        accountService.updateAccountRoleByAccountsSignInId(signInId, roleType);
+        accountService.updateAccountRoleByAccountsEmail(email, roleType);
         return responseService.getSuccessResponse();
     }
 

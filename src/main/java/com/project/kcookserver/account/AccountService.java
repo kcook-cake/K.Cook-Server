@@ -31,20 +31,19 @@ public class AccountService {
     public AccountAuthDto signUp(AccountAuthDto dto) {
         if (accountRepository.findByEmailAndStatus(dto.getEmail(), VALID).isPresent()) throw new CustomException(CustomExceptionStatus.DUPLICATED_EMAIL);
         if (accountRepository.findByNicknameAndStatus(dto.getNickname(), VALID).isPresent()) throw new CustomException(CustomExceptionStatus.DUPLICATED_NICKNAME);
-        if (accountRepository.findBySignInIdAndStatus(dto.getSignInId(), VALID).isPresent()) throw new CustomException(CustomExceptionStatus.DUPLICATED_ID);
         if (dto.getAddress() != null) naverGeocode.getCoordinate(dto.getAddress());
 
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         Account account = Account.createAccount(dto);
         Account save = accountRepository.save(account);
         dto.setAccountId(save.getAccountId());
-        dto.setJwt(jwtTokenProvider.createToken(account.getSignInId(),account.getRole()));
+        dto.setJwt(jwtTokenProvider.createToken(account.getEmail(),account.getRole()));
         return dto;
     }
 
     @Transactional
     public SignInRes signIn(SignInReq req) {
-        Account account = accountRepository.findBySignInIdAndStatus(req.getSignInId(), VALID)
+        Account account = accountRepository.findByEmailAndStatus(req.getEmail(), VALID)
                 .orElseThrow(()-> new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN));
         if(!passwordEncoder.matches(req.getPassword(),account.getPassword())){
             throw new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN);
@@ -52,7 +51,7 @@ public class AccountService {
 
         SignInRes res = SignInRes.builder()
                 .accountId(account.getAccountId())
-                .jwt(jwtTokenProvider.createToken(account.getSignInId(), account.getRole()))
+                .jwt(jwtTokenProvider.createToken(account.getEmail(), account.getRole()))
                 .build();
 
         return res;
@@ -64,8 +63,8 @@ public class AccountService {
     }
 
     @Transactional
-    public void updateAccountRoleByAccountsSignInId(String signInId, RoleType roleType) {
-        Account account = accountRepository.findBySignInIdAndStatus(signInId, VALID)
+    public void updateAccountRoleByAccountsEmail(String email, RoleType roleType) {
+        Account account = accountRepository.findByEmailAndStatus(email, VALID)
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID));
         account.changeRole(roleType);
     }
