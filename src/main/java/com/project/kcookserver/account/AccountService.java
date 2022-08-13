@@ -32,7 +32,7 @@ public class AccountService {
         if (accountRepository.findByEmailAndStatus(dto.getEmail(), VALID).isPresent()) throw new CustomException(CustomExceptionStatus.DUPLICATED_EMAIL);
         if (accountRepository.findByNicknameAndStatus(dto.getNickname(), VALID).isPresent()) throw new CustomException(CustomExceptionStatus.DUPLICATED_NICKNAME);
         if (accountRepository.findBySignInIdAndStatus(dto.getSignInId(), VALID).isPresent()) throw new CustomException(CustomExceptionStatus.DUPLICATED_ID);
-        naverGeocode.getCoordinate(dto.getAddress());
+        if (dto.getAddress() != null) naverGeocode.getCoordinate(dto.getAddress());
 
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         Account account = Account.createAccount(dto);
