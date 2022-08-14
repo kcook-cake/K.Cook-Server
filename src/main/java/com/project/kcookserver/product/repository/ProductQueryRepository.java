@@ -38,7 +38,6 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         QStore store = QStore.store;
         QProductEventRelation productEventRelation = QProductEventRelation.productEventRelation;
         QEvent qEvent = QEvent.event;
-        QProductOptionsRelation productOptionsRelation = QProductOptionsRelation.productOptionsRelation;
         QOptions qOptions = QOptions.options;
 
 
@@ -48,8 +47,7 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
                 .leftJoin(product.store, store).fetchJoin()
                 .leftJoin(productEventRelation).on(productEventRelation.product.eq(product).and(productEventRelation.status.eq(VALID)))
                 .leftJoin(qEvent).on(qEvent.status.eq(VALID).and(productEventRelation.event.eq(qEvent)))
-                .leftJoin(productOptionsRelation).on(productOptionsRelation.status.eq(VALID).and(productOptionsRelation.product.eq(product)))
-                .leftJoin(qOptions).on(qOptions.status.eq(VALID).and(productOptionsRelation.options.eq(qOptions)))
+                .leftJoin(qOptions).on(qOptions.status.eq(VALID))
                 .where(product.status.eq(VALID), product.isCake.eq(true), eventEq(qEvent, event), optionsEq(qOptions, options), storeEq(store, area), lowPriceGoe(product,lowPrice),highPriceLoe(product,highPrice))
                 .distinct()
                 .offset(pageable.getOffset())
@@ -65,7 +63,6 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         QProduct product = QProduct.product;
         QStore store = QStore.store;
         QProductEventRelation productEventRelation = QProductEventRelation.productEventRelation;
-        QProductOptionsRelation productOptionsRelation = QProductOptionsRelation.productOptionsRelation;
         QOptions qOptions = QOptions.options;
 
 
@@ -74,8 +71,7 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
                 .from(product)
                 .leftJoin(product.store, store).fetchJoin()
                 .leftJoin(productEventRelation).on(productEventRelation.product.eq(product).and(productEventRelation.status.eq(VALID)))
-                .leftJoin(productOptionsRelation).on(productOptionsRelation.status.eq(VALID).and(productOptionsRelation.product.eq(product)))
-                .leftJoin(qOptions).on(qOptions.status.eq(VALID).and(productOptionsRelation.options.eq(qOptions)))
+                .leftJoin(qOptions).on(qOptions.status.eq(VALID))
                 .where(product.status.eq(VALID), product.isCake.eq(false), optionsEq(qOptions, options), storeEq(store, area), lowPriceGoe(product,lowPrice),highPriceLoe(product,highPrice))
                 .distinct()
                 .offset(pageable.getOffset())
