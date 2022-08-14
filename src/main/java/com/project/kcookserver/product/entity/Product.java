@@ -3,7 +3,6 @@ package com.project.kcookserver.product.entity;
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
-import com.project.kcookserver.product.dto.CreateOptionReq;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.review.Review;
 import com.project.kcookserver.store.Store;
@@ -16,7 +15,6 @@ import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.project.kcookserver.configure.entity.Status.*;
 import static javax.persistence.CascadeType.*;
