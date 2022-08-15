@@ -20,7 +20,7 @@ public class ProductListRes {
 
     private Boolean isCake;
 
-    private String thumbnail;
+    private String image;
 
     private String raiting;
 
@@ -40,7 +40,7 @@ public class ProductListRes {
         this.productId = product.getProductId();
         this.status = product.getStatus();
         this.isCake = product.getIsCake();
-        this.thumbnail = product.getThumbnail();
+        this.image = product.getImage();
         this.raiting = new DecimalFormat("#.00").format(product.getRaiting());
         this.storeName = product.getStore().getName();
         this.name = product.getName();

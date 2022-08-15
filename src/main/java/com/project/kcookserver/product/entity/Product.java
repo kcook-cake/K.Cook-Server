@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,8 @@ public class Product extends BaseTimeEntity {
 
     private String name;
 
-    private String thumbnail;
+    @Size(max = 500)
+    private String image;
 
     private Integer price;
 
@@ -54,13 +56,13 @@ public class Product extends BaseTimeEntity {
 
     private Long reviewCount;
 
+
     @OneToMany(mappedBy = "product", cascade = ALL)
     private List<Review> reviews = new ArrayList<>();
 
     public Product(Account account, CreateProductReq createProductReq) {
         this.status = VALID;
         this.name = createProductReq.getName();
-        this.thumbnail = createProductReq.getThumbnail();
         this.price = createProductReq.getPrice();
         this.salePrice = createProductReq.getSalePrice();
         this.store = account.getStore();
@@ -68,4 +70,7 @@ public class Product extends BaseTimeEntity {
         this.reviewCount = 0L;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

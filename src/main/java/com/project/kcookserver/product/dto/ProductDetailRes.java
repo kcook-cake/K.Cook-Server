@@ -19,7 +19,7 @@ public class ProductDetailRes {
 
     private String name;
 
-    private String thumbnail;
+    private String image;
 
     private Integer price;
 
@@ -35,7 +35,7 @@ public class ProductDetailRes {
         this.productId = product.getProductId();
         this.status = product.getStatus();
         this.name = product.getName();
-        this.thumbnail = product.getThumbnail();
+        this.image = product.getImage();
         this.price = product.getPrice();
         this.salePrice = product.getSalePrice();
         this.storeId = product.getStore().getStoreId();
