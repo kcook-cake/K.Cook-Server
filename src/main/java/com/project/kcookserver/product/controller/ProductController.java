@@ -1,9 +1,11 @@
 package com.project.kcookserver.product.controller;
 
+import java.io.IOException;
+
+import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
-import com.project.kcookserver.product.dto.CreateOptionReq;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.product.dto.ProductDetailRes;
 import com.project.kcookserver.product.service.ProductService;
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Api(tags = {"Product API"})
 @RequiredArgsConstructor
@@ -85,6 +88,14 @@ public class ProductController {
                                             @RequestBody CreateProductReq createProductReq) {
         Long productId = productService.createProduct(customUserDetails ,createProductReq);
         return responseService.getDataResponse(productId);
+    }
+
+    @Operation(summary = "상품 이미지 추가 API", description = "상품 ID를 기준으로 이미지 추가")
+    @PatchMapping(value = "/products/image")
+    public CommonResponse uploadProductImage(@RequestParam("images") MultipartFile multipartFile,
+        @RequestParam("productId") Long productId) throws IOException {
+        productService.uploadProductImage(multipartFile, productId);
+        return responseService.getSuccessResponse();
     }
 
 }

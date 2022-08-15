@@ -19,9 +19,6 @@ public class CreateProductReq {
     private String name;
 
     @NotNull
-    private String thumbnail;
-
-    @NotNull
     private Integer price;
 
     @NotNull

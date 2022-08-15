@@ -3,6 +3,7 @@ package com.project.kcookserver.product.service;
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
+import com.project.kcookserver.configure.s3.S3Uploader;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.product.dto.OptionsListRes;
@@ -20,7 +21,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +37,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final OptionsRepository optionsRepository;
     private final ProductRepositoryCustom productRepositoryCustom;
+    private final S3Uploader s3Uploader;
 
     public Page<ProductListRes> getCakeList
             (int page, int size, String sortBy, boolean isAsc, String event, String options, Integer lowPrice, Integer highPrice, String area) {
@@ -79,5 +83,13 @@ public class ProductService {
             Options optionsSave = optionsRepository.save(options);
         }
         return save.getProductId();
+    }
+
+    @Transactional
+    public void uploadProductImage(MultipartFile multipartFile, Long productId) throws IOException {
+        String productImageUrl = s3Uploader.upload(multipartFile, "productImage");
+        Product product = productRepository.findByProductIdAndStatus(productId, VALID)
+            .orElseThrow(() -> new CustomException(CustomExceptionStatus.PRODUCT_NOT_FOUND));
+        product.setImage(productImageUrl);
     }
 }
