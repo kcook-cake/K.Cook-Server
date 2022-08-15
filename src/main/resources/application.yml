@@ -8,6 +8,10 @@ server:
       force: true
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   profiles:
     include: key
     active: prod
