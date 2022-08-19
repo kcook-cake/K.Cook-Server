@@ -17,9 +17,9 @@ public class CreateOptionReq {
     @NotNull
     private OptionsCategoryType category;
 
-    @NotNull
     private String contents;
 
-    @NotNull
     private Integer additionalCost;
+
+    private String title;
 }

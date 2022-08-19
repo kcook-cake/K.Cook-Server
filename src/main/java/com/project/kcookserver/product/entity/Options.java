@@ -29,6 +29,8 @@ public class Options extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OptionsCategoryType category;
 
+    private String title;
+
     private String contents;
 
     private Integer additionalCost;
