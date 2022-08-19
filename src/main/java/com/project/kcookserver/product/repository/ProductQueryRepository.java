@@ -21,7 +21,7 @@ import static com.project.kcookserver.configure.entity.Status.*;
 
 @RequiredArgsConstructor
 @Repository
-public class ProductQueryRepository implements  ProductRepositoryCustom{
+public class ProductQueryRepository implements ProductRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     private OrderSpecifier<?>[] getSortedColumn(Sort sorts){
@@ -32,6 +32,8 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         }).toArray(OrderSpecifier[]::new);
     }
 
+
+
     @Override
     public Page<Product> findAllCakeProduct(Pageable pageable, String event, String options, Integer lowPrice, Integer highPrice, String area) {
         QProduct product = QProduct.product;
@@ -39,7 +41,6 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         QProductEventRelation productEventRelation = QProductEventRelation.productEventRelation;
         QEvent qEvent = QEvent.event;
         QOptions qOptions = QOptions.options;
-
 
         QueryResults<Product> result = queryFactory
                 .select(product)
@@ -64,7 +65,6 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         QStore store = QStore.store;
         QProductEventRelation productEventRelation = QProductEventRelation.productEventRelation;
         QOptions qOptions = QOptions.options;
-
 
         QueryResults<Product> result = queryFactory
                 .select(product)
@@ -106,8 +106,4 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         if (highPrice == null) return null;
         return qProduct.price.loe(highPrice);
     }
-
-
-
-
 }

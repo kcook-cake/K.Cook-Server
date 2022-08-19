@@ -1,5 +1,6 @@
 package com.project.kcookserver.product.controller;
 
+import com.project.kcookserver.product.dto.UpdatePopularityReq;
 import java.io.IOException;
 
 import com.project.kcookserver.configure.response.CommonResponse;
@@ -98,4 +99,9 @@ public class ProductController {
         return responseService.getSuccessResponse();
     }
 
+    @PatchMapping(value = "/popularity")
+    public CommonResponse updatePopularity(@RequestBody UpdatePopularityReq updatePopularityReq) {
+        productService.updatePopularity(updatePopularityReq.getPopularities());
+        return responseService.getSuccessResponse();
+    }
 }

@@ -46,6 +46,8 @@ public class Product extends BaseTimeEntity {
 
     private Float raiting = 0F;
 
+    private Integer popularityRank;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "storeId")
     private Store store;
@@ -72,5 +74,13 @@ public class Product extends BaseTimeEntity {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void changePopularityRank(int popularityRank) {
+        this.popularityRank = popularityRank;
+    }
+
+    public void deletePopularityRank() {
+        this.popularityRank = null;
     }
 }
