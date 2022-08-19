@@ -93,7 +93,7 @@ public class AccountController {
 
     @AccountLog
     @Operation(summary = "회원 이메일로 SMS 인증", description = "회원의 이메일을 받아서 SMS 인증 번호 Return")
-    @GetMapping(value = "/accounts/email/sms-token")
+    @PatchMapping(value = "/accounts/email/sms-token")
     public DataResponse<Integer> getAccountSmsTokenByEmail(@RequestBody EmailDto emailDto) {
         return responseService.getDataResponse(smsAuthService.getAccountSmsTokenByEmail(emailDto.getEmail()));
     }
