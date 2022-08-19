@@ -1,6 +1,5 @@
 package com.project.kcookserver.product.dto;
 
-import com.project.kcookserver.product.entity.Product;
 import com.project.kcookserver.product.entity.enums.OptionsCategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +22,4 @@ public class CreateOptionReq {
 
     @NotNull
     private Integer additionalCost;
-
-    private Product product;
-
 }
