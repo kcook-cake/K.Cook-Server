@@ -7,6 +7,8 @@ import com.project.kcookserver.configure.s3.S3Uploader;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.product.dto.OptionsListRes;
+import com.project.kcookserver.product.vo.PopularProduct;
+import com.project.kcookserver.product.vo.Popularity;
 import com.project.kcookserver.product.dto.ProductDetailRes;
 import com.project.kcookserver.product.dto.ProductListRes;
 import com.project.kcookserver.product.entity.Options;
@@ -14,11 +16,14 @@ import com.project.kcookserver.product.entity.Product;
 import com.project.kcookserver.product.repository.OptionsRepository;
 import com.project.kcookserver.product.repository.ProductRepository;
 import com.project.kcookserver.product.repository.ProductRepositoryCustom;
+import java.util.Map;
+import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -82,12 +87,28 @@ public class ProductService {
         optionsRepository.saveAll(optionsList);
         return save.getProductId();
     }
-
     @Transactional
     public void uploadProductImage(MultipartFile multipartFile, Long productId) throws IOException {
         String productImageUrl = s3Uploader.upload(multipartFile, "productImage");
         Product product = productRepository.findByProductIdAndStatus(productId, VALID)
             .orElseThrow(() -> new CustomException(CustomExceptionStatus.PRODUCT_NOT_FOUND));
         product.setImage(productImageUrl);
+    }
+    @Transactional
+    public void updatePopularity(List<Popularity> popularities) {
+        List<Product> popularProducts = productRepository.findByPopularityRankIsNotNull();
+        popularProducts.stream().forEach(Product::deletePopularityRank);
+
+        List<Long> cakeIds = popularities.stream().map(Popularity::getCakeId).collect(Collectors.toList());
+        Map<Long, Product> newPopularProducts = productRepository.findByProductIdIn(cakeIds).stream().collect(Collectors.toMap(Product::getProductId, Function.identity()));
+        for (Popularity popularity : popularities) {
+            newPopularProducts.get(popularity.getCakeId()).changePopularityRank(popularity.getPopularityRank());
+        }
+    }
+
+    public Page<PopularProduct> getPopularProducts(int page) {
+        Sort sort = Sort.by(Direction.ASC, "popularityRank");
+        Pageable pageable = PageRequest.of(page, 4, sort);
+        return productRepositoryCustom.findAllPopularProducts(pageable);
     }
 }

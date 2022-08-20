@@ -1,6 +1,8 @@
 package com.project.kcookserver.product.repository;
 
 import com.project.kcookserver.product.entity.*;
+import com.project.kcookserver.product.vo.PopularProduct;
+import com.project.kcookserver.product.vo.QPopularProduct;
 import com.project.kcookserver.store.QStore;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
@@ -17,11 +19,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import static com.project.kcookserver.configure.entity.Status.*;
+import static com.project.kcookserver.product.entity.QProduct.product;
+import static com.project.kcookserver.store.QStore.store;
 
 
 @RequiredArgsConstructor
 @Repository
-public class ProductQueryRepository implements  ProductRepositoryCustom{
+public class ProductQueryRepository implements ProductRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     private OrderSpecifier<?>[] getSortedColumn(Sort sorts){
@@ -32,6 +36,8 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         }).toArray(OrderSpecifier[]::new);
     }
 
+
+
     @Override
     public Page<Product> findAllCakeProduct(Pageable pageable, String event, String options, Integer lowPrice, Integer highPrice, String area) {
         QProduct product = QProduct.product;
@@ -39,7 +45,6 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         QProductEventRelation productEventRelation = QProductEventRelation.productEventRelation;
         QEvent qEvent = QEvent.event;
         QOptions qOptions = QOptions.options;
-
 
         QueryResults<Product> result = queryFactory
                 .select(product)
@@ -65,7 +70,6 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         QProductEventRelation productEventRelation = QProductEventRelation.productEventRelation;
         QOptions qOptions = QOptions.options;
 
-
         QueryResults<Product> result = queryFactory
                 .select(product)
                 .from(product)
@@ -78,6 +82,22 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
                 .limit(pageable.getPageSize())
                 .orderBy(getSortedColumn(pageable.getSort()))
                 .fetchResults();
+
+        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+    }
+
+    @Override
+    public Page<PopularProduct> findAllPopularProducts(Pageable pageable) {
+        QueryResults<PopularProduct> result = queryFactory
+            .select(new QPopularProduct(product.popularityRank, product.name, product.price, store.name))
+            .from(product)
+            .where(product.popularityRank.isNotNull())
+            .leftJoin(store)
+            .on(product.store.storeId.eq(store.storeId))
+            .orderBy(getSortedColumn(pageable.getSort()))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetchResults();
 
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
@@ -106,8 +126,4 @@ public class ProductQueryRepository implements  ProductRepositoryCustom{
         if (highPrice == null) return null;
         return qProduct.price.loe(highPrice);
     }
-
-
-
-
 }
