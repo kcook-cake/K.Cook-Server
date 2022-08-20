@@ -16,13 +16,16 @@ public class PopularProduct {
 
 	private int price;
 
+	private String image;
+
 	private String storeName;
 
 	@QueryProjection
-	public PopularProduct(int popularRank, String name, int price, String storeName) {
+	public PopularProduct(int popularRank, String name, int price, String image, String storeName) {
 		this.popularRank = popularRank;
 		this.name = name;
 		this.price = price;
+		this.image = image;
 		this.storeName = storeName;
 	}
 }
