@@ -1,6 +1,7 @@
 package com.project.kcookserver.product.controller;
 
 import com.project.kcookserver.product.dto.UpdatePopularityReq;
+import com.project.kcookserver.product.vo.PopularProduct;
 import java.io.IOException;
 
 import com.project.kcookserver.configure.response.CommonResponse;
@@ -15,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -103,5 +105,12 @@ public class ProductController {
     public CommonResponse updatePopularity(@RequestBody UpdatePopularityReq updatePopularityReq) {
         productService.updatePopularity(updatePopularityReq.getPopularities());
         return responseService.getSuccessResponse();
+    }
+
+    @Operation(summary = "상품 인기순 조회 API")
+    @GetMapping(value = "/popular-products")
+    public DataResponse<Page<PopularProduct>> getPopularProducts(@RequestParam int page) {
+        Page<PopularProduct> popularProducts = productService.getPopularProducts(page);
+        return responseService.getDataResponse(popularProducts);
     }
 }

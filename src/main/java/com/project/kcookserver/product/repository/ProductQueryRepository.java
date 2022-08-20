@@ -1,6 +1,8 @@
 package com.project.kcookserver.product.repository;
 
 import com.project.kcookserver.product.entity.*;
+import com.project.kcookserver.product.vo.PopularProduct;
+import com.project.kcookserver.product.vo.QPopularProduct;
 import com.project.kcookserver.store.QStore;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
@@ -17,6 +19,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import static com.project.kcookserver.configure.entity.Status.*;
+import static com.project.kcookserver.product.entity.QProduct.product;
+import static com.project.kcookserver.store.QStore.store;
 
 
 @RequiredArgsConstructor
@@ -78,6 +82,22 @@ public class ProductQueryRepository implements ProductRepositoryCustom{
                 .limit(pageable.getPageSize())
                 .orderBy(getSortedColumn(pageable.getSort()))
                 .fetchResults();
+
+        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+    }
+
+    @Override
+    public Page<PopularProduct> findAllPopularProducts(Pageable pageable) {
+        QueryResults<PopularProduct> result = queryFactory
+            .select(new QPopularProduct(product.popularityRank, product.name, product.price, store.name))
+            .from(product)
+            .where(product.popularityRank.isNotNull())
+            .leftJoin(store)
+            .on(product.store.storeId.eq(store.storeId))
+            .orderBy(getSortedColumn(pageable.getSort()))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetchResults();
 
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
