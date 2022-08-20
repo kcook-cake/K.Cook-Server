@@ -29,6 +29,8 @@ public class Options extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OptionsCategoryType category;
 
+    private String title;
+
     private String contents;
 
     private Integer additionalCost;
@@ -46,7 +48,6 @@ public class Options extends BaseTimeEntity {
         this.category = createOptionReq.getCategory();
         this.contents = createOptionReq.getContents();
         this.additionalCost = createOptionReq.getAdditionalCost();
-        this.product = createOptionReq.getProduct();
     }
 
 }

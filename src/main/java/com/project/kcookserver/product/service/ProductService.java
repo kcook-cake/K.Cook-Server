@@ -82,11 +82,9 @@ public class ProductService {
         Account account = customUserDetails.getAccount();
         Product product = new Product(account, createProductReq);
         Product save = productRepository.save(product);
-        createProductReq.getNewOptionsList().forEach(createOptionReq -> createOptionReq.setProduct(product));
         List<Options> optionsList = createProductReq.getNewOptionsList().stream().map(Options::new).collect(Collectors.toList());
-        for (Options options : optionsList) {
-            Options optionsSave = optionsRepository.save(options);
-        }
+        optionsList.forEach(options -> options.setProduct(save));
+        optionsRepository.saveAll(optionsList);
         return save.getProductId();
     }
     @Transactional
