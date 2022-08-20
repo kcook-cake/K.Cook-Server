@@ -89,7 +89,7 @@ public class ProductQueryRepository implements ProductRepositoryCustom{
     @Override
     public Page<PopularProduct> findAllPopularProducts(Pageable pageable) {
         QueryResults<PopularProduct> result = queryFactory
-            .select(new QPopularProduct(product.popularityRank, product.name, product.price, store.name))
+            .select(new QPopularProduct(product.popularityRank, product.name, product.price, product.image, store.name))
             .from(product)
             .where(product.popularityRank.isNotNull())
             .leftJoin(store)
