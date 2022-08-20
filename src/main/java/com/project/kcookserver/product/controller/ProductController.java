@@ -101,6 +101,10 @@ public class ProductController {
         return responseService.getSuccessResponse();
     }
 
+    @Operation(summary = "상품 인기순 변경 API")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
+    })
     @PatchMapping(value = "/popularity")
     public CommonResponse updatePopularity(@RequestBody UpdatePopularityReq updatePopularityReq) {
         productService.updatePopularity(updatePopularityReq.getPopularities());
