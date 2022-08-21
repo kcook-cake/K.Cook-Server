@@ -113,7 +113,12 @@ public class ProductController {
 
     @Operation(summary = "상품 인기순 조회 API")
     @GetMapping(value = "/popular-products")
-    public DataResponse<Page<PopularProduct>> getPopularProducts(@RequestParam int page) {
+    public DataResponse<Page<PopularProduct>> getPopularProducts(
+        @RequestParam Integer page
+    ) {
+        if (page == null) page = 1;
+        page = page - 1;
+
         Page<PopularProduct> popularProducts = productService.getPopularProducts(page);
         return responseService.getDataResponse(popularProducts);
     }
