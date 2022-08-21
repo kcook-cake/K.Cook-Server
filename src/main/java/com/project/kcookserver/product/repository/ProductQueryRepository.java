@@ -1,5 +1,7 @@
 package com.project.kcookserver.product.repository;
 
+import com.project.kcookserver.product.dto.ProductListRes;
+import com.project.kcookserver.product.dto.QProductListRes;
 import com.project.kcookserver.product.entity.*;
 import com.project.kcookserver.product.vo.PopularProduct;
 import com.project.kcookserver.product.vo.QPopularProduct;
@@ -92,6 +94,22 @@ public class ProductQueryRepository implements ProductRepositoryCustom{
             .select(new QPopularProduct(product.popularityRank, product.name, product.price, product.image, store.name))
             .from(product)
             .where(product.popularityRank.isNotNull())
+            .leftJoin(store)
+            .on(product.store.storeId.eq(store.storeId))
+            .orderBy(getSortedColumn(pageable.getSort()))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetchResults();
+
+        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+    }
+
+    @Override
+    public Page<ProductListRes> findRecentUpdatedProducts(Pageable pageable) {
+        QueryResults<ProductListRes> result = queryFactory
+            .select(new QProductListRes(product.name, product.price, product.store.name, product.image))
+            .from(product)
+            .where(product.isCake.eq(true))
             .leftJoin(store)
             .on(product.store.storeId.eq(store.storeId))
             .orderBy(getSortedColumn(pageable.getSort()))

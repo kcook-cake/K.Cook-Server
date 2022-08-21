@@ -16,7 +16,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -105,7 +104,7 @@ public class ProductController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
-    @PatchMapping(value = "/popularity")
+    @PatchMapping(value = "/products/popularity")
     public CommonResponse updatePopularity(@RequestBody UpdatePopularityReq updatePopularityReq) {
         productService.updatePopularity(updatePopularityReq.getPopularities());
         return responseService.getSuccessResponse();
@@ -121,5 +120,16 @@ public class ProductController {
 
         Page<PopularProduct> popularProducts = productService.getPopularProducts(page);
         return responseService.getDataResponse(popularProducts);
+    }
+
+    @GetMapping(value = "/products/update")
+    public DataResponse<Page<ProductListRes>> getProductsByUpdatedAtDesc(
+        @RequestParam Integer page
+    ) {
+        if (page == null) page = 1;
+        page = page - 1;
+
+        Page<ProductListRes> productsRes = productService.getProductsByUpdatedAtDesc(page);
+        return responseService.getDataResponse(productsRes);
     }
 }
