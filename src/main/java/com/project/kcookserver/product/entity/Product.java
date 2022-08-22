@@ -6,6 +6,7 @@ import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.review.Review;
 import com.project.kcookserver.store.Store;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,6 +50,7 @@ public class Product extends BaseTimeEntity {
     private Integer popularityRank;
 
     @ManyToOne(fetch = LAZY)
+    @NotNull
     @JoinColumn(name = "storeId")
     private Store store;
 

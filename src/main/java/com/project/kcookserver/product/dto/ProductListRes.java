@@ -2,11 +2,11 @@ package com.project.kcookserver.product.dto;
 
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.product.entity.Product;
+import com.querydsl.core.annotations.QueryProjection;
+import java.text.DecimalFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.text.DecimalFormat;
 
 
 @Getter
@@ -50,4 +50,11 @@ public class ProductListRes {
         this.reviewCount = product.getReviewCount();
     }
 
+    @QueryProjection
+    public ProductListRes(String name, int price, String storeName, String image) {
+        this.name = name;
+        this.price = price;
+        this.storeName = storeName;
+        this.image = image;
+    }
 }

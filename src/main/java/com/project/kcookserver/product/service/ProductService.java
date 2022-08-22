@@ -94,6 +94,7 @@ public class ProductService {
             .orElseThrow(() -> new CustomException(CustomExceptionStatus.PRODUCT_NOT_FOUND));
         product.setImage(productImageUrl);
     }
+
     @Transactional
     public void updatePopularity(List<Popularity> popularities) {
         List<Product> popularProducts = productRepository.findByPopularityRankIsNotNull();
@@ -110,5 +111,12 @@ public class ProductService {
         Sort sort = Sort.by(Direction.ASC, "popularityRank");
         Pageable pageable = PageRequest.of(page, 4, sort);
         return productRepositoryCustom.findAllPopularProducts(pageable);
+    }
+
+    public Page<ProductListRes> getProductsByUpdatedAtDesc(int page) {
+        Sort sort = Sort.by(Direction.DESC, "updatedAt");
+        Pageable pageable = PageRequest.of(page, 4, sort);
+
+        return productRepositoryCustom.findRecentUpdatedProducts(pageable);
     }
 }
