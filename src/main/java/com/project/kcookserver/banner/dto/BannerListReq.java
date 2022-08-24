@@ -1,12 +1,16 @@
-package com.project.kcookserver.banner.vo;
+package com.project.kcookserver.banner.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.web.multipart.MultipartFile;
 
+@Accessors(chain = true)
 @Getter
 @Setter
-public class RegisterBanner {
+@NoArgsConstructor
+public class BannerListReq {
 
 	private long orders; // 배너 순서
 
