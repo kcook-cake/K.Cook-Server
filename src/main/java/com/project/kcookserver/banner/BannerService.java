@@ -1,9 +1,9 @@
 package com.project.kcookserver.banner;
 
 import com.project.kcookserver.banner.dto.BannerListReq;
-import com.project.kcookserver.banner.dto.BannerListRes;
 import com.project.kcookserver.banner.dto.RegisterCarouselBannerReq;
 import com.project.kcookserver.banner.dto.RegisterStaticBannerReq;
+import com.project.kcookserver.banner.dto.registeredBanner;
 import com.project.kcookserver.banner.entity.Banner;
 import com.project.kcookserver.configure.s3.S3Uploader;
 import java.io.IOException;
@@ -23,10 +23,16 @@ public class BannerService {
 	private final BannerRepository bannerRepository;
 	private final S3Uploader s3Uploader;
 
-	public List<BannerListRes> getCarouselBanners() {
-		List<Banner> banners = bannerRepository.findByUsedIsTrueAndStaticBannerIsFalse();
-		return banners.stream().map(BannerListRes::new).collect(Collectors.toList());
+	public registeredBanner getStaticBanner() {
+		Banner banner = bannerRepository.findByUsedIsTrueAndStaticBannerIsTrue();
+		return new registeredBanner(banner);
 	}
+
+	public List<registeredBanner> getCarouselBanners() {
+		List<Banner> banners = bannerRepository.findByUsedIsTrueAndStaticBannerIsFalse();
+		return banners.stream().map(registeredBanner::new).collect(Collectors.toList());
+	}
+
 	@Transactional
 	public void registerCarouselBanners(RegisterCarouselBannerReq registerCarouselBannerReqs) throws Exception {
 

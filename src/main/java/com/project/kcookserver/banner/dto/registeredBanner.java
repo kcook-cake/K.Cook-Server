@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BannerListRes {
+public class registeredBanner {
 
 	private long orders; // 배너 순서
 
@@ -22,7 +22,7 @@ public class BannerListRes {
 
 	private String mobileImageUrl;
 
-	public BannerListRes (Banner banner) {
+	public registeredBanner(Banner banner) {
 		this.orders = banner.getOrders();
 		this.connectedUrl = banner.getConnectedUrl();
 		this.webImageUrl = banner.getWebImageUrl();

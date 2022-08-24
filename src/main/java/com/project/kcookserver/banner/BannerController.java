@@ -1,8 +1,8 @@
 package com.project.kcookserver.banner;
 
-import com.project.kcookserver.banner.dto.BannerListRes;
 import com.project.kcookserver.banner.dto.RegisterCarouselBannerReq;
 import com.project.kcookserver.banner.dto.RegisterStaticBannerReq;
+import com.project.kcookserver.banner.dto.registeredBanner;
 import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
@@ -27,9 +27,16 @@ public class BannerController {
 
 	@Operation(summary = " 슬라이드 배너 조회")
 	@GetMapping("/carousel")
-	public DataResponse<List<BannerListRes>> getCarouselBanner() {
-		List<BannerListRes> carouselBanners = bannerService.getCarouselBanners();
+	public DataResponse<List<registeredBanner>> getCarouselBanner() {
+		List<registeredBanner> carouselBanners = bannerService.getCarouselBanners();
 		return responseService.getDataResponse(carouselBanners);
+	}
+
+	@Operation(summary = " 고정 배너 조회")
+	@GetMapping("/static")
+	public DataResponse<registeredBanner> getStaticBanner() {
+		registeredBanner staticBanner = bannerService.getStaticBanner();
+		return responseService.getDataResponse(staticBanner);
 	}
 
 	@Operation(summary = " 슬라이드 배너 등록", description = "배너 1개당 이미지 2개씩 등록(웹, 모바일)")
