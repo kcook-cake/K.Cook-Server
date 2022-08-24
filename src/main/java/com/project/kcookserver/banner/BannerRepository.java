@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BannerRepository extends JpaRepository<Banner, Long> {
 
-	List<Banner> findByUsedIsTrue();
+	List<Banner> findByUsedIsTrueAndStaticBannerIsFalse();
+
+	Banner findByUsedIsTrueAndStaticBannerIsTrue();
 
 	@Modifying
 	@Query("UPDATE Banner b set b.used = false where b.bannerId in :ids")
