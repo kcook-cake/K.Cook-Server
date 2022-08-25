@@ -17,4 +17,11 @@ public class PasswordDto {
 	@NotBlank
 	@Length(min=8, max= 50)
 	private String password;
+
+	@Getter
+	public static class OnlyPasswordDto{
+		@NotBlank
+		@Length(min=8, max= 50)
+		private String password;
+	}
 }

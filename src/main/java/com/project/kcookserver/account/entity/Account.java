@@ -92,4 +92,8 @@ public class Account extends BaseTimeEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setDELETED(){
+        this.status = DELETED;
+    }
 }

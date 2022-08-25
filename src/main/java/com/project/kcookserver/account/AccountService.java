@@ -76,5 +76,14 @@ public class AccountService {
             .orElseThrow(() -> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_VALID));
         account.setPassword(passwordEncoder.encode(dto.getPassword()));
     }
+
+	public void deleteAccountByAccountPassword(CustomUserDetails customUserDetails, PasswordDto.OnlyPasswordDto passwordDto) {
+        Account account = accountRepository.findByEmailAndStatus(customUserDetails.getAccount().getEmail(), VALID)
+            .orElseThrow(()-> new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN));
+        if(!passwordEncoder.matches(passwordDto.getPassword(),account.getPassword())){
+            throw new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN);
+        }
+        account.setDELETED();
+	}
 }
 

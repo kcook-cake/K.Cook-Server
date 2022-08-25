@@ -105,4 +105,16 @@ public class AccountController {
         accountService.updateAccountPasswordByEmail(passwordDto);
         return responseService.getSuccessResponse();
     }
+
+    @AccountLog
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
+    })
+    @Operation(summary = "회원 탈퇴", description = "회원의 비밀번호를 받아서 회원 탈퇴")
+    @DeleteMapping(value = "/accounts/auth")
+    public CommonResponse deleteAccountByAccountPassword(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestBody PasswordDto.OnlyPasswordDto passwordDto) {
+        accountService.deleteAccountByAccountPassword(customUserDetails, passwordDto);
+        return responseService.getSuccessResponse();
+    }
 }
