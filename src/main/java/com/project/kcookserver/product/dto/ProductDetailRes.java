@@ -42,6 +42,4 @@ public class ProductDetailRes {
         this.storeName = product.getStore().getName();
         this.optionsList = optionsList;
     }
-
-
 }
