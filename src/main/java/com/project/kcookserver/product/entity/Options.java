@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import static com.project.kcookserver.configure.entity.Status.*;
 import static javax.persistence.FetchType.*;
@@ -39,6 +40,9 @@ public class Options extends BaseTimeEntity {
     @JoinColumn(name = "productId")
     private Product product;
 
+    @Size(max = 500)
+    private String imageUrl;
+
     public void setProduct(Product product) {
         this.product = product;
     }
@@ -48,6 +52,8 @@ public class Options extends BaseTimeEntity {
         this.category = createOptionReq.getCategory();
         this.contents = createOptionReq.getContents();
         this.additionalCost = createOptionReq.getAdditionalCost();
+        if (this.category.equals(OptionsCategoryType.IMAGE))
+            this.imageUrl = createOptionReq.getImageUrl();
     }
 
 }

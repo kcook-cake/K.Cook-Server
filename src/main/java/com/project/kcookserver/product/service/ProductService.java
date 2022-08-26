@@ -7,6 +7,7 @@ import com.project.kcookserver.configure.s3.S3Uploader;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.product.dto.OptionsListRes;
+import com.project.kcookserver.product.entity.enums.OptionsCategoryType;
 import com.project.kcookserver.product.vo.PopularProduct;
 import com.project.kcookserver.product.vo.Popularity;
 import com.project.kcookserver.product.dto.ProductDetailRes;
@@ -82,6 +83,16 @@ public class ProductService {
         Account account = customUserDetails.getAccount();
         Product product = new Product(account, createProductReq);
         Product save = productRepository.save(product);
+        createProductReq.getNewOptionsList().forEach(optionsDto -> {
+            if (optionsDto.getCategory().equals(OptionsCategoryType.IMAGE) && optionsDto.getMultipartFile() != null) {
+                try {
+                    String imageUrl = s3Uploader.upload(optionsDto.getMultipartFile(), "optionsImage");
+                    optionsDto.setImageUrl(imageUrl);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         List<Options> optionsList = createProductReq.getNewOptionsList().stream().map(Options::new).collect(Collectors.toList());
         optionsList.forEach(options -> options.setProduct(save));
         optionsRepository.saveAll(optionsList);
