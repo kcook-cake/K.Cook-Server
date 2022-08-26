@@ -77,6 +77,7 @@ public class AccountService {
         account.setPassword(passwordEncoder.encode(dto.getPassword()));
     }
 
+    @Transactional
 	public void deleteAccountByAccountPassword(CustomUserDetails customUserDetails, PasswordDto.OnlyPasswordDto passwordDto) {
         Account account = accountRepository.findByEmailAndStatus(customUserDetails.getAccount().getEmail(), VALID)
             .orElseThrow(()-> new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN));
