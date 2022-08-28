@@ -1,5 +1,7 @@
 package com.project.kcookserver.product.service;
 
+import static com.project.kcookserver.configure.entity.Status.VALID;
+
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
@@ -7,18 +9,21 @@ import com.project.kcookserver.configure.s3.S3Uploader;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.product.dto.OptionsListRes;
-import com.project.kcookserver.product.entity.enums.OptionsCategoryType;
-import com.project.kcookserver.product.vo.PopularProduct;
-import com.project.kcookserver.product.vo.Popularity;
 import com.project.kcookserver.product.dto.ProductDetailRes;
 import com.project.kcookserver.product.dto.ProductListRes;
 import com.project.kcookserver.product.entity.Options;
 import com.project.kcookserver.product.entity.Product;
+import com.project.kcookserver.product.entity.enums.OptionsCategoryType;
 import com.project.kcookserver.product.repository.OptionsRepository;
 import com.project.kcookserver.product.repository.ProductRepository;
 import com.project.kcookserver.product.repository.ProductRepositoryCustom;
+import com.project.kcookserver.product.vo.PopularProduct;
+import com.project.kcookserver.product.vo.Popularity;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,12 +33,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.project.kcookserver.configure.entity.Status.*;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -129,5 +128,11 @@ public class ProductService {
         Pageable pageable = PageRequest.of(page, 4, sort);
 
         return productRepositoryCustom.findRecentUpdatedProducts(pageable);
+    }
+
+    @Transactional
+    public void updateRepresentativeCake(List<Long> cakeIds) {
+        productRepository.updateRepresentativeCakeIsNone();
+        productRepository.registerRepresentativeCakeByIds(cakeIds);
     }
 }
