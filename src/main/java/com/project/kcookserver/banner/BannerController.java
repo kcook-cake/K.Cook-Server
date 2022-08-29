@@ -7,6 +7,8 @@ import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,9 @@ public class BannerController {
 		return responseService.getDataResponse(staticBanner);
 	}
 
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
+	})
 	@Operation(summary = " 슬라이드 배너 등록", description = "배너 1개당 이미지 2개씩 등록(웹, 모바일)")
 	@PostMapping("/carousel")
 	public CommonResponse registerCarouselBanner(@ModelAttribute RegisterCarouselBannerReq registerCarouselBannerReq) throws Exception {
@@ -46,6 +51,9 @@ public class BannerController {
 		return responseService.getSuccessResponse();
 	}
 
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
+	})
 	@Operation(summary = "고정 배너 등록", description = "배너 1개당 이미지 2개씩 등록(웹, 모바일)")
 	@PostMapping("/static")
 	public CommonResponse registerStaticBanner(@ModelAttribute RegisterStaticBannerReq registerStaticBannerReq) throws Exception {
