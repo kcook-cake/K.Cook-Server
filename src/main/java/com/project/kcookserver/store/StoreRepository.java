@@ -25,4 +25,6 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     @Modifying(clearAutomatically = true)
     @Query(value = "Update Store s set s.representativeStore = true WHERE s.storeId in :ids")
     void registerRepresentativeStoreByIds(List<Long> ids);
+
+    List<Store> findAllByRepresentativeStoreIsTrue();
 }

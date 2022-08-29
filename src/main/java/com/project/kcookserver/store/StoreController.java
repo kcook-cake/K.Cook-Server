@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -78,5 +79,12 @@ public class StoreController {
     public CommonResponse updateRepresentativeStore(@RequestBody UpdateRepresentativeStore updateRepresentativeStore) {
         storeService.updateRepresentativeStore(updateRepresentativeStore.getStoreIds());
         return responseService.getSuccessResponse();
+    }
+
+    @Operation(summary = "대표 스토어 조회 API")
+    @GetMapping(value = "stores/representative")
+    public DataResponse<List<StoreDetailRes>> getRepresentativeStores() {
+        List<StoreDetailRes> representativeStores = storeService.getRepresentativeStores();
+        return responseService.getDataResponse(representativeStores);
     }
 }

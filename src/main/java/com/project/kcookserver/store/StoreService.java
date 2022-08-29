@@ -11,6 +11,7 @@ import com.project.kcookserver.store.dto.StoreDetailRes;
 import com.project.kcookserver.util.location.NaverGeocode;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,5 +53,9 @@ public class StoreService {
     public void updateRepresentativeStore(List<Long> storeIds) {
         storeRepository.updateRepresentativeStoreIsNone();
         storeRepository.registerRepresentativeStoreByIds(storeIds);
+    }
+
+    public List<StoreDetailRes> getRepresentativeStores() {
+        return storeRepository.findAllByRepresentativeStoreIsTrue().stream().map(StoreDetailRes::new).collect(Collectors.toList());
     }
 }
