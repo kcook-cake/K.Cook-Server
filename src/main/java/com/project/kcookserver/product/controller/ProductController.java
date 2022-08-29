@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -140,8 +141,20 @@ public class ProductController {
         return responseService.getDataResponse(productsRes);
     }
 
+    @Operation(summary = "대표 케익 조회 API")
+    @GetMapping(value = "products/representative-cake")
+    public DataResponse<List<ProductListRes>> getRepresentativeCakes() {
+        List<ProductListRes> representativeCakes = productService.getRepresentativeCakes();
+        return responseService.getDataResponse(representativeCakes);
+    }
+
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
+    })
+    @Operation(summary = "대표 케익 수정 API")
     @PostMapping(value = "/products/representative-cake")
-    public void updateRepresentativeCake(@RequestBody UpdateRepresentativeCakeReq updateRepresentativeCakeReq) {
+    public CommonResponse updateRepresentativeCake(@RequestBody UpdateRepresentativeCakeReq updateRepresentativeCakeReq) {
         productService.updateRepresentativeCake(updateRepresentativeCakeReq.getCakeIds());
+        return responseService.getSuccessResponse();
     }
 }

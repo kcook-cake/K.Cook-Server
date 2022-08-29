@@ -135,4 +135,8 @@ public class ProductService {
         productRepository.updateRepresentativeCakeIsNone();
         productRepository.registerRepresentativeCakeByIds(cakeIds);
     }
+
+    public List<ProductListRes> getRepresentativeCakes() {
+        return productRepository.findAllByRepresentativeCakeIsTrue().stream().map(ProductListRes::new).collect(Collectors.toList());
+    }
 }

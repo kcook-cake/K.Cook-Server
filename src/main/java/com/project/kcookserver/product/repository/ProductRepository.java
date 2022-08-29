@@ -32,4 +32,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Modifying(clearAutomatically = true)
     @Query(value = "Update Product p set p.representativeCake = true WHERE p.productId in :ids")
     void registerRepresentativeCakeByIds(List<Long> ids);
+
+    List<Product> findAllByRepresentativeCakeIsTrue();
 }
