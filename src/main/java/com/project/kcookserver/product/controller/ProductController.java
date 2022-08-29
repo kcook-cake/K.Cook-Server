@@ -1,25 +1,33 @@
 package com.project.kcookserver.product.controller;
 
-import com.project.kcookserver.product.dto.UpdatePopularityReq;
-import com.project.kcookserver.product.vo.PopularProduct;
-import java.io.IOException;
-
 import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.product.dto.ProductDetailRes;
-import com.project.kcookserver.product.service.ProductService;
 import com.project.kcookserver.product.dto.ProductListRes;
+import com.project.kcookserver.product.dto.UpdatePopularityReq;
+import com.project.kcookserver.product.dto.UpdateRepresentativeCakeReq;
+import com.project.kcookserver.product.service.ProductService;
+import com.project.kcookserver.product.vo.PopularProduct;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
+import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @Api(tags = {"Product API"})
@@ -131,5 +139,22 @@ public class ProductController {
 
         Page<ProductListRes> productsRes = productService.getProductsByUpdatedAtDesc(page);
         return responseService.getDataResponse(productsRes);
+    }
+
+    @Operation(summary = "대표 케익 조회 API")
+    @GetMapping(value = "products/representative-cake")
+    public DataResponse<List<ProductListRes>> getRepresentativeCakes() {
+        List<ProductListRes> representativeCakes = productService.getRepresentativeCakes();
+        return responseService.getDataResponse(representativeCakes);
+    }
+
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
+    })
+    @Operation(summary = "대표 케익 수정 API")
+    @PostMapping(value = "/products/representative-cake")
+    public CommonResponse updateRepresentativeCake(@RequestBody UpdateRepresentativeCakeReq updateRepresentativeCakeReq) {
+        productService.updateRepresentativeCake(updateRepresentativeCakeReq.getCakeIds());
+        return responseService.getSuccessResponse();
     }
 }

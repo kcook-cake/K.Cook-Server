@@ -14,7 +14,7 @@ public interface BannerRepository extends JpaRepository<Banner, Long> {
 
 	Banner findByUsedIsTrueAndStaticBannerIsTrue();
 
-	@Modifying
+	@Modifying(clearAutomatically = true)
 	@Query("UPDATE Banner b set b.used = false where b.bannerId in :ids")
 	void updateBannerNotUsedIdIn(List<Long> ids);
 }
