@@ -93,8 +93,4 @@ public class Product extends BaseTimeEntity {
     public void deletePopularityRank() {
         this.popularityRank = null;
     }
-
-    public void setRepresentativeCake() {
-        this.representativeCake = true;
-    }
 }
