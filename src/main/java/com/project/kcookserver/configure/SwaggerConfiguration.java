@@ -35,6 +35,6 @@ public class SwaggerConfiguration {
     private ApiInfo swaggerInfo() {
         return new ApiInfoBuilder().title("K.Cook")
                 .description("K.Cook App Back-End 연동 문서")
-                .license("© 2022. vividswan, ohjinhokor").licenseUrl("https://vividswan.github.io/").version("1").build();
+                .license("© 2022. vividswan, ohjinhokor").build();
     }
 }
