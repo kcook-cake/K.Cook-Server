@@ -1,5 +1,7 @@
 package com.project.kcookserver.store;
 
+import static com.project.kcookserver.configure.entity.Status.VALID;
+
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
@@ -7,13 +9,11 @@ import com.project.kcookserver.configure.security.authentication.CustomUserDetai
 import com.project.kcookserver.store.dto.CreateStoreReq;
 import com.project.kcookserver.store.dto.StoreDetailRes;
 import com.project.kcookserver.util.location.NaverGeocode;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
-import static com.project.kcookserver.configure.entity.Status.*;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -46,5 +46,11 @@ public class StoreService {
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.STORE_NOT_FOUND));
         naverGeocode.getCoordinate(dto.getAddress());
         store.updateStore(dto);
+    }
+
+    @Transactional
+    public void updateRepresentativeStore(List<Long> storeIds) {
+        storeRepository.updateRepresentativeStoreIsNone();
+        storeRepository.registerRepresentativeStoreByIds(storeIds);
     }
 }

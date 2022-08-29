@@ -1,17 +1,23 @@
 package com.project.kcookserver.store;
 
+import static com.project.kcookserver.configure.entity.Status.VALID;
+import static javax.persistence.FetchType.LAZY;
+
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.store.dto.CreateStoreReq;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-
-import static com.project.kcookserver.configure.entity.Status.*;
-import static javax.persistence.FetchType.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,6 +43,8 @@ public class Store extends BaseTimeEntity {
     private String address;
 
     private String area;
+
+    private boolean representativeStore;
 
     public Store(CreateStoreReq dto, Account account) {
         this.status = VALID;

@@ -7,17 +7,22 @@ import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.store.dto.CreateStoreReq;
 import com.project.kcookserver.store.dto.StoreDetailRes;
+import com.project.kcookserver.store.dto.UpdateRepresentativeStore;
 import com.project.kcookserver.util.ValidationExceptionProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"Store API"})
 @RequiredArgsConstructor
@@ -65,4 +70,13 @@ public class StoreController {
         return responseService.getSuccessResponse();
     }
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
+    })
+    @Operation(summary = "대표 스토어 수정 API")
+    @PostMapping(value = "/stores/representative")
+    public CommonResponse updateRepresentativeStore(@RequestBody UpdateRepresentativeStore updateRepresentativeStore) {
+        storeService.updateRepresentativeStore(updateRepresentativeStore.getStoreIds());
+        return responseService.getSuccessResponse();
+    }
 }
