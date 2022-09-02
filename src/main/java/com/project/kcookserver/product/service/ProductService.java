@@ -79,8 +79,8 @@ public class ProductService {
 
     @Transactional
     public Long createProduct(CustomUserDetails customUserDetails, CreateProductReq createProductReq) {
-        Account account = customUserDetails.getAccount();
-        Product product = new Product(account, createProductReq);
+        // Account account = customUserDetails.getAccount();
+        Product product = new Product(createProductReq);
         Product save = productRepository.save(product);
         createProductReq.getNewOptionsList().forEach(optionsDto -> {
             if (optionsDto.getCategory().equals(OptionsCategoryType.IMAGE) && optionsDto.getMultipartFile() != null) {
