@@ -1,12 +1,13 @@
 package com.project.kcookserver.store.dto;
 
+import com.project.kcookserver.store.enums.Area;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 
 @AllArgsConstructor
@@ -27,9 +28,6 @@ public class CreateStoreReq {
     @Pattern(regexp = "^[가-힣a-zA-Z0-9\\s_-]*$")
     private String address;
 
-    @NotBlank
-    @Pattern(regexp = "^[가-힣a-zA-Z0-9\\s_-]*$")
-    private String area;
-
-
+    @NotNull
+    private Area area;
 }

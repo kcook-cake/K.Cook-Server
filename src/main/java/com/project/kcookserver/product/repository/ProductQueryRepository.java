@@ -1,11 +1,20 @@
 package com.project.kcookserver.product.repository;
 
+import static com.project.kcookserver.configure.entity.Status.VALID;
+import static com.project.kcookserver.product.entity.QProduct.product;
+import static com.project.kcookserver.store.QStore.store;
+
 import com.project.kcookserver.product.dto.ProductListRes;
 import com.project.kcookserver.product.dto.QProductListRes;
-import com.project.kcookserver.product.entity.*;
+import com.project.kcookserver.product.entity.Product;
+import com.project.kcookserver.product.entity.QEvent;
+import com.project.kcookserver.product.entity.QOptions;
+import com.project.kcookserver.product.entity.QProduct;
+import com.project.kcookserver.product.entity.QProductEventRelation;
 import com.project.kcookserver.product.vo.PopularProduct;
 import com.project.kcookserver.product.vo.QPopularProduct;
 import com.project.kcookserver.store.QStore;
+import com.project.kcookserver.store.enums.Area;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -19,10 +28,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
-
-import static com.project.kcookserver.configure.entity.Status.*;
-import static com.project.kcookserver.product.entity.QProduct.product;
-import static com.project.kcookserver.store.QStore.store;
 
 
 @RequiredArgsConstructor
@@ -41,7 +46,7 @@ public class ProductQueryRepository implements ProductRepositoryCustom{
 
 
     @Override
-    public Page<Product> findAllCakeProduct(Pageable pageable, String event, String options, Integer lowPrice, Integer highPrice, String area) {
+    public Page<Product> findAllCakeProduct(Pageable pageable, String event, String options, Integer lowPrice, Integer highPrice, Area area) {
         QProduct product = QProduct.product;
         QStore store = QStore.store;
         QProductEventRelation productEventRelation = QProductEventRelation.productEventRelation;
@@ -66,7 +71,7 @@ public class ProductQueryRepository implements ProductRepositoryCustom{
     }
 
     @Override
-    public Page<Product> findAllAdditionalProduct(Pageable pageable, String options, Integer lowPrice, Integer highPrice, String area) {
+    public Page<Product> findAllAdditionalProduct(Pageable pageable, String options, Integer lowPrice, Integer highPrice, Area area) {
         QProduct product = QProduct.product;
         QStore store = QStore.store;
         QProductEventRelation productEventRelation = QProductEventRelation.productEventRelation;
@@ -130,7 +135,7 @@ public class ProductQueryRepository implements ProductRepositoryCustom{
         return qOptions.contents.eq(options);
     }
 
-    private BooleanExpression storeEq(QStore qStore, String area) {
+    private BooleanExpression storeEq(QStore qStore, Area area) {
         if (area == null) return null;
         return qStore.area.eq(area);
     }

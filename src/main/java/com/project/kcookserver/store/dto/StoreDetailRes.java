@@ -2,6 +2,7 @@ package com.project.kcookserver.store.dto;
 
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.store.Store;
+import com.project.kcookserver.store.enums.Area;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class StoreDetailRes {
 
     private String address;
 
-    private String area;
+    private Area area;
 
     public StoreDetailRes(Store store) {
         this.storeId = store.getStoreId();
