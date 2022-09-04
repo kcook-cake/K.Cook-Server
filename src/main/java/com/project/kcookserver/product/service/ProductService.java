@@ -19,6 +19,7 @@ import com.project.kcookserver.product.repository.ProductRepository;
 import com.project.kcookserver.product.repository.ProductRepositoryCustom;
 import com.project.kcookserver.product.vo.PopularProduct;
 import com.project.kcookserver.product.vo.Popularity;
+import com.project.kcookserver.store.enums.Area;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -45,14 +46,14 @@ public class ProductService {
     private final S3Uploader s3Uploader;
 
     public Page<ProductListRes> getCakeList
-            (int page, int size, String sortBy, boolean isAsc, String event, String options, Integer lowPrice, Integer highPrice, String area) {
+            (int page, int size, String sortBy, boolean isAsc, String event, String options, Integer lowPrice, Integer highPrice, Area area) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
 
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Product> cakeList;
         try {
-            cakeList = productRepositoryCustom.findAllCakeProduct(pageable, event, options, lowPrice, highPrice,area);
+            cakeList = productRepositoryCustom.findAllCakeProduct(pageable, event, options, lowPrice, highPrice, area);
         } catch (Exception exception) {
             throw new CustomException(CustomExceptionStatus.REQUEST_ERROR);
         }
@@ -60,11 +61,11 @@ public class ProductService {
     }
 
     public Page<ProductListRes> getAdditionalProductsList
-            (Integer page, Integer size, String sortBy, Boolean isAsc, String options, Integer lowPrice, Integer highPrice, String area) {
+            (Integer page, Integer size, String sortBy, Boolean isAsc, String options, Integer lowPrice, Integer highPrice, Area area) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Product> additionalProductList = productRepositoryCustom.findAllAdditionalProduct(pageable, options, lowPrice, highPrice,area);
+        Page<Product> additionalProductList = productRepositoryCustom.findAllAdditionalProduct(pageable, options, lowPrice, highPrice, area);
         return additionalProductList.map(ProductListRes::new);
     }
 

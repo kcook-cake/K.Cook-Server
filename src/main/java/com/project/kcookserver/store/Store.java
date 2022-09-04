@@ -7,6 +7,7 @@ import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.store.dto.CreateStoreReq;
+import com.project.kcookserver.store.enums.Area;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -42,7 +43,8 @@ public class Store extends BaseTimeEntity {
 
     private String address;
 
-    private String area;
+    @Enumerated(EnumType.STRING)
+    private Area area;
 
     private boolean representativeStore;
 

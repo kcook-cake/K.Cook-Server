@@ -11,6 +11,7 @@ import com.project.kcookserver.product.dto.UpdatePopularityReq;
 import com.project.kcookserver.product.dto.UpdateRepresentativeCakeReq;
 import com.project.kcookserver.product.service.ProductService;
 import com.project.kcookserver.product.vo.PopularProduct;
+import com.project.kcookserver.store.enums.Area;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -50,7 +51,7 @@ public class ProductController {
             @RequestParam(name = "options", required = false) String options,
             @RequestParam(name = "lowPrice", required = false) Integer lowPrice,
             @RequestParam(name = "highPrice", required = false) Integer highPrice,
-            @RequestParam(name = "area", required = false) String area
+            @RequestParam(name = "area", required = false) Area area
     ){
         if (page == null) page = 1;
         page = page - 1;
@@ -71,7 +72,7 @@ public class ProductController {
             @RequestParam(name = "options", required = false) String options,
             @RequestParam(name = "lowPrice", required = false) Integer lowPrice,
             @RequestParam(name = "highPrice", required = false) Integer highPrice,
-            @RequestParam(name = "area", required = false) String area
+            @RequestParam(name = "area", required = false) Area area
     ){
         if (page == null) page = 1;
         page = page - 1;
