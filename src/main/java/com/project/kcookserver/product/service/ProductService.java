@@ -21,10 +21,13 @@ import com.project.kcookserver.product.vo.PopularProduct;
 import com.project.kcookserver.product.vo.Popularity;
 import com.project.kcookserver.store.enums.Area;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -79,20 +82,29 @@ public class ProductService {
     }
 
     @Transactional
-    public Long createProduct(CustomUserDetails customUserDetails, CreateProductReq createProductReq) {
+    public Long createProduct(CustomUserDetails customUserDetails, CreateProductReq createProductReq,
+        MultipartFile productImage1, MultipartFile productImage2, MultipartFile productImage3,
+        MultipartFile productImage4, MultipartFile productImage5,
+        MultipartFile optionImage1, MultipartFile optionImage2, MultipartFile optionImage3) {
         // Account account = customUserDetails.getAccount();
-        Product product = new Product(createProductReq);
-        Product save = productRepository.save(product);
-        createProductReq.getNewOptionsList().forEach(optionsDto -> {
-            if (optionsDto.getCategory().equals(OptionsCategoryType.IMAGE) && optionsDto.getMultipartFile() != null) {
-                try {
-                    String imageUrl = s3Uploader.upload(optionsDto.getMultipartFile(), "optionsImage");
-                    optionsDto.setImageUrl(imageUrl);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+        List<String> productImage = Stream.of(productImage1, productImage2, productImage3, productImage4,
+            productImage5, optionImage1, optionImage2, optionImage3).map(
+            multipartFile -> {
+                if (multipartFile == null) {
+                    return "";
+                }
+                else {
+                    try {
+                        return s3Uploader.upload(multipartFile, "productImage");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
-        });
+        ).collect(Collectors.toList());
+
+        Product product = new Product(createProductReq, productImage);
+        Product save = productRepository.save(product);
         List<Options> optionsList = createProductReq.getNewOptionsList().stream().map(Options::new).collect(Collectors.toList());
         optionsList.forEach(options -> options.setProduct(save));
         optionsRepository.saveAll(optionsList);

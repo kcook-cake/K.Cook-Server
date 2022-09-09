@@ -4,7 +4,6 @@ import static com.project.kcookserver.configure.entity.Status.VALID;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 
-import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.product.dto.CreateProductReq;
@@ -27,6 +26,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -44,8 +44,33 @@ public class Product extends BaseTimeEntity {
 
     private String name;
 
+    @Setter
     @Size(max = 500)
     private String image;
+
+    @Size(max = 500)
+    private String productImage1;
+
+    @Size(max = 500)
+    private String productImage2;
+
+    @Size(max = 500)
+    private String productImage3;
+
+    @Size(max = 500)
+    private String productImage4;
+
+    @Size(max = 500)
+    private String productImage5;
+
+    @Size(max = 500)
+    private String optionImage1;
+
+    @Size(max = 500)
+    private String optionImage2;
+
+    @Size(max = 500)
+    private String optionImage3;
 
     private Integer price;
 
@@ -72,7 +97,7 @@ public class Product extends BaseTimeEntity {
     @OneToMany(mappedBy = "product", cascade = ALL)
     private List<Review> reviews = new ArrayList<>();
 
-    public Product(CreateProductReq createProductReq) {
+    public Product(CreateProductReq createProductReq, List<String> productImages) {
         this.status = VALID;
         this.name = createProductReq.getName();
         this.price = createProductReq.getPrice();
@@ -80,11 +105,16 @@ public class Product extends BaseTimeEntity {
         // this.store = account.getStore();
         this.isCake = createProductReq.getIsCake();
         this.reviewCount = 0L;
+        if(!productImages.get(0).isEmpty()) this.productImage1 = productImages.get(0);
+        if(!productImages.get(1).isEmpty()) this.productImage2 = productImages.get(1);
+        if(!productImages.get(2).isEmpty()) this.productImage3 = productImages.get(2);
+        if(!productImages.get(3).isEmpty()) this.productImage4 = productImages.get(3);
+        if(!productImages.get(4).isEmpty()) this.productImage5 = productImages.get(4);
+        if(!productImages.get(5).isEmpty()) this.optionImage1 = productImages.get(5);
+        if(!productImages.get(6).isEmpty()) this.optionImage2 = productImages.get(6);
+        if(!productImages.get(7).isEmpty()) this.optionImage3 = productImages.get(7);
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public void changePopularityRank(int popularityRank) {
         this.popularityRank = popularityRank;
