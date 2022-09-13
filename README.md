@@ -112,7 +112,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2021 [vividswan](https://github.com/vividswan).<br /> [ohjinhokor](https://github.com/ohjinhokor).<br />
+Copyright © 2022 [vividswan](https://github.com/vividswan). [ohjinhokor](https://github.com/ohjinhokor). <br />
 This project is [MIT](https://github.com/vividswan/K.Cook-Server/blob/main/LICENSE) licensed.
 
 ***
