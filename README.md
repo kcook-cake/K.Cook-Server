@@ -98,6 +98,10 @@ https://prod.kcook-cake.com/app
 * Website: vividswan.github.io
 * Github: [@vividswan](https://github.com/vividswan)
 
+👤 **ohjinhokor**
+
+* Github: [@ohjinhokor](https://github.com/ohjinhokor)
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/vividswan/K.Cook-Server/issues). 
@@ -108,7 +112,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2021 [vividswan](https://github.com/vividswan).<br />
+Copyright © 2021 [vividswan](https://github.com/vividswan).<br /> [ohjinhokor](https://github.com/ohjinhokor).<br />
 This project is [MIT](https://github.com/vividswan/K.Cook-Server/blob/main/LICENSE) licensed.
 
 ***
