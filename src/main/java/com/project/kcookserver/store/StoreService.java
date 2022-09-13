@@ -8,11 +8,16 @@ import com.project.kcookserver.configure.response.exception.CustomExceptionStatu
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.store.dto.CreateStoreReq;
 import com.project.kcookserver.store.dto.StoreDetailRes;
+import com.project.kcookserver.store.enums.Area;
 import com.project.kcookserver.util.location.NaverGeocode;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,5 +62,12 @@ public class StoreService {
 
     public List<StoreDetailRes> getRepresentativeStores() {
         return storeRepository.findAllByRepresentativeStoreIsTrue().stream().map(StoreDetailRes::new).collect(Collectors.toList());
+    }
+
+    public Page<StoreDetailRes> getStoresByArea(Area area, int page, int size, boolean isAsc, String sortBy) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return storeRepository.findAllByArea(area, pageable).map(StoreDetailRes::new);
     }
 }
