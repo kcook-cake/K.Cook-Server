@@ -1,8 +1,8 @@
 package com.project.kcookserver.product.service;
 
 import static com.project.kcookserver.configure.entity.Status.VALID;
+import static org.springframework.data.domain.Sort.by;
 
-import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
 import com.project.kcookserver.configure.s3.S3Uploader;
@@ -13,7 +13,6 @@ import com.project.kcookserver.product.dto.ProductDetailRes;
 import com.project.kcookserver.product.dto.ProductListRes;
 import com.project.kcookserver.product.entity.Options;
 import com.project.kcookserver.product.entity.Product;
-import com.project.kcookserver.product.entity.enums.OptionsCategoryType;
 import com.project.kcookserver.product.repository.OptionsRepository;
 import com.project.kcookserver.product.repository.ProductRepository;
 import com.project.kcookserver.product.repository.ProductRepositoryCustom;
@@ -21,13 +20,11 @@ import com.project.kcookserver.product.vo.PopularProduct;
 import com.project.kcookserver.product.vo.Popularity;
 import com.project.kcookserver.store.enums.Area;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,8 +47,8 @@ public class ProductService {
 
     public Page<ProductListRes> getCakeList
             (int page, int size, String sortBy, boolean isAsc, String event, String options, Integer lowPrice, Integer highPrice, Area area) {
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Sort sort = Sort.by(direction, sortBy);
+        Direction direction = isAsc ? Direction.ASC : Direction.DESC;
+        Sort sort = by(direction, sortBy);
 
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Product> cakeList;
@@ -65,8 +62,8 @@ public class ProductService {
 
     public Page<ProductListRes> getAdditionalProductsList
             (Integer page, Integer size, String sortBy, Boolean isAsc, String options, Integer lowPrice, Integer highPrice, Area area) {
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Sort sort = Sort.by(direction, sortBy);
+        Direction direction = isAsc ? Direction.ASC : Direction.DESC;
+        Sort sort = by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Product> additionalProductList = productRepositoryCustom.findAllAdditionalProduct(pageable, options, lowPrice, highPrice, area);
         return additionalProductList.map(ProductListRes::new);
@@ -131,13 +128,13 @@ public class ProductService {
     }
 
     public Page<PopularProduct> getPopularProducts(int page) {
-        Sort sort = Sort.by(Direction.ASC, "popularityRank");
+        Sort sort = by(Direction.ASC, "popularityRank");
         Pageable pageable = PageRequest.of(page, 4, sort);
         return productRepositoryCustom.findAllPopularProducts(pageable);
     }
 
     public Page<ProductListRes> getProductsByUpdatedAtDesc(int page) {
-        Sort sort = Sort.by(Direction.DESC, "updatedAt");
+        Sort sort = by(Direction.DESC, "updatedAt");
         Pageable pageable = PageRequest.of(page, 4, sort);
 
         return productRepositoryCustom.findRecentUpdatedProducts(pageable);
@@ -151,5 +148,12 @@ public class ProductService {
 
     public List<ProductListRes> getRepresentativeCakes() {
         return productRepository.findAllByRepresentativeCakeIsTrue().stream().map(ProductListRes::new).collect(Collectors.toList());
+    }
+
+    public Page<ProductListRes> getCakesByStoreId(long storeId, int page, int size, boolean isAsc, String sortBy) {
+        Direction direction = isAsc ? Direction.ASC : Direction.DESC;
+        Sort sort = by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return productRepository.findCakesByStoreId(storeId, pageable).map(ProductListRes::new);
     }
 }

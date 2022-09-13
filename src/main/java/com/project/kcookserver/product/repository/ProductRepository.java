@@ -34,4 +34,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     void registerRepresentativeCakeByIds(List<Long> ids);
 
     List<Product> findAllByRepresentativeCakeIsTrue();
+
+    @Query(value = "SELECT p FROM Product p WHERE p.store.storeId = :storeId")
+    Page<Product> findCakesByStoreId(long storeId, Pageable pageable);
 }
