@@ -159,4 +159,23 @@ public class ProductController {
         productService.updateRepresentativeCake(updateRepresentativeCakeReq.getCakeIds());
         return responseService.getSuccessResponse();
     }
+
+    @Operation(summary = "스토어에서 판매하는 케이크 리스트 조회")
+    @GetMapping(value = "/cakes/on-sale")
+    public DataResponse<Page<ProductListRes>> getCakesByStoreId(
+        @RequestParam long storeId,
+        @RequestParam(required = false) Integer page,
+        @RequestParam(required = false) Integer size,
+        @RequestParam(name = "sortBy", required = false) String sortBy,
+        @RequestParam(name = "isAsc", required = false) Boolean isAsc
+    ) {
+        if (page == null) page = 1;
+        page = page - 1;
+        if (size == null) size = 10;
+        if (isAsc == null) isAsc = true;
+        if (sortBy == null) sortBy = "salesRate";
+
+        Page<ProductListRes> cakesListRes = productService.getCakesByStoreId(storeId, page, size, isAsc, sortBy);
+        return responseService.getDataResponse(cakesListRes);
+    }
 }

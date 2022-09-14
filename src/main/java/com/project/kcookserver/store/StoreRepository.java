@@ -3,8 +3,11 @@ package com.project.kcookserver.store;
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.store.dto.StoreDetailRes;
+import com.project.kcookserver.store.enums.Area;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +30,6 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     void registerRepresentativeStoreByIds(List<Long> ids);
 
     List<Store> findAllByRepresentativeStoreIsTrue();
+
+    Page<Store> findAllByArea(Area area, Pageable pageable);
 }

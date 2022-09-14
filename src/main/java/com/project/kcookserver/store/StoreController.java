@@ -8,6 +8,7 @@ import com.project.kcookserver.configure.security.authentication.CustomUserDetai
 import com.project.kcookserver.store.dto.CreateStoreReq;
 import com.project.kcookserver.store.dto.StoreDetailRes;
 import com.project.kcookserver.store.dto.UpdateRepresentativeStore;
+import com.project.kcookserver.store.enums.Area;
 import com.project.kcookserver.util.ValidationExceptionProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"Store API"})
@@ -86,5 +89,24 @@ public class StoreController {
     public DataResponse<List<StoreDetailRes>> getRepresentativeStores() {
         List<StoreDetailRes> representativeStores = storeService.getRepresentativeStores();
         return responseService.getDataResponse(representativeStores);
+    }
+
+    @Operation(summary = "지역별 스토어 조회 API")
+    @GetMapping(value = "/stores/area")
+    public DataResponse<Page<StoreDetailRes>> getStoresByArea(
+        @RequestParam Area area,
+        @RequestParam(required = false) Integer page,
+        @RequestParam(required = false) Integer size,
+        @RequestParam(name = "sortBy", required = false) String sortBy,
+        @RequestParam(name = "isAsc", required = false) Boolean isAsc
+        ) {
+        if (page == null) page = 1;
+        page = page - 1;
+        if (size == null) size = 10;
+        if (isAsc == null) isAsc = true;
+        if (sortBy == null) sortBy = "updatedAt";
+
+        Page<StoreDetailRes> storesByArea = storeService.getStoresByArea(area, page, size, isAsc, sortBy);
+        return responseService.getDataResponse(storesByArea);
     }
 }
