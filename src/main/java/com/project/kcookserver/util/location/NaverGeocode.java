@@ -2,6 +2,8 @@ package com.project.kcookserver.util.location;
 
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
+import com.project.kcookserver.store.dto.Coordinate;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +20,7 @@ public class NaverGeocode {
     @Value("${naver.API_KEY}")
     private String X_NCP_APIGW_API_KEY;
 
-    public String getCoordinate(String address) {
+    public Coordinate getCoordinate(String address) {
         RestTemplate rest = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-NCP-APIGW-API-KEY-ID", X_NCP_APIGW_API_KEY_ID);
@@ -36,7 +38,7 @@ public class NaverGeocode {
         JSONObject addresses = new JSONObject(addressesArray.get(0).toString());
         String x = addresses.get("x").toString();
         String y = addresses.get("y").toString();
-        return x + "," + y;
+        return new Coordinate(x,y);
     }
 
 
