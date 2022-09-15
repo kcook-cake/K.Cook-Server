@@ -79,28 +79,10 @@ public class ProductService {
     }
 
     @Transactional
-    public Long createProduct(CustomUserDetails customUserDetails, CreateProductReq createProductReq,
-        MultipartFile productImage1, MultipartFile productImage2, MultipartFile productImage3,
-        MultipartFile productImage4, MultipartFile productImage5,
-        MultipartFile optionImage1, MultipartFile optionImage2, MultipartFile optionImage3) {
+    public Long createProduct(CustomUserDetails customUserDetails, CreateProductReq createProductReq) {
         // Account account = customUserDetails.getAccount();
-        List<String> productImage = Stream.of(productImage1, productImage2, productImage3, productImage4,
-            productImage5, optionImage1, optionImage2, optionImage3).map(
-            multipartFile -> {
-                if (multipartFile == null) {
-                    return "";
-                }
-                else {
-                    try {
-                        return s3Uploader.upload(multipartFile, "productImage");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        ).collect(Collectors.toList());
 
-        Product product = new Product(createProductReq, productImage);
+        Product product = new Product(createProductReq);
         Product save = productRepository.save(product);
         List<Options> optionsList = createProductReq.getNewOptionsList().stream().map(Options::new).collect(Collectors.toList());
         optionsList.forEach(options -> options.setProduct(save));
@@ -155,5 +137,29 @@ public class ProductService {
         Sort sort = by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         return productRepository.findCakesByStoreId(storeId, pageable).map(ProductListRes::new);
+    }
+
+    @Transactional
+    public void addProductImages(Long productId, MultipartFile productImage1, MultipartFile productImage2,
+        MultipartFile productImage3, MultipartFile productImage4, MultipartFile productImage5,
+        MultipartFile optionImage1, MultipartFile optionImage2, MultipartFile optionImage3) {
+        List<String> productImage = Stream.of(productImage1, productImage2, productImage3, productImage4, productImage5,
+            optionImage1, optionImage2, optionImage3).map(
+            multipartFile -> {
+                if (multipartFile == null) {
+                    return "";
+                }
+                else {
+                    try {
+                        return s3Uploader.upload(multipartFile, "productImage");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        ).collect(Collectors.toList());
+        Product product = productRepository.findByProductIdAndStatus(productId, VALID)
+            .orElseThrow(() -> new CustomException(CustomExceptionStatus.PRODUCT_NOT_FOUND));
+        product.setProductImages(productImage);
     }
 }

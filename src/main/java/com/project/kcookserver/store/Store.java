@@ -6,6 +6,7 @@ import static javax.persistence.FetchType.LAZY;
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
+import com.project.kcookserver.store.dto.Coordinate;
 import com.project.kcookserver.store.dto.CreateStoreReq;
 import com.project.kcookserver.store.enums.Area;
 import javax.persistence.Entity;
@@ -48,13 +49,17 @@ public class Store extends BaseTimeEntity {
 
     private boolean representativeStore;
 
-    public Store(CreateStoreReq dto, Account account) {
+    private double xCoordinate;
+    private double yCoordinate;
+    public Store(CreateStoreReq dto, Account account, Coordinate coordinate) {
         this.status = VALID;
         this.account = account;
         this.name = dto.getName();
         this.contact = dto.getContact();
         this.address = dto.getAddress();
         this.area = dto.getArea();
+        this.xCoordinate = coordinate.getXCoordinate();
+        this.yCoordinate = coordinate.getYCoordinate();
     }
 
     public void updateStore(CreateStoreReq dto) {
@@ -62,6 +67,11 @@ public class Store extends BaseTimeEntity {
         this.contact = dto.getContact();
         this.address = dto.getAddress();
         this.area = dto.getArea();
+    }
+
+    public void enrollCoordinate(Coordinate coordinate) {
+        this.xCoordinate = coordinate.getXCoordinate();
+        this.yCoordinate = coordinate.getYCoordinate();
     }
 
 }

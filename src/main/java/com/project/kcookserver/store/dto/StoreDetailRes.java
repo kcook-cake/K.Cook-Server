@@ -26,6 +26,10 @@ public class StoreDetailRes {
 
     private Area area;
 
+    private Double xCoordinate;
+
+    private Double yCoordinate;
+
     public StoreDetailRes(Store store) {
         this.storeId = store.getStoreId();
         this.status = store.getStatus();
@@ -34,6 +38,8 @@ public class StoreDetailRes {
         this.contact = store.getContact();
         this.address = store.getAddress();
         this.area = store.getArea();
+        this.xCoordinate = store.getXCoordinate();
+        this.yCoordinate = store.getYCoordinate();
     }
 
 }

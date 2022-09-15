@@ -6,6 +6,7 @@ import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
+import com.project.kcookserver.store.dto.Coordinate;
 import com.project.kcookserver.store.dto.CreateStoreReq;
 import com.project.kcookserver.store.dto.StoreDetailRes;
 import com.project.kcookserver.store.enums.Area;
@@ -39,8 +40,8 @@ public class StoreService {
         Account account = customUserDetails.getAccount();
         Optional<StoreDetailRes> optional = storeRepository.getStoreByAccountAndStatus(account, VALID);
         if (optional.isPresent()) throw new CustomException(CustomExceptionStatus.ALREADY_CREATED_STORE);
-        naverGeocode.getCoordinate(dto.getAddress());
-        Store store = new Store(dto, account);
+        Coordinate coordinate = naverGeocode.getCoordinate(dto.getAddress());
+        Store store = new Store(dto, account, coordinate);
         Store save = storeRepository.save(store);
         return save.getStoreId();
     }
