@@ -94,12 +94,20 @@ public class ProductController {
     @Operation(summary = "상품 생성 API", description = "운영자 , 사업자 계정만 사용 가능")
     @PostMapping(value = "/products")
     public DataResponse<Long> createProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                            @RequestBody CreateProductReq createProductReq,
-                                            @RequestPart MultipartFile productImage1, @RequestPart MultipartFile productImage2, @RequestPart MultipartFile productImage3,
-                                            @RequestPart MultipartFile productImage4, @RequestPart MultipartFile productImage5,
-                                            @RequestPart MultipartFile optionImage1,  @RequestPart MultipartFile optionImage2,  @RequestPart MultipartFile optionImage3) {
-        Long productId = productService.createProduct(customUserDetails ,createProductReq, productImage1, productImage2, productImage3, productImage4, productImage5, optionImage1, optionImage2, optionImage3);
+                                            @RequestBody CreateProductReq createProductReq) {
+        Long productId = productService.createProduct(customUserDetails ,createProductReq);
         return responseService.getDataResponse(productId);
+    }
+
+    @Operation(summary = "상품 이미지 추가 API", description = "운영자 , 사업자 계정만 사용 가능")
+    @PatchMapping(value = "/products/{productId}/photos")
+    public CommonResponse addProductImages(@PathVariable Long productId,
+        @RequestPart MultipartFile productImage1, @RequestPart MultipartFile productImage2, @RequestPart MultipartFile productImage3,
+        @RequestPart MultipartFile productImage4, @RequestPart MultipartFile productImage5,
+        @RequestPart MultipartFile optionImage1,  @RequestPart MultipartFile optionImage2,  @RequestPart MultipartFile optionImage3){
+        productService.addProductImages(productId ,productImage1, productImage2, productImage3, productImage4, productImage5,
+            optionImage1, optionImage2, optionImage3);
+        return responseService.getSuccessResponse();
     }
 
     @Operation(summary = "상품 이미지 추가 API", description = "상품 ID를 기준으로 이미지 추가")
