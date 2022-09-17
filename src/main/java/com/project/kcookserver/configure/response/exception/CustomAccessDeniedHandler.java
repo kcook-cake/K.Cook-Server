@@ -21,7 +21,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
         log.warn(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))+" : Exception transmitted to AccessDeniedHandler");
 
-        response.sendRedirect("/errors/access-Denied");
+        response.sendRedirect("/errors/access-denied");
 
     }
 }

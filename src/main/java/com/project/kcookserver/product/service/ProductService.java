@@ -3,6 +3,7 @@ package com.project.kcookserver.product.service;
 import static com.project.kcookserver.configure.entity.Status.VALID;
 import static org.springframework.data.domain.Sort.by;
 
+import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
 import com.project.kcookserver.configure.s3.S3Uploader;
@@ -80,9 +81,8 @@ public class ProductService {
 
     @Transactional
     public Long createProduct(CustomUserDetails customUserDetails, CreateProductReq createProductReq) {
-        // Account account = customUserDetails.getAccount();
-
-        Product product = new Product(createProductReq);
+        Account account = customUserDetails.getAccount();
+        Product product = new Product(createProductReq, account);
         Product save = productRepository.save(product);
         List<Options> optionsList = createProductReq.getNewOptionsList().stream().map(Options::new).collect(Collectors.toList());
         optionsList.forEach(options -> options.setProduct(save));

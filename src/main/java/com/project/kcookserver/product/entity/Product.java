@@ -4,6 +4,7 @@ import static com.project.kcookserver.configure.entity.Status.VALID;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 
+import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.product.dto.CreateProductReq;
@@ -97,12 +98,12 @@ public class Product extends BaseTimeEntity {
     @OneToMany(mappedBy = "product", cascade = ALL)
     private List<Review> reviews = new ArrayList<>();
 
-    public Product(CreateProductReq createProductReq) {
+    public Product(CreateProductReq createProductReq, Account account) {
         this.status = VALID;
         this.name = createProductReq.getName();
         this.price = createProductReq.getPrice();
         this.salePrice = createProductReq.getSalePrice();
-        // this.store = account.getStore();
+        this.store = account.getStore();
         this.isCake = createProductReq.getIsCake();
         this.reviewCount = 0L;
     }
