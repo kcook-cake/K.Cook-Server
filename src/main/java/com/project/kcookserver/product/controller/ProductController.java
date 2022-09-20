@@ -18,6 +18,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -101,10 +104,10 @@ public class ProductController {
 
     @Operation(summary = "상품 이미지 추가 API", description = "운영자 , 사업자 계정만 사용 가능")
     @PatchMapping(value = "/products/{productId}/photos")
-    public CommonResponse addProductImages(@PathVariable Long productId,
-        @RequestPart MultipartFile productImage1, @RequestPart MultipartFile productImage2, @RequestPart MultipartFile productImage3,
-        @RequestPart MultipartFile productImage4, @RequestPart MultipartFile productImage5,
-        @RequestPart MultipartFile optionImage1,  @RequestPart MultipartFile optionImage2,  @RequestPart MultipartFile optionImage3){
+    public CommonResponse addProductImages(@PathVariable Long productId, HttpServletRequest request,
+        @RequestPart(required = false) MultipartFile productImage1, @RequestPart(required = false) MultipartFile productImage2, @RequestPart(required = false) MultipartFile productImage3,
+        @RequestPart(required = false) MultipartFile productImage4, @RequestPart(required = false) MultipartFile productImage5,
+        @RequestPart(required = false) MultipartFile optionImage1,  @RequestPart(required = false) MultipartFile optionImage2,  @RequestPart(required = false) MultipartFile optionImage3){
         productService.addProductImages(productId ,productImage1, productImage2, productImage3, productImage4, productImage5,
             optionImage1, optionImage2, optionImage3);
         return responseService.getSuccessResponse();
