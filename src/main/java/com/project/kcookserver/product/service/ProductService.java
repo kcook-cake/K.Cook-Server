@@ -73,7 +73,7 @@ public class ProductService {
     public ProductDetailRes getDetailProduct(Long productId) {
         Product product = productRepository.findByProductIdAndStatus(productId, VALID)
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.PRODUCT_NOT_FOUND));
-        List<OptionsListRes> optionsList = optionsRepository.findAllByProductId(productId)
+        List<OptionsListRes> optionsList = optionsRepository.findAllByProductAndStatus(product, VALID)
                 .stream().map(OptionsListRes::new).collect(Collectors.toList());
         ProductDetailRes productDetailRes = new ProductDetailRes(product, optionsList);
         return productDetailRes;
