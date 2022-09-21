@@ -1,6 +1,6 @@
 package com.project.kcookserver.review.dto;
 
-import com.project.kcookserver.review.entity.Review.ReviewContent;
+import com.project.kcookserver.review.entity.Review.ReviewKeyword;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class CreateReviewDto {
 
 	private long productId;
 
-	private ReviewContent contents;
+	private ReviewKeyword contents;
 
 	private int raiting;
 }

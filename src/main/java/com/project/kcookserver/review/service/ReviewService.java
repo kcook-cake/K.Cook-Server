@@ -7,8 +7,12 @@ import com.project.kcookserver.orders.entity.Orders;
 import com.project.kcookserver.product.entity.Product;
 import com.project.kcookserver.product.repository.ProductRepository;
 import com.project.kcookserver.review.dto.CreateReviewDto;
+import com.project.kcookserver.review.dto.ReviewKeywordWithKorean;
 import com.project.kcookserver.review.entity.Review;
+import com.project.kcookserver.review.entity.Review.ReviewKeyword;
 import com.project.kcookserver.review.repository.ReviewRepository;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,5 +33,14 @@ public class ReviewService {
 		product.plusReviewCount();
 		Review review = new Review(Status.VALID, orders, account, product, createReviewDto.getContents(), createReviewDto.getRaiting());
 		reviewRepository.save(review);
+	}
+
+	public List<ReviewKeywordWithKorean> getReviewKeywords() {
+		List<ReviewKeywordWithKorean> reviewKeywords = new ArrayList<>();
+		for (ReviewKeyword value : ReviewKeyword.values()) {
+			reviewKeywords.add(new ReviewKeywordWithKorean(value, value.getKorean()));
+		}
+
+		return reviewKeywords;
 	}
 }

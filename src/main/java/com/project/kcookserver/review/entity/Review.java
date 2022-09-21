@@ -46,11 +46,11 @@ public class Review extends BaseTimeEntity {
     private Product product;
 
     @Enumerated(EnumType.STRING)
-    private ReviewContent contents;
+    private ReviewKeyword contents;
 
     private Integer raiting;
 
-    public Review(Status status, Orders orders, Account account, Product product, ReviewContent contents, Integer raiting) {
+    public Review(Status status, Orders orders, Account account, Product product, ReviewKeyword contents, Integer raiting) {
         this.status = status;
         this.orders = orders;
         this.account = account;
@@ -59,7 +59,7 @@ public class Review extends BaseTimeEntity {
         this.raiting = raiting;
     }
 
-    public enum ReviewContent {
+    public enum ReviewKeyword {
         REVIEW1("맛이 좋아요"),
         REVIEW2("디자인이 예뻐요"),
         REVIEW3("선물하기 좋아요"),
@@ -83,7 +83,7 @@ public class Review extends BaseTimeEntity {
 
         private String korean;
 
-        ReviewContent(String korean) {
+        ReviewKeyword(String korean) {
             this.korean = korean;
         }
 
