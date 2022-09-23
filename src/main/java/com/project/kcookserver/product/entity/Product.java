@@ -8,7 +8,7 @@ import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.product.dto.CreateProductReq;
-import com.project.kcookserver.review.Review;
+import com.project.kcookserver.review.entity.Review;
 import com.project.kcookserver.store.Store;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,12 +88,11 @@ public class Product extends BaseTimeEntity {
     @JoinColumn(name = "storeId")
     private Store store;
 
+    private Long reviewCount;
+
     private Boolean isCake;
 
     private Integer salesRate;
-
-    private Long reviewCount;
-
 
     @OneToMany(mappedBy = "product", cascade = ALL)
     private List<Review> reviews = new ArrayList<>();
@@ -117,6 +116,9 @@ public class Product extends BaseTimeEntity {
         this.popularityRank = null;
     }
 
+    public void plusReviewCount() {
+        reviewCount++;
+    }
     public void setProductImages(List<String> productImages){
         if(!productImages.get(0).isEmpty()) this.productImage1 = productImages.get(0);
         if(!productImages.get(1).isEmpty()) this.productImage2 = productImages.get(1);

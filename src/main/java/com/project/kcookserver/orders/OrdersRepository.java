@@ -1,14 +1,12 @@
 package com.project.kcookserver.orders;
 
 import com.project.kcookserver.account.entity.Account;
-import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.orders.dto.OrdersListRes;
 import com.project.kcookserver.orders.entity.Orders;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.util.List;
 
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
