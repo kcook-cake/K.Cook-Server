@@ -97,6 +97,16 @@ public class Product extends BaseTimeEntity {
     @OneToMany(mappedBy = "product", cascade = ALL)
     private List<Review> reviews = new ArrayList<>();
 
+    private Boolean todayCake;
+
+    private Integer todayMax;
+
+    private Integer todaySale;
+
+    private Boolean originShow;
+
+    private Boolean show;
+
     public Product(CreateProductReq createProductReq, Account account) {
         this.status = VALID;
         this.name = createProductReq.getName();
