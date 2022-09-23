@@ -14,19 +14,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
+
+import java.io.IOException;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Api(tags = {"Store API"})
 @RequiredArgsConstructor
@@ -108,5 +105,18 @@ public class StoreController {
 
         Page<StoreDetailRes> storesByArea = storeService.getStoresByArea(area, page, size, isAsc, sortBy);
         return responseService.getDataResponse(storesByArea);
+    }
+
+    @Operation(summary = "스토어 대표 사진 변경 API")
+    @PostMapping(value = "stores/images")
+    public CommonResponse updateStoreImages(@RequestBody long storeId,
+        @RequestPart(required = false) MultipartFile storeImage1,
+        @RequestPart(required = false) MultipartFile storeImage2,
+        @RequestPart(required = false) MultipartFile storeImage3,
+        @RequestPart(required = false) MultipartFile storeImage4,
+        @RequestPart(required = false) MultipartFile storeImage5
+    ) {
+        storeService.updateStoreImage(storeId, storeImage1, storeImage2, storeImage3, storeImage4, storeImage5);
+        return responseService.getSuccessResponse();
     }
 }
