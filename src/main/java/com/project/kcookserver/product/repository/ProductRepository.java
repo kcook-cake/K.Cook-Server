@@ -37,4 +37,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "SELECT p FROM Product p WHERE p.store.storeId = :storeId")
     Page<Product> findCakesByStoreId(long storeId, Pageable pageable);
+
+    List<Product> findAllByIsCakeAndStatus(Boolean isCake, Status status);
 }

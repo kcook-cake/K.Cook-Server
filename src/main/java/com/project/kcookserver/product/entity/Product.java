@@ -145,4 +145,8 @@ public class Product extends BaseTimeEntity {
         if(!productImages.get(6).isEmpty()) this.optionImage2 = productImages.get(6);
         if(!productImages.get(7).isEmpty()) this.optionImage3 = productImages.get(7);
     }
+
+    public void updateProductTodaySaleCount() {
+        this.todaySaleNumber = this.maxOfToday;
+    }
 }
