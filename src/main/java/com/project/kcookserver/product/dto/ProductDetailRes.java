@@ -29,6 +29,16 @@ public class ProductDetailRes {
 
     private String storeName;
 
+    private Boolean isTodayCake;
+
+    private Integer maxOfToday;
+
+    private Integer todaySaleNumber;
+
+    private Boolean isOriginShow;
+
+    private Boolean isTodayShow;
+
     private List<OptionsListRes> optionsList;
 
     public ProductDetailRes(Product product, List<OptionsListRes> optionsList) {
@@ -40,5 +50,10 @@ public class ProductDetailRes {
         this.storeId = product.getStore().getStoreId();
         this.storeName = product.getStore().getName();
         this.optionsList = optionsList;
+        this.isTodayCake = product.getIsTodayCake();
+        this.maxOfToday = product.getMaxOfToday();
+        this.todaySaleNumber = product.getTodaySaleNumber();
+        this.isOriginShow = product.getIsOriginShow();
+        this.isTodayShow = product.getIsTodayShow();
     }
 }

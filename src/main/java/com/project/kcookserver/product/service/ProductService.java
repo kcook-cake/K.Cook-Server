@@ -9,8 +9,6 @@ import com.project.kcookserver.configure.response.exception.CustomExceptionStatu
 import com.project.kcookserver.configure.s3.S3Uploader;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.product.dto.ChildOptionsListRes;
-import com.project.kcookserver.product.dto.CreateChildOptionReq;
-import com.project.kcookserver.product.dto.CreateOptionReq;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.product.dto.OptionsListRes;
 import com.project.kcookserver.product.dto.ProductDetailRes;
