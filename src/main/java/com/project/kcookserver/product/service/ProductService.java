@@ -8,12 +8,17 @@ import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
 import com.project.kcookserver.configure.s3.S3Uploader;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
+import com.project.kcookserver.product.dto.ChildOptionsListRes;
+import com.project.kcookserver.product.dto.CreateChildOptionReq;
+import com.project.kcookserver.product.dto.CreateOptionReq;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.product.dto.OptionsListRes;
 import com.project.kcookserver.product.dto.ProductDetailRes;
 import com.project.kcookserver.product.dto.ProductListRes;
+import com.project.kcookserver.product.entity.ChildOptions;
 import com.project.kcookserver.product.entity.Options;
 import com.project.kcookserver.product.entity.Product;
+import com.project.kcookserver.product.repository.ChildOptionsRepository;
 import com.project.kcookserver.product.repository.OptionsRepository;
 import com.project.kcookserver.product.repository.ProductRepository;
 import com.project.kcookserver.product.repository.ProductRepositoryCustom;
@@ -21,6 +26,7 @@ import com.project.kcookserver.product.vo.PopularProduct;
 import com.project.kcookserver.product.vo.Popularity;
 import com.project.kcookserver.store.enums.Area;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -44,6 +50,9 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final OptionsRepository optionsRepository;
     private final ProductRepositoryCustom productRepositoryCustom;
+
+    private final ChildOptionsRepository childOptionsRepository;
+
     private final S3Uploader s3Uploader;
 
     public Page<ProductListRes> getCakeList
@@ -73,8 +82,18 @@ public class ProductService {
     public ProductDetailRes getDetailProduct(Long productId) {
         Product product = productRepository.findByProductIdAndStatus(productId, VALID)
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.PRODUCT_NOT_FOUND));
-        List<OptionsListRes> optionsList = optionsRepository.findAllByProductAndStatus(product, VALID)
-                .stream().map(OptionsListRes::new).collect(Collectors.toList());
+        List<OptionsListRes> optionsList = new ArrayList<>();
+        optionsRepository.findAllByProductAndStatus(product, VALID)
+            .forEach(
+                options -> {
+                    OptionsListRes optionsListRes = new OptionsListRes(options);
+                    ArrayList<ChildOptionsListRes> childOptionsListResList = new ArrayList<>();
+                    childOptionsRepository.findAllByOptionsAndStatus(options, VALID).forEach(
+                        childOptions -> childOptionsListResList.add(new ChildOptionsListRes(childOptions)));
+                    optionsListRes.setChildOptionsList(childOptionsListResList);
+                    optionsList.add(optionsListRes);
+                }
+            );
         ProductDetailRes productDetailRes = new ProductDetailRes(product, optionsList);
         return productDetailRes;
     }
@@ -82,11 +101,27 @@ public class ProductService {
     @Transactional
     public Long createProduct(CustomUserDetails customUserDetails, CreateProductReq createProductReq) {
         Account account = customUserDetails.getAccount();
+        if (account.getStore() == null) throw new CustomException(CustomExceptionStatus.STORE_NOT_FOUND);
         Product product = new Product(createProductReq, account);
         Product save = productRepository.save(product);
-        List<Options> optionsList = createProductReq.getNewOptionsList().stream().map(Options::new).collect(Collectors.toList());
-        optionsList.forEach(options -> options.setProduct(save));
-        optionsRepository.saveAll(optionsList);
+        if (createProductReq.getNewOptionsList() != null) {
+            createProductReq.getNewOptionsList().forEach(
+                options->{
+                    Options optionsEntity = new Options(options);
+                    optionsEntity.setProduct(save);
+                    Options savedOptions = optionsRepository.save(optionsEntity);
+                    if (options.getChild()!= null){
+                        options.getChild()
+                            .forEach(child -> {
+                                    ChildOptions childOptions = new ChildOptions(child);
+                                    childOptions.setOptions(savedOptions);
+                                    childOptionsRepository.save(childOptions);
+                            }
+                        );
+                    }
+                }
+            );
+        }
         return save.getProductId();
     }
     @Transactional

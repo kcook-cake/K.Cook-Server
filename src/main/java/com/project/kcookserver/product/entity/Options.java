@@ -30,8 +30,6 @@ public class Options extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OptionsCategoryType category;
 
-    private String title;
-
     private String contents;
 
     private Integer additionalCost;
@@ -42,6 +40,10 @@ public class Options extends BaseTimeEntity {
 
     @Size(max = 500)
     private String imageUrl;
+
+    private Long itemNumber;
+
+    private String itemType;
 
     public void setProduct(Product product) {
         this.product = product;
@@ -54,6 +56,8 @@ public class Options extends BaseTimeEntity {
         this.additionalCost = createOptionReq.getAdditionalCost();
         if (this.category.equals(OptionsCategoryType.IMAGE))
             this.imageUrl = createOptionReq.getImageUrl();
+        this.itemNumber = createOptionReq.getItemNumber();
+        this.itemType = createOptionReq.getItemType();
     }
 
 }

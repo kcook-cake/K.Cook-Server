@@ -12,6 +12,8 @@ import com.project.kcookserver.review.entity.Review;
 import com.project.kcookserver.store.Store;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -84,7 +86,6 @@ public class Product extends BaseTimeEntity {
     private boolean representativeCake;
 
     @ManyToOne(fetch = LAZY)
-    @NotNull
     @JoinColumn(name = "storeId")
     private Store store;
 
@@ -97,15 +98,15 @@ public class Product extends BaseTimeEntity {
     @OneToMany(mappedBy = "product", cascade = ALL)
     private List<Review> reviews = new ArrayList<>();
 
-    private Boolean todayCake;
+    private Boolean isTodayCake;
 
-    private Integer todayMax;
+    private Integer maxOfToday;
 
-    private Integer todaySale;
+    private Integer todaySaleNumber;
 
-    private Boolean originShow;
+    private Boolean isOriginShow;
 
-    private Boolean show;
+    private Boolean isTodayShow;
 
     public Product(CreateProductReq createProductReq, Account account) {
         this.status = VALID;
@@ -115,6 +116,11 @@ public class Product extends BaseTimeEntity {
         this.store = account.getStore();
         this.isCake = createProductReq.getIsCake();
         this.reviewCount = 0L;
+        this.isTodayCake = createProductReq.getIsTodayCake();
+        this.maxOfToday = createProductReq.getMaxOfToday();
+        this.todaySaleNumber = createProductReq.getTodaySaleNumber();
+        this.isOriginShow = createProductReq.getIsOriginShow();
+        this.isTodayShow = createProductReq.getIsTodayShow();
     }
 
 
