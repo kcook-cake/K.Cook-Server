@@ -25,6 +25,8 @@ public class OptionsListRes {
 
     private List<ChildOptionsListRes> childOptionsList;
 
+    private String categoryTitle;
+
     public OptionsListRes(Options options) {
         this.optionsId = options.getOptionsId();
         this.category = options.getCategory();

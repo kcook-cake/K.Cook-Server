@@ -34,4 +34,6 @@ public class CreateOptionReq {
 
     private List<CreateChildOptionReq> child;
 
+    private String categoryTitle;
+
 }

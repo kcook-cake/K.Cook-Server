@@ -49,6 +49,8 @@ public class Options extends BaseTimeEntity {
         this.product = product;
     }
 
+    private String categoryTitle;
+
     public Options(CreateOptionReq createOptionReq) {
         this.status = VALID;
         this.category = createOptionReq.getCategory();
@@ -58,6 +60,7 @@ public class Options extends BaseTimeEntity {
             this.imageUrl = createOptionReq.getImageUrl();
         this.itemNumber = createOptionReq.getItemNumber();
         this.itemType = createOptionReq.getItemType();
+        this.categoryTitle = createOptionReq.getCategoryTitle();
     }
 
 }
