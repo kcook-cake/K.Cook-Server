@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -41,6 +43,22 @@ public class ProductDetailRes {
 
     private List<OptionsListRes> optionsList;
 
+    private String productImage1;
+
+    private String productImage2;
+
+    private String productImage3;
+
+    private String productImage4;
+
+    private String productImage5;
+
+    private String optionImage1;
+
+    private String optionImage2;
+
+    private String optionImage3;
+
     public ProductDetailRes(Product product, List<OptionsListRes> optionsList) {
         this.productId = product.getProductId();
         this.status = product.getStatus();
@@ -55,5 +73,13 @@ public class ProductDetailRes {
         this.todaySaleNumber = product.getTodaySaleNumber();
         this.isOriginShow = product.getIsOriginShow();
         this.isTodayShow = product.getIsTodayShow();
+        this.productImage1 = product.getProductImage1();
+        this.productImage2 = product.getProductImage2();
+        this.productImage3 = product.getProductImage3();
+        this.productImage4 = product.getProductImage4();
+        this.productImage5 = product.getProductImage5();
+        this.optionImage1 = product.getOptionImage1();
+        this.optionImage2 = product.getOptionImage2();
+        this.optionImage3 = product.getOptionImage3();
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.product.entity.Product;
 import com.project.kcookserver.product.repository.ProductRepository;
 

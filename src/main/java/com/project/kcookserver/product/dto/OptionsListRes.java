@@ -32,6 +32,7 @@ public class OptionsListRes {
         this.category = options.getCategory();
         this.contents = options.getContents();
         this.additionalCost = options.getAdditionalCost();
+        this.categoryTitle = options.getCategoryTitle();
     }
 
 }
