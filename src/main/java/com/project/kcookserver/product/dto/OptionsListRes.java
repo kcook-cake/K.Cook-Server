@@ -27,12 +27,18 @@ public class OptionsListRes {
 
     private String categoryTitle;
 
+    private Long itemNumber;
+
+    private String itemType;
+
     public OptionsListRes(Options options) {
         this.optionsId = options.getOptionsId();
         this.category = options.getCategory();
         this.contents = options.getContents();
         this.additionalCost = options.getAdditionalCost();
         this.categoryTitle = options.getCategoryTitle();
+        this.itemNumber = options.getItemNumber();
+        this.itemType = options.getItemType();
     }
 
 }
