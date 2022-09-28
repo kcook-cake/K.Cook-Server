@@ -8,10 +8,12 @@ import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.product.dto.CreateProductReq;
-import com.project.kcookserver.review.Review;
+import com.project.kcookserver.review.entity.Review;
 import com.project.kcookserver.store.Store;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -84,19 +86,27 @@ public class Product extends BaseTimeEntity {
     private Integer defaultPageCakeSequence;
 
     @ManyToOne(fetch = LAZY)
-    @NotNull
     @JoinColumn(name = "storeId")
     private Store store;
+
+    private Long reviewCount;
 
     private Boolean isCake;
 
     private Integer salesRate;
 
-    private Long reviewCount;
-
-
     @OneToMany(mappedBy = "product", cascade = ALL)
     private List<Review> reviews = new ArrayList<>();
+
+    private Boolean isTodayCake;
+
+    private Integer maxOfToday;
+
+    private Integer todaySaleNumber;
+
+    private Boolean isOriginShow;
+
+    private Boolean isTodayShow;
 
     public Product(CreateProductReq createProductReq, Account account) {
         this.status = VALID;
@@ -106,6 +116,11 @@ public class Product extends BaseTimeEntity {
         this.store = account.getStore();
         this.isCake = createProductReq.getIsCake();
         this.reviewCount = 0L;
+        this.isTodayCake = createProductReq.getIsTodayCake();
+        this.maxOfToday = createProductReq.getMaxOfToday();
+        this.todaySaleNumber = createProductReq.getTodaySaleNumber();
+        this.isOriginShow = createProductReq.getIsOriginShow();
+        this.isTodayShow = createProductReq.getIsTodayShow();
     }
 
 
@@ -120,6 +135,9 @@ public class Product extends BaseTimeEntity {
         this.popularityRank = null;
     }
 
+    public void plusReviewCount() {
+        reviewCount++;
+    }
     public void setProductImages(List<String> productImages){
         if(!productImages.get(0).isEmpty()) this.productImage1 = productImages.get(0);
         if(!productImages.get(1).isEmpty()) this.productImage2 = productImages.get(1);
@@ -129,5 +147,9 @@ public class Product extends BaseTimeEntity {
         if(!productImages.get(5).isEmpty()) this.optionImage1 = productImages.get(5);
         if(!productImages.get(6).isEmpty()) this.optionImage2 = productImages.get(6);
         if(!productImages.get(7).isEmpty()) this.optionImage3 = productImages.get(7);
+    }
+
+    public void updateProductTodaySaleCount() {
+        this.todaySaleNumber = this.maxOfToday;
     }
 }

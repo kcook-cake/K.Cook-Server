@@ -39,4 +39,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "SELECT p FROM Product p where p.isCake = true and p.defaultPageCakeSequence is not null ORDER BY p.defaultPageCakeSequence")
     List<Product> getDefaultPageCakes();
+    List<Product> findAllByIsCakeAndStatus(Boolean isCake, Status status);
 }

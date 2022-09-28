@@ -1,30 +1,39 @@
 package com.project.kcookserver.orders.entity;
 
+import static com.project.kcookserver.configure.entity.Status.RESERVATION;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.orders.PaymentType;
 import com.project.kcookserver.product.entity.Options;
 import com.project.kcookserver.product.entity.Product;
+import com.project.kcookserver.review.entity.Review;
 import com.project.kcookserver.store.Store;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.project.kcookserver.configure.entity.Status.*;
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.FetchType.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 public class Orders extends BaseTimeEntity {
 
     @Id
@@ -45,6 +54,10 @@ public class Orders extends BaseTimeEntity {
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "productId")
     private Product product;
+
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "reviewId")
+    private Review review;
 
     private Integer price;
 
