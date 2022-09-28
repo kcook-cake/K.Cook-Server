@@ -49,7 +49,7 @@ public class Store extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Area area;
 
-    private boolean representativeStore;
+    private Integer defaultPageStoreSequence;
 
     private double xCoordinate;
     private double yCoordinate;
@@ -80,6 +80,10 @@ public class Store extends BaseTimeEntity {
         this.contact = dto.getContact();
         this.address = dto.getAddress();
         this.area = dto.getArea();
+    }
+
+    public void changeDefaultPageSequence(int sequence) {
+        this.defaultPageStoreSequence = sequence;
     }
 
     public void enrollCoordinate(Coordinate coordinate) {

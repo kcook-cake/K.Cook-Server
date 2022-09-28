@@ -22,14 +22,10 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     Optional<Store> findByAccountAndStatus(Account account, Status status);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "Update Store s set s.representativeStore = false")
-    void updateRepresentativeStoreIsNone();
-
-    @Modifying(clearAutomatically = true)
-    @Query(value = "Update Store s set s.representativeStore = true WHERE s.storeId in :ids")
-    void registerRepresentativeStoreByIds(List<Long> ids);
-
-    List<Store> findAllByRepresentativeStoreIsTrue();
+    @Query(value = "Update Store s set s.defaultPageStoreSequence = null")
+    void updateDefaultPageStoreIsNone();
 
     Page<Store> findAllByArea(Area area, Pageable pageable);
+
+    List<Store> findByStoreIdIn(List<Long> storeIds);
 }

@@ -138,12 +138,12 @@ public class ProductController {
         return responseService.getDataResponse(products);
     }
 
-//    @Operation(summary = "디폴트 케이크 페이지 조회 API")
-//    @GetMapping(value = "products/representative-cake")
-//    public DataResponse<List<ProductListRes>> getRepresentativeCakes() {
-//        List<ProductListRes> representativeCakes = productService.getRepresentativeCakes();
-//        return responseService.getDataResponse(representativeCakes);
-//    }
+    @Operation(summary = "디폴트 페이지 케이크 조회 API")
+    @GetMapping(value = "/products/default-page-cake")
+    public DataResponse<List<ProductListRes>> getDefaultPageCakes() {
+        List<ProductListRes> representativeCakes = productService.getDefaultPageCakes();
+        return responseService.getDataResponse(representativeCakes);
+    }
 
     @ApiImplicitParams({
         @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")

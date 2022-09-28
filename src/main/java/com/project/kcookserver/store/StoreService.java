@@ -9,13 +9,16 @@ import com.project.kcookserver.configure.s3.S3Uploader;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.store.dto.Coordinate;
 import com.project.kcookserver.store.dto.CreateStoreReq;
+import com.project.kcookserver.store.dto.DefaultPageStore;
 import com.project.kcookserver.store.dto.StoreDetailRes;
 import com.project.kcookserver.store.enums.Area;
 import com.project.kcookserver.util.location.NaverGeocode;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,14 +67,24 @@ public class StoreService {
     }
 
     @Transactional
-    public void updateRepresentativeStore(List<Long> storeIds) {
-        storeRepository.updateRepresentativeStoreIsNone();
-        storeRepository.registerRepresentativeStoreByIds(storeIds);
+    public void updateRepresentativeStore(List<DefaultPageStore> defaultPageStores) {
+        storeRepository.updateDefaultPageStoreIsNone();
+
+        List<Long> cakeIds = defaultPageStores.stream().map(DefaultPageStore::getStoreId).collect(Collectors.toList());
+        Map<Long, Store> products = storeRepository.findByStoreIdIn(cakeIds).stream().collect(Collectors.toMap(
+                Store::getStoreId,
+                Function.identity()
+        ));
+
+        for (DefaultPageStore defaultPageStore : defaultPageStores) {
+            products.get(defaultPageStore.getStoreId())
+                    .changeDefaultPageSequence(defaultPageStore.getSequence());
+        }
     }
 
-    public List<StoreDetailRes> getRepresentativeStores() {
-        return storeRepository.findAllByRepresentativeStoreIsTrue().stream().map(StoreDetailRes::new).collect(Collectors.toList());
-    }
+//    public List<StoreDetailRes> getRepresentativeStores() {
+//        return storeRepository.findAllByRepresentativeStoreIsTrue().stream().map(StoreDetailRes::new).collect(Collectors.toList());
+//    }
 
     public Page<StoreDetailRes> getStoresByArea(Area area, int page, int size, boolean isAsc, String sortBy) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;

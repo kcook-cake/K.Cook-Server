@@ -38,6 +38,8 @@ public class ProductListRes {
 
     private Integer popularityRank;
 
+    private Integer defaultPageSequence;
+
     public ProductListRes(Product product) {
         this.productId = product.getProductId();
         this.status = product.getStatus();
@@ -51,6 +53,7 @@ public class ProductListRes {
         this.resultPrice = price - salePrice;
         this.reviewCount = product.getReviewCount();
         this.popularityRank = product.getPopularityRank();
+        this.defaultPageSequence = product.getDefaultPageCakeSequence();
     }
 
     @QueryProjection

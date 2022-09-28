@@ -7,6 +7,7 @@ import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.store.dto.CreateStoreReq;
 import com.project.kcookserver.store.dto.StoreDetailRes;
+import com.project.kcookserver.store.dto.UpdateDefaultPageStore;
 import com.project.kcookserver.store.dto.UpdateRepresentativeStore;
 import com.project.kcookserver.store.enums.Area;
 import com.project.kcookserver.util.ValidationExceptionProvider;
@@ -74,19 +75,19 @@ public class StoreController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
-    @Operation(summary = "대표 스토어 수정 API")
-    @PostMapping(value = "/stores/representative")
-    public CommonResponse updateRepresentativeStore(@RequestBody UpdateRepresentativeStore updateRepresentativeStore) {
-        storeService.updateRepresentativeStore(updateRepresentativeStore.getStoreIds());
+    @Operation(summary = "디폴트 페이지 스토어 수정 API")
+    @PostMapping(value = "/stores/default-page-store")
+    public CommonResponse updateRepresentativeStore(@RequestBody UpdateDefaultPageStore updateDefaultPageStore) {
+        storeService.updateRepresentativeStore(updateDefaultPageStore.getDefaultPageStores());
         return responseService.getSuccessResponse();
     }
 
-    @Operation(summary = "대표 스토어 조회 API")
-    @GetMapping(value = "stores/representative")
-    public DataResponse<List<StoreDetailRes>> getRepresentativeStores() {
-        List<StoreDetailRes> representativeStores = storeService.getRepresentativeStores();
-        return responseService.getDataResponse(representativeStores);
-    }
+//    @Operation(summary = "대표 스토어 조회 API")
+//    @GetMapping(value = "stores/representative")
+//    public DataResponse<List<StoreDetailRes>> getRepresentativeStores() {
+//        List<StoreDetailRes> representativeStores = storeService.getRepresentativeStores();
+//        return responseService.getDataResponse(representativeStores);
+//    }
 
     @Operation(summary = "지역별 스토어 조회 API")
     @GetMapping(value = "/stores/area")

@@ -131,6 +131,11 @@ public class ProductService {
         }
     }
 
+    public List<ProductListRes> getDefaultPageCakes() {
+        return productRepository.getDefaultPageCakes().stream().map(ProductListRes::new)
+                .collect(Collectors.toList());
+    }
+
     public Page<ProductListRes> getCakesByStoreId(long storeId, int page, int size, boolean isAsc, String sortBy) {
         Direction direction = isAsc ? Direction.ASC : Direction.DESC;
         Sort sort = by(direction, sortBy);
