@@ -107,7 +107,7 @@ public class ProductController {
 
     @Operation(summary = "상품 이미지 추가 API", description = "운영자 , 사업자 계정만 사용 가능")
     @PatchMapping(value = "/products/{productId}/photos")
-    public CommonResponse addProductImages(@PathVariable Long productId, HttpServletRequest request,
+    public CommonResponse addProductImages(@PathVariable Long productId, 
         @RequestPart(required = false) MultipartFile productImage1, @RequestPart(required = false) MultipartFile productImage2, @RequestPart(required = false) MultipartFile productImage3,
         @RequestPart(required = false) MultipartFile productImage4, @RequestPart(required = false) MultipartFile productImage5,
         @RequestPart(required = false) MultipartFile optionImage1,  @RequestPart(required = false) MultipartFile optionImage2,  @RequestPart(required = false) MultipartFile optionImage3){
