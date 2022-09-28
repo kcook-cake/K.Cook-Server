@@ -37,4 +37,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "SELECT p FROM Product p WHERE p.store.storeId = :storeId")
     Page<Product> findCakesByStoreId(long storeId, Pageable pageable);
+
+    @Query(value = "SELECT p FROM Product p where p.isCake = true and p.popularityRank is not null ORDER BY p.popularityRank")
+    List<Product> getPopularCakes();
+
+    List<Product> findTop12ByIsCakeIsTrueOrderByUpdatedAtDesc();
 }

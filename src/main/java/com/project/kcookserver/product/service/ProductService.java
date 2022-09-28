@@ -109,17 +109,14 @@ public class ProductService {
         }
     }
 
-    public Page<PopularProduct> getPopularProducts(int page) {
-        Sort sort = by(Direction.ASC, "popularityRank");
-        Pageable pageable = PageRequest.of(page, 4, sort);
-        return productRepositoryCustom.findAllPopularProducts(pageable);
+    public List<ProductListRes> getPopularProducts() {
+        List<Product> popularCakes = productRepository.getPopularCakes();
+        return popularCakes.stream().map(ProductListRes::new).collect(Collectors.toList());
     }
 
-    public Page<ProductListRes> getProductsByUpdatedAtDesc(int page) {
-        Sort sort = by(Direction.DESC, "updatedAt");
-        Pageable pageable = PageRequest.of(page, 4, sort);
-
-        return productRepositoryCustom.findRecentUpdatedProducts(pageable);
+    public List<ProductListRes> getProductsByUpdatedAtDesc() {
+        List<Product> products = productRepository.findTop12ByIsCakeIsTrueOrderByUpdatedAtDesc();
+        return products.stream().map(ProductListRes::new).collect(Collectors.toList());
     }
 
     @Transactional

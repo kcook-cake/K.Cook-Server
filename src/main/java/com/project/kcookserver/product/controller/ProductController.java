@@ -133,26 +133,16 @@ public class ProductController {
 
     @Operation(summary = "상품 인기순 조회 API")
     @GetMapping(value = "/popular-products")
-    public DataResponse<Page<PopularProduct>> getPopularProducts(
-        @RequestParam Integer page
-    ) {
-        if (page == null) page = 1;
-        page = page - 1;
-
-        Page<PopularProduct> popularProducts = productService.getPopularProducts(page);
+    public DataResponse<List<ProductListRes>> getPopularProducts() {
+        List<ProductListRes> popularProducts = productService.getPopularProducts();
         return responseService.getDataResponse(popularProducts);
     }
 
     @Operation(summary = "최신 케익 조회 API")
-    @GetMapping(value = "/products/update")
-    public DataResponse<Page<ProductListRes>> getProductsByUpdatedAtDesc(
-        @RequestParam Integer page
-    ) {
-        if (page == null) page = 1;
-        page = page - 1;
-
-        Page<ProductListRes> productsRes = productService.getProductsByUpdatedAtDesc(page);
-        return responseService.getDataResponse(productsRes);
+    @GetMapping(value = "/products/recently-updated")
+    public DataResponse<List<ProductListRes>> getProductsByUpdatedAtDesc() {
+        List<ProductListRes> products = productService.getProductsByUpdatedAtDesc();
+        return responseService.getDataResponse(products);
     }
 
     @Operation(summary = "대표 케익 조회 API")

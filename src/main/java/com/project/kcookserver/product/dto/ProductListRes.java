@@ -36,6 +36,8 @@ public class ProductListRes {
 
     private Long reviewCount;
 
+    private Integer popularityRank;
+
     public ProductListRes(Product product) {
         this.productId = product.getProductId();
         this.status = product.getStatus();
@@ -48,6 +50,7 @@ public class ProductListRes {
         this.salePrice = product.getSalePrice();
         this.resultPrice = price - salePrice;
         this.reviewCount = product.getReviewCount();
+        this.popularityRank = product.getPopularityRank();
     }
 
     @QueryProjection

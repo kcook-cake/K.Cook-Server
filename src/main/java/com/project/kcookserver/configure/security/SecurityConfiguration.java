@@ -67,7 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers(HttpMethod.POST, "/app/sign-in", "/app/sign-up", "/app/applicants", "/app/products").permitAll()
             .antMatchers(HttpMethod.GET, "/errors/**", "/app/cakes/**", "/app/additional-products/**", "/app/products/**", "/app/accounts/{accountId}/coupons", "/app/applicants", "/app/cities", "/app/locations/{cityIndex}", "/app/accounts/email/sms-token",
-                "/app/popular-products", "/app/banner/static", "/app/banner/carousel", "/app/products/representative-cake", "/app/stores/representative", "/app/stores/area", "/app/cakes/on-sale").permitAll()
+                "/app/popular-products", "/app/banner/static", "/app/banner/carousel", "/app/products/representative-cake", "/app/stores/representative", "/app/stores/area", "/app/cakes/on-sale", "/app/products/recently-updated").permitAll()
             .antMatchers(HttpMethod.PATCH, "/app/accounts/sms-token", "/app/accounts/email/password", "/app/products/image", "/app/accounts/email/sms-token",  "/app/products/{productId}/photos").permitAll()
             .antMatchers(HttpMethod.GET, "/app/stores/account/auth").hasAnyRole("MANAGER", "ADMIN")
             .antMatchers(HttpMethod.POST, "/app/stores", "/app/stores/images").hasAnyRole("MANAGER", "ADMIN")
