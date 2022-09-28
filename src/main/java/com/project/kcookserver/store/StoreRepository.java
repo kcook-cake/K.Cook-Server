@@ -28,4 +28,6 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     Page<Store> findAllByArea(Area area, Pageable pageable);
 
     List<Store> findByStoreIdIn(List<Long> storeIds);
+
+    List<Store> findStoreByDefaultPageStoreSequenceIsNotNull();
 }

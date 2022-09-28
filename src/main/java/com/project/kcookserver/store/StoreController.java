@@ -82,12 +82,12 @@ public class StoreController {
         return responseService.getSuccessResponse();
     }
 
-//    @Operation(summary = "대표 스토어 조회 API")
-//    @GetMapping(value = "stores/representative")
-//    public DataResponse<List<StoreDetailRes>> getRepresentativeStores() {
-//        List<StoreDetailRes> representativeStores = storeService.getRepresentativeStores();
-//        return responseService.getDataResponse(representativeStores);
-//    }
+    @Operation(summary = "디폴트 페이지 스토어 조회 API")
+    @GetMapping(value = "stores/default-page-store")
+    public DataResponse<List<StoreDetailRes>> getRepresentativeStores() {
+        List<StoreDetailRes> defaultPageCakes = storeService.getDefaultPageStores();
+        return responseService.getDataResponse(defaultPageCakes);
+    }
 
     @Operation(summary = "지역별 스토어 조회 API")
     @GetMapping(value = "/stores/area")

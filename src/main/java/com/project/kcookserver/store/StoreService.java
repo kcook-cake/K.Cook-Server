@@ -82,9 +82,10 @@ public class StoreService {
         }
     }
 
-//    public List<StoreDetailRes> getRepresentativeStores() {
-//        return storeRepository.findAllByRepresentativeStoreIsTrue().stream().map(StoreDetailRes::new).collect(Collectors.toList());
-//    }
+    public List<StoreDetailRes> getDefaultPageStores() {
+        return storeRepository.findStoreByDefaultPageStoreSequenceIsNotNull().stream().map(StoreDetailRes::new)
+                .collect(Collectors.toList());
+    }
 
     public Page<StoreDetailRes> getStoresByArea(Area area, int page, int size, boolean isAsc, String sortBy) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
