@@ -4,13 +4,8 @@ import com.project.kcookserver.configure.response.CommonResponse;
 import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
-import com.project.kcookserver.product.dto.CreateProductReq;
-import com.project.kcookserver.product.dto.ProductDetailRes;
-import com.project.kcookserver.product.dto.ProductListRes;
-import com.project.kcookserver.product.dto.UpdatePopularityReq;
-import com.project.kcookserver.product.dto.UpdateRepresentativeCakeReq;
+import com.project.kcookserver.product.dto.*;
 import com.project.kcookserver.product.service.ProductService;
-import com.project.kcookserver.product.vo.PopularProduct;
 import com.project.kcookserver.store.enums.Area;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -18,8 +13,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -145,20 +138,20 @@ public class ProductController {
         return responseService.getDataResponse(products);
     }
 
-    @Operation(summary = "대표 케익 조회 API")
-    @GetMapping(value = "products/representative-cake")
-    public DataResponse<List<ProductListRes>> getRepresentativeCakes() {
-        List<ProductListRes> representativeCakes = productService.getRepresentativeCakes();
-        return responseService.getDataResponse(representativeCakes);
-    }
+//    @Operation(summary = "디폴트 케이크 페이지 조회 API")
+//    @GetMapping(value = "products/representative-cake")
+//    public DataResponse<List<ProductListRes>> getRepresentativeCakes() {
+//        List<ProductListRes> representativeCakes = productService.getRepresentativeCakes();
+//        return responseService.getDataResponse(representativeCakes);
+//    }
 
     @ApiImplicitParams({
         @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
-    @Operation(summary = "대표 케익 수정 API")
-    @PostMapping(value = "/products/representative-cake")
-    public CommonResponse updateRepresentativeCake(@RequestBody UpdateRepresentativeCakeReq updateRepresentativeCakeReq) {
-        productService.updateRepresentativeCake(updateRepresentativeCakeReq.getCakeIds());
+    @Operation(summary = "디폴트 케이크 페이지 수정 API", description = "첫 케이크 화면에 나올 케이크의 순서를 수정하는 API")
+    @PostMapping(value = "/products/default-page-cake")
+    public CommonResponse updateRepresentativeCake(@RequestBody UpdateDefaultPageCakeReq updateDefaultPageCakeReq) {
+        productService.updateDefaultPageCake(updateDefaultPageCakeReq.getDefaultPageCakes());
         return responseService.getSuccessResponse();
     }
 

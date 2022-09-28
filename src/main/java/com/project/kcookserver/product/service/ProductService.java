@@ -8,16 +8,12 @@ import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
 import com.project.kcookserver.configure.s3.S3Uploader;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
-import com.project.kcookserver.product.dto.CreateProductReq;
-import com.project.kcookserver.product.dto.OptionsListRes;
-import com.project.kcookserver.product.dto.ProductDetailRes;
-import com.project.kcookserver.product.dto.ProductListRes;
+import com.project.kcookserver.product.dto.*;
 import com.project.kcookserver.product.entity.Options;
 import com.project.kcookserver.product.entity.Product;
 import com.project.kcookserver.product.repository.OptionsRepository;
 import com.project.kcookserver.product.repository.ProductRepository;
 import com.project.kcookserver.product.repository.ProductRepositoryCustom;
-import com.project.kcookserver.product.vo.PopularProduct;
 import com.project.kcookserver.product.vo.Popularity;
 import com.project.kcookserver.store.enums.Area;
 import java.io.IOException;
@@ -120,13 +116,19 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateRepresentativeCake(List<Long> cakeIds) {
-        productRepository.updateRepresentativeCakeIsNone();
-        productRepository.registerRepresentativeCakeByIds(cakeIds);
-    }
+    public void updateDefaultPageCake(List<DefaultPageCake> defaultPageCakes) {
+        productRepository.updateDefaultPageCakeIsNone();
 
-    public List<ProductListRes> getRepresentativeCakes() {
-        return productRepository.findAllByRepresentativeCakeIsTrue().stream().map(ProductListRes::new).collect(Collectors.toList());
+        List<Long> cakeIds = defaultPageCakes.stream().map(DefaultPageCake::getProductId).collect(Collectors.toList());
+        Map<Long, Product> products = productRepository.findByProductIdIn(cakeIds).stream().collect(Collectors.toMap(
+                Product::getProductId,
+                Function.identity()
+        ));
+
+        for (DefaultPageCake defaultPageCake : defaultPageCakes) {
+            products.get(defaultPageCake.getProductId())
+                    .changeDefaultPageSequence(defaultPageCake.getSequence());
+        }
     }
 
     public Page<ProductListRes> getCakesByStoreId(long storeId, int page, int size, boolean isAsc, String sortBy) {

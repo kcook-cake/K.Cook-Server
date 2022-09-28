@@ -44,7 +44,7 @@ public class ProductListRes {
         this.isCake = product.getIsCake();
         this.image = product.getImage();
         this.raiting = new DecimalFormat("#.00").format(product.getRaiting());
-        // this.storeName = product.getStore().getName();
+         this.storeName = product.getStore().getName();
         this.name = product.getName();
         this.price = product.getPrice();
         this.salePrice = product.getSalePrice();
