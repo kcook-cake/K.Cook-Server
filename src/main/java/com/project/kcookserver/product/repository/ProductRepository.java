@@ -26,17 +26,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByProductIdIn(List<Long> productIds);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "Update Product p set p.representativeCake = false")
-    void updateRepresentativeCakeIsNone();
-
-    @Modifying(clearAutomatically = true)
-    @Query(value = "Update Product p set p.representativeCake = true WHERE p.productId in :ids")
-    void registerRepresentativeCakeByIds(List<Long> ids);
-
-    List<Product> findAllByRepresentativeCakeIsTrue();
+    @Query(value = "Update Product p set p.defaultPageCakeSequence = null")
+    void updateDefaultPageCakeIsNone();
 
     @Query(value = "SELECT p FROM Product p WHERE p.store.storeId = :storeId")
     Page<Product> findCakesByStoreId(long storeId, Pageable pageable);
 
+    @Query(value = "SELECT p FROM Product p where p.isCake = true and p.popularityRank is not null ORDER BY p.popularityRank")
+    List<Product> getPopularCakes();
+
+    List<Product> findTop12ByIsCakeIsTrueOrderByUpdatedAtDesc();
+
+    @Query(value = "SELECT p FROM Product p where p.isCake = true and p.defaultPageCakeSequence is not null ORDER BY p.defaultPageCakeSequence")
+    List<Product> getDefaultPageCakes();
     List<Product> findAllByIsCakeAndStatus(Boolean isCake, Status status);
 }

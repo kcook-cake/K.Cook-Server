@@ -30,6 +30,8 @@ public class StoreDetailRes {
 
     private Double yCoordinate;
 
+    private Integer defaultPageStoreSequence;
+
     public StoreDetailRes(Store store) {
         this.storeId = store.getStoreId();
         this.status = store.getStatus();
@@ -40,6 +42,7 @@ public class StoreDetailRes {
         this.area = store.getArea();
         this.xCoordinate = store.getXCoordinate();
         this.yCoordinate = store.getYCoordinate();
+        this.defaultPageStoreSequence = store.getDefaultPageStoreSequence();
     }
 
 }

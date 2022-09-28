@@ -8,6 +8,7 @@ import com.project.kcookserver.configure.response.exception.CustomException;
 import com.project.kcookserver.configure.response.exception.CustomExceptionStatus;
 import com.project.kcookserver.configure.s3.S3Uploader;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
+import com.project.kcookserver.product.dto.*;
 import com.project.kcookserver.product.dto.ChildOptionsListRes;
 import com.project.kcookserver.product.dto.CreateProductReq;
 import com.project.kcookserver.product.dto.OptionsListRes;
@@ -20,7 +21,6 @@ import com.project.kcookserver.product.repository.ChildOptionsRepository;
 import com.project.kcookserver.product.repository.OptionsRepository;
 import com.project.kcookserver.product.repository.ProductRepository;
 import com.project.kcookserver.product.repository.ProductRepositoryCustom;
-import com.project.kcookserver.product.vo.PopularProduct;
 import com.project.kcookserver.product.vo.Popularity;
 import com.project.kcookserver.store.enums.Area;
 import java.io.IOException;
@@ -142,27 +142,35 @@ public class ProductService {
         }
     }
 
-    public Page<PopularProduct> getPopularProducts(int page) {
-        Sort sort = by(Direction.ASC, "popularityRank");
-        Pageable pageable = PageRequest.of(page, 4, sort);
-        return productRepositoryCustom.findAllPopularProducts(pageable);
+    public List<ProductListRes> getPopularProducts() {
+        List<Product> popularCakes = productRepository.getPopularCakes();
+        return popularCakes.stream().map(ProductListRes::new).collect(Collectors.toList());
     }
 
-    public Page<ProductListRes> getProductsByUpdatedAtDesc(int page) {
-        Sort sort = by(Direction.DESC, "updatedAt");
-        Pageable pageable = PageRequest.of(page, 4, sort);
-
-        return productRepositoryCustom.findRecentUpdatedProducts(pageable);
+    public List<ProductListRes> getProductsByUpdatedAtDesc() {
+        List<Product> products = productRepository.findTop12ByIsCakeIsTrueOrderByUpdatedAtDesc();
+        return products.stream().map(ProductListRes::new).collect(Collectors.toList());
     }
 
     @Transactional
-    public void updateRepresentativeCake(List<Long> cakeIds) {
-        productRepository.updateRepresentativeCakeIsNone();
-        productRepository.registerRepresentativeCakeByIds(cakeIds);
+    public void updateDefaultPageCake(List<DefaultPageCake> defaultPageCakes) {
+        productRepository.updateDefaultPageCakeIsNone();
+
+        List<Long> cakeIds = defaultPageCakes.stream().map(DefaultPageCake::getProductId).collect(Collectors.toList());
+        Map<Long, Product> products = productRepository.findByProductIdIn(cakeIds).stream().collect(Collectors.toMap(
+                Product::getProductId,
+                Function.identity()
+        ));
+
+        for (DefaultPageCake defaultPageCake : defaultPageCakes) {
+            products.get(defaultPageCake.getProductId())
+                    .changeDefaultPageSequence(defaultPageCake.getSequence());
+        }
     }
 
-    public List<ProductListRes> getRepresentativeCakes() {
-        return productRepository.findAllByRepresentativeCakeIsTrue().stream().map(ProductListRes::new).collect(Collectors.toList());
+    public List<ProductListRes> getDefaultPageCakes() {
+        return productRepository.getDefaultPageCakes().stream().map(ProductListRes::new)
+                .collect(Collectors.toList());
     }
 
     public Page<ProductListRes> getCakesByStoreId(long storeId, int page, int size, boolean isAsc, String sortBy) {

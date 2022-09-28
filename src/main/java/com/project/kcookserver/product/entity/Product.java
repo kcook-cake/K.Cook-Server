@@ -83,7 +83,7 @@ public class Product extends BaseTimeEntity {
 
     private Integer popularityRank;
 
-    private boolean representativeCake;
+    private Integer defaultPageCakeSequence;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "storeId")
@@ -124,6 +124,9 @@ public class Product extends BaseTimeEntity {
     }
 
 
+    public void changeDefaultPageSequence(int sequence) {
+        this.defaultPageCakeSequence = sequence;
+    }
     public void changePopularityRank(int popularityRank) {
         this.popularityRank = popularityRank;
     }

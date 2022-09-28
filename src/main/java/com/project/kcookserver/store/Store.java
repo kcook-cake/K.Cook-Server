@@ -21,6 +21,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -47,10 +49,21 @@ public class Store extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Area area;
 
-    private boolean representativeStore;
+    private Integer defaultPageStoreSequence;
 
     private double xCoordinate;
     private double yCoordinate;
+
+    private String storeImage1;
+
+    private String storeImage2;
+
+    private String storeImage3;
+
+    private String storeImage4;
+
+    private String storeImage5;
+
     public Store(CreateStoreReq dto, Account account, Coordinate coordinate) {
         this.status = VALID;
         this.account = account;
@@ -69,9 +82,20 @@ public class Store extends BaseTimeEntity {
         this.area = dto.getArea();
     }
 
+    public void changeDefaultPageSequence(int sequence) {
+        this.defaultPageStoreSequence = sequence;
+    }
+
     public void enrollCoordinate(Coordinate coordinate) {
         this.xCoordinate = coordinate.getXCoordinate();
         this.yCoordinate = coordinate.getYCoordinate();
     }
 
+    public void setStoreImages(List<String> storeImages){
+        if(!storeImages.get(0).isEmpty()) this.storeImage1 = storeImages.get(0);
+        if(!storeImages.get(1).isEmpty()) this.storeImage2 = storeImages.get(1);
+        if(!storeImages.get(2).isEmpty()) this.storeImage3 = storeImages.get(2);
+        if(!storeImages.get(3).isEmpty()) this.storeImage4 = storeImages.get(3);
+        if(!storeImages.get(4).isEmpty()) this.storeImage5 = storeImages.get(4);
+    }
 }

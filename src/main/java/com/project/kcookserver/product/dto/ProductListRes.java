@@ -36,17 +36,23 @@ public class ProductListRes {
 
     private Long reviewCount;
 
+    private Integer popularityRank;
+
+    private Integer defaultPageSequence;
+
     public ProductListRes(Product product) {
         this.productId = product.getProductId();
         this.status = product.getStatus();
         this.isCake = product.getIsCake();
         this.raiting = new DecimalFormat("#.00").format(product.getRaiting());
-        // this.storeName = product.getStore().getName();
+         this.storeName = product.getStore().getName();
         this.name = product.getName();
         this.price = product.getPrice();
         this.salePrice = product.getSalePrice();
         this.resultPrice = price - salePrice;
         this.reviewCount = product.getReviewCount();
+        this.popularityRank = product.getPopularityRank();
+        this.defaultPageSequence = product.getDefaultPageCakeSequence();
     }
 
     @QueryProjection

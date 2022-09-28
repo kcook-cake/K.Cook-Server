@@ -7,6 +7,7 @@ import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.configure.security.authentication.CustomUserDetails;
 import com.project.kcookserver.store.dto.CreateStoreReq;
 import com.project.kcookserver.store.dto.StoreDetailRes;
+import com.project.kcookserver.store.dto.UpdateDefaultPageStore;
 import com.project.kcookserver.store.dto.UpdateRepresentativeStore;
 import com.project.kcookserver.store.enums.Area;
 import com.project.kcookserver.util.ValidationExceptionProvider;
@@ -14,19 +15,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
+
+import java.io.IOException;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Api(tags = {"Store API"})
 @RequiredArgsConstructor
@@ -77,18 +75,18 @@ public class StoreController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", dataTypeClass = String.class, paramType = "header")
     })
-    @Operation(summary = "대표 스토어 수정 API")
-    @PostMapping(value = "/stores/representative")
-    public CommonResponse updateRepresentativeStore(@RequestBody UpdateRepresentativeStore updateRepresentativeStore) {
-        storeService.updateRepresentativeStore(updateRepresentativeStore.getStoreIds());
+    @Operation(summary = "디폴트 페이지 스토어 수정 API")
+    @PostMapping(value = "/stores/default-page-store")
+    public CommonResponse updateRepresentativeStore(@RequestBody UpdateDefaultPageStore updateDefaultPageStore) {
+        storeService.updateRepresentativeStore(updateDefaultPageStore.getDefaultPageStores());
         return responseService.getSuccessResponse();
     }
 
-    @Operation(summary = "대표 스토어 조회 API")
-    @GetMapping(value = "stores/representative")
+    @Operation(summary = "디폴트 페이지 스토어 조회 API")
+    @GetMapping(value = "stores/default-page-store")
     public DataResponse<List<StoreDetailRes>> getRepresentativeStores() {
-        List<StoreDetailRes> representativeStores = storeService.getRepresentativeStores();
-        return responseService.getDataResponse(representativeStores);
+        List<StoreDetailRes> defaultPageCakes = storeService.getDefaultPageStores();
+        return responseService.getDataResponse(defaultPageCakes);
     }
 
     @Operation(summary = "지역별 스토어 조회 API")
@@ -108,5 +106,18 @@ public class StoreController {
 
         Page<StoreDetailRes> storesByArea = storeService.getStoresByArea(area, page, size, isAsc, sortBy);
         return responseService.getDataResponse(storesByArea);
+    }
+
+    @Operation(summary = "스토어 대표 사진 변경 API")
+    @PostMapping(value = "stores/images")
+    public CommonResponse updateStoreImages(@RequestBody long storeId,
+        @RequestPart(required = false) MultipartFile storeImage1,
+        @RequestPart(required = false) MultipartFile storeImage2,
+        @RequestPart(required = false) MultipartFile storeImage3,
+        @RequestPart(required = false) MultipartFile storeImage4,
+        @RequestPart(required = false) MultipartFile storeImage5
+    ) {
+        storeService.updateStoreImage(storeId, storeImage1, storeImage2, storeImage3, storeImage4, storeImage5);
+        return responseService.getSuccessResponse();
     }
 }
