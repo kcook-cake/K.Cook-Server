@@ -1,8 +1,9 @@
-package com.project.kcookserver.store;
+package com.project.kcookserver.store.repository;
 
 import com.project.kcookserver.account.entity.Account;
 import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.store.dto.StoreDetailRes;
+import com.project.kcookserver.store.entity.Store;
 import com.project.kcookserver.store.enums.Area;
 import java.util.List;
 import java.util.Optional;

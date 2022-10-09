@@ -1,4 +1,4 @@
-package com.project.kcookserver.store;
+package com.project.kcookserver.store.entity;
 
 import static com.project.kcookserver.configure.entity.Status.VALID;
 import static javax.persistence.FetchType.LAZY;
@@ -9,6 +9,7 @@ import com.project.kcookserver.configure.entity.Status;
 import com.project.kcookserver.store.dto.Coordinate;
 import com.project.kcookserver.store.dto.CreateStoreReq;
 import com.project.kcookserver.store.enums.Area;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,8 +21,6 @@ import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

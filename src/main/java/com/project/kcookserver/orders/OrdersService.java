@@ -23,29 +23,29 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrdersService {
 
-    private final OptionsRepository optionsRepository;
-    private final OrdersRepository ordersRepository;
-    private final ProductRepository productRepository;
+	private final OptionsRepository optionsRepository;
+	private final OrdersRepository ordersRepository;
+	private final ProductRepository productRepository;
 
-    @Transactional
-    public Long createOrders(CustomUserDetails customUserDetails, CreateOrdersReq createOrdersReq) {
-        Account account = customUserDetails.getAccount();
-        Product product = productRepository.findById(createOrdersReq.getProductId())
-                .orElseThrow(() -> new CustomException(CustomExceptionStatus.PRODUCT_NOT_FOUND));
-        List<Options> optionsList = new ArrayList<>();
-        for (Long optionsId : createOrdersReq.getOrdersList()) {
-            optionsList.add(optionsRepository.findById(optionsId)
-                    .orElseThrow(() -> new CustomException(CustomExceptionStatus.OPTIONS_NOT_FOUND)));
-        }
+	@Transactional
+	public Long createOrders(CustomUserDetails customUserDetails, CreateOrdersReq createOrdersReq) {
+		Account account = customUserDetails.getAccount();
+		Product product = productRepository.findById(createOrdersReq.getProductId())
+			.orElseThrow(() -> new CustomException(CustomExceptionStatus.PRODUCT_NOT_FOUND));
+		List<Options> optionsList = new ArrayList<>();
+		for (Long optionsId : createOrdersReq.getOrdersList()) {
+			optionsList.add(optionsRepository.findById(optionsId)
+				.orElseThrow(() -> new CustomException(CustomExceptionStatus.OPTIONS_NOT_FOUND)));
+		}
 
-        Orders orders = new Orders(account, product, createOrdersReq.getPaymentType(), createOrdersReq.getPickUpAt(), optionsList);
-        Orders save = ordersRepository.save(orders);
+		Orders orders = new Orders(account, product, createOrdersReq.getPaymentType(), createOrdersReq.getPickUpAt(), optionsList);
+		Orders save = ordersRepository.save(orders);
 
-        return save.getOrdersId();
-    }
+		return save.getOrdersId();
+	}
 
-    public List<OrdersListRes> getOrdersListByAccount(CustomUserDetails customUserDetails) {
-        Account account = customUserDetails.getAccount();
-        return ordersRepository.findAllByAccount(account);
-    }
+	public List<OrdersListRes> getOrdersListByAccount(CustomUserDetails customUserDetails) {
+		Account account = customUserDetails.getAccount();
+		return ordersRepository.findAllByAccount(account);
+	}
 }

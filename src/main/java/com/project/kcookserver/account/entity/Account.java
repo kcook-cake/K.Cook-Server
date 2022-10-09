@@ -1,26 +1,33 @@
 package com.project.kcookserver.account.entity;
 
-import com.project.kcookserver.coupon.Coupon;
+import static com.project.kcookserver.configure.entity.Status.DELETED;
+import static com.project.kcookserver.configure.entity.Status.VALID;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+
 import com.project.kcookserver.account.dto.AccountAuthDto;
 import com.project.kcookserver.account.entity.enumtypes.OAuthType;
 import com.project.kcookserver.account.entity.enumtypes.RoleType;
 import com.project.kcookserver.configure.entity.BaseTimeEntity;
 import com.project.kcookserver.configure.entity.Status;
-import com.project.kcookserver.store.Store;
+import com.project.kcookserver.coupon.Coupon;
+import com.project.kcookserver.store.entity.Store;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
-
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.project.kcookserver.configure.entity.Status.*;
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.FetchType.*;
 
 @Builder
 @NoArgsConstructor

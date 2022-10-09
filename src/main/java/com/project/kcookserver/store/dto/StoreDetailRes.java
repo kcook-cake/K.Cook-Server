@@ -1,7 +1,7 @@
 package com.project.kcookserver.store.dto;
 
 import com.project.kcookserver.configure.entity.Status;
-import com.project.kcookserver.store.Store;
+import com.project.kcookserver.store.entity.Store;
 import com.project.kcookserver.store.enums.Area;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

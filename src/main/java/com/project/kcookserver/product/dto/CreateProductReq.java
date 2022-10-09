@@ -28,7 +28,7 @@ public class CreateProductReq {
 
     private Boolean isTodayCake;
 
-    private Integer maxOfToday;
+    private Integer todayCakeLimit;
 
     private Integer todaySaleNumber;
 

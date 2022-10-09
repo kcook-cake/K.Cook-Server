@@ -4,8 +4,6 @@ import com.project.kcookserver.configure.response.DataResponse;
 import com.project.kcookserver.configure.response.ResponseService;
 import com.project.kcookserver.coupon.entity.GetCouponReq;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

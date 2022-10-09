@@ -11,7 +11,7 @@ import com.project.kcookserver.orders.PaymentType;
 import com.project.kcookserver.product.entity.Options;
 import com.project.kcookserver.product.entity.Product;
 import com.project.kcookserver.review.entity.Review;
-import com.project.kcookserver.store.Store;
+import com.project.kcookserver.store.entity.Store;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

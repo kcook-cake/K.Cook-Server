@@ -5,8 +5,8 @@
 // import com.project.kcookserver.account.entity.Account;
 // import com.project.kcookserver.product.entity.Product;
 // import com.project.kcookserver.product.repository.ProductRepository;
-// import com.project.kcookserver.store.Store;
-// import com.project.kcookserver.store.StoreRepository;
+// import com.project.kcookserver.store.entity.Store;
+// import com.project.kcookserver.store.repository.StoreRepository;
 // import com.project.kcookserver.store.dto.CreateStoreReq;
 // import org.junit.jupiter.api.BeforeEach;
 // import org.junit.jupiter.api.DisplayName;
