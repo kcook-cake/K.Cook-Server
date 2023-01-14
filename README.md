@@ -29,12 +29,9 @@
   <img src="https://img.shields.io/badge/-SpringBoot-blue"/>&nbsp
   <img src="https://img.shields.io/badge/-JPA-red"/>&nbsp
   <img src="https://img.shields.io/badge/-MySQL-yellow"/>&nbsp
-  <img src="https://img.shields.io/badge/-JWT-blue"/>&nbsp
-  <img src="https://img.shields.io/badge/-AWS-orange"/>&nbsp
+  <img src="https://img.shields.io/badge/-EC2-orange"/>&nbsp
+  <img src="https://img.shields.io/badge/-RDS-orange"/>&nbsp
   <img src="https://img.shields.io/badge/-Nginx-red"/>&nbsp
-  <img src="https://img.shields.io/badge/-Swagger-black"/>&nbsp
-  <img src="https://img.shields.io/badge/-SpringSecurity-green"/>&nbsp
-  <img src="https://img.shields.io/badge/-Querydsl-violet"/>&nbsp
 </p>
 
 ## 개발환경
